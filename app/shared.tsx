@@ -1,0 +1,7 @@
+import {modules,labels,type Row,type Module} from '@/lib/model';
+const extra:Record<string,string>={overview:'نظرة عامة',tree:'الهيكل الشجري',map:'خريطة الانتشار',reports:'التقارير والأرباح',audit:'سجل التدقيق',backups:'النسخ الاحتياطي والاستعادة',glossary:'دليل المصطلحات',requirements:'نقاط تحتاج اعتمادًا'};
+export const title=(id:string)=>modules.find(m=>m.id===id)?.title||extra[id]||id;
+export const num=(n:unknown)=>Number(n||0).toLocaleString('en-US');
+export function Badge({value}:{value:unknown}){const s=String(value??'—');const danger=/Failed|محظور|بدون سعر|موقوف|حرجة/.test(s);const amber=/Pending|Quarantined|Review|مسودة|بانتظار|مفتوحة|معزولة|مقترح|غير متصل|Partially/.test(s);return <span className={'badge '+(danger?'danger':amber?'amber':'')}>{labels[s]||s}{labels[s]&&<small dir="ltr">{s}</small>}</span>}
+export function download(name:string,body:string,type='text/csv;charset=utf-8'){const url=URL.createObjectURL(new Blob([body],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)}
+export function exportRows(rows:Row[],mod?:Module){const keys=mod?.fields.map(f=>f.key)||Object.keys(rows[0]?.data||{});const cell=(v:unknown)=>'"'+String(v??'').replace(/^[=+@\-\t\r]/,"'$&").replaceAll('"','""')+'"';download(`masal-${mod?.id||'report'}.csv`,'\uFEFF'+[keys.map(k=>cell(mod?.fields.find(f=>f.key===k)?.label||k)).join(','),...rows.map(r=>keys.map(k=>cell(r.data[k])).join(','))].join('\r\n'))}
