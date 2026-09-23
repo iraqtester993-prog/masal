@@ -480,3 +480,10 @@ html[data-theme=dark] .main .ops-account-grid > .card :is(.caption,.help,p,small
 .receipt .receipt-art{display:block;width:auto;height:auto;max-width:100%;max-height:160px;object-fit:contain;margin-inline:auto}
 .receipt .receipt-identities{flex-wrap:wrap;gap:12px;max-width:100%}
 @media print{.receipt .receipt-block{break-inside:avoid}}
+/* Handoff check: closed mobile navigation must not cover the workspace. */
+@media(max-width:1100px){
+ html[data-theme] .shell{display:block;grid-template-columns:none}
+ html[data-theme] .shell .sidebar:not(.open){display:none}
+ html[data-theme] .shell .sidebar.open{display:flex;position:fixed;inset-inline-start:0;inset-inline-end:auto;top:0;height:100dvh;max-width:85vw;z-index:40}
+ html[data-theme] .shell>.main{width:100%;min-width:0;margin-inline:0}
+}

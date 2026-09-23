@@ -95,6 +95,13 @@ appOptions.data=function(){
  sessionStorage.removeItem('masal-login-user');
  return d;
 };
+// Provision the requested handoff login once; later password changes are preserved.
+const handoffData=appOptions.data;
+appOptions.data=function(){const d=handoffData.call(this);if(d.s.adminLoginRevision!=='20260924'){
+const owner=d.s.users.find(u=>u.active&&u.role==='owner');if(!owner)throw Error('حساب مدير النظام غير موجود');
+owner.username='admin';owner.credentials={"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"d1d134cb85c17da3495e2efe16d480ff","hash":"7aa7dba1e72c5e7e810d0362b3076d22164a53f83ab9bb13b62800446301a954"};owner.mustChangePassword=false;owner.twoFactor=false;
+d.s.adminLoginRevision='20260924';localStorage.setItem('masal-v1',JSON.stringify(d.s));sessionStorage.removeItem('masal-login-user');d.loginScreen=true;
+}return d;};
 window.app=createApp(appOptions).mount('#app');
 
 

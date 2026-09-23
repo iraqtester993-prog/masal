@@ -1,0 +1,50 @@
+{
+  "date": "2026-09-23T22:53:53.314Z",
+  "results": [
+    {
+      "name": "Admin credentials, rejected wrong password, owner-only initial state",
+      "status": "passed"
+    },
+    {
+      "name": "All 26 administration routes render in light and dark themes",
+      "status": "passed"
+    },
+    {
+      "name": "Real account creation path: main, sub, nested branch, POS; nested branch creation blocked; permission profile saved",
+      "status": "passed"
+    },
+    {
+      "name": "Each new account logs in using its own credentials",
+      "status": "passed"
+    },
+    {
+      "name": "Account switcher remains available",
+      "status": "passed"
+    },
+    {
+      "name": "Reload preserves new accounts and does not repeat reset/provisioning",
+      "status": "passed"
+    },
+    {
+      "name": "Custom notification selects exactly one recipient",
+      "status": "passed"
+    },
+    {
+      "name": "Direct support reply sends from message card",
+      "status": "passed"
+    },
+    {
+      "name": "1000-card delivered file validates and imports once with cash collection",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile smoke check of core pages",
+      "status": "passed"
+    },
+    {
+      "name": "No JavaScript page errors during delivery checks",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}
