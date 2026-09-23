@@ -2,6 +2,7 @@ from pathlib import Path
 import shutil,zipfile,csv
 root=Path.cwd(); out=root/'output/handoff'
 shutil.copy2(root/'masal.html',out/'masal.html')
+shutil.copy2(root/'decrypt.html',out/'decrypt.html')
 shutil.copy2(root/'output/pdf/masal-handoff-guide.pdf',out/'masal-handoff-guide.pdf')
 (out/'ابدأ هنا.txt').write_text('''ماسال — حزمة العرض والتسليم — 24 سبتمبر 2026
 
