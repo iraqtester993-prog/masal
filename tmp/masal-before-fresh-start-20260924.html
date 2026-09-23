@@ -3578,27 +3578,6 @@ MasalCashOrders.install(appOptions);
 MasalAuditFixes.install(appOptions);
 MasalTablePagination.install(appOptions);
 MasalSearchSelects.install(appOptions);
-// User-requested one-time fresh start, with the previous browser data retained as a backup.
-const freshStartData=appOptions.data;
-appOptions.data=function(){
- const d=freshStartData.call(this),revision='20260924-owner-only';
- if(d.s.freshStartRevision===revision)return d;
- const previous=localStorage.getItem('masal-v1');
- if(previous)localStorage.setItem('masal-backup-before-'+revision,previous);
- const owner=Masal.clone(d.s.users.find(u=>u.active&&u.role==='owner'));
- if(!owner)throw Error('تعذر العثور على حساب مدير النظام؛ لم يتم التفريغ');
- for(const [key,value]of Object.entries(d.s))if(Array.isArray(value))d.s[key]=[];
- for(const [key,value]of Object.entries(d.s))if(value&&typeof value==='object'&&!Array.isArray(value)&&key!=='settings')d.s[key]={};
- d.s.users=[owner];owner.assigned=[];owner.agent='';owner.pos='';delete owner.permissionProfileId;
- d.s.companyProfile={name:'ماسال',about:'',slides:[],activities:[],offers:[],projects:[],social:[]};
- d.s.governorates=MasalCategoriesUI.governorates.map(name=>({name,active:false}));
- d.s.settings={...Masal.seed().settings,support:'',email:''};
- d.s.freshStartRevision=revision;
- d.currentUser=owner.id;d.brandAgent='';d.priceAgent='';d.permissionUser='';
- localStorage.setItem('masal-v1',JSON.stringify(d.s));
- sessionStorage.removeItem('masal-login-user');
- return d;
-};
 window.app=createApp(appOptions).mount('#app');
 
 
