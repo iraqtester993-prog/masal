@@ -1,0 +1,1 @@
+const fs=require('fs');let h=fs.readFileSync('index.html','utf8');h=h.replace('v-permit="can(page+\'.export\')" @click="exportCurrent"','v-if="hasPermissionKey(page+\'.export\')" v-permit="can(page+\'.export\')" @click="exportCurrent"');for(const v of ['a.name','p.name','u.name','c'])h=h.replaceAll('{{'+v+'}}','{{tr('+v+')}}');fs.writeFileSync('index.html',h);

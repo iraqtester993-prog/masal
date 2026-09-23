@@ -1,0 +1,19 @@
+{
+  "masal.html": "84f77cab3c815bcd5a06d91494809993979aa715891b85e409cbddaac053412a",
+  "index.html": "a251598dd8dbdc8781960b6398176b15cefbb3fcf088303bc3f154d8c86e12d3",
+  "engine.js": "a0612d996724e8d65278495fdd0ad2cfcb28d9e3acc2932da03786ab15c64e6a",
+  "operations-engine.js": "f349cb67e2eb035a620842c17ab222799f889364f913b6d9e0ba998fe41cbed9",
+  "workflow-engine.js": "8bcefea13e46be680cec4e56337ffcb271ccfe1b6e5769af71a9d9c918278b91",
+  "operations-ui.js": "4ec00dad81d14891588752333f927fdc6d83604883502a7ce76c13ae3adebb68",
+  "workflow-ui.js": "0b6e61eaa83fa4759d6a32ca793cad08a9e5ebded837f22b63fd71174f695aaa",
+  "access.js": "2dd21ff34ab5201070c3296fdc67c9e92c7f254ef469627814c8704bbd230d46",
+  "app.js": "25927aec44ef9e1c07e7096fdd519aeff2195b0bc1c0b6277331cc134426a7c6",
+  "completion-engine.js": "71ebec3808fb9dc1df7fcde9d5d85717b504575e372a2811ac2fda7385e24329",
+  "completion-ui.js": "f72003d90297523991f13675103f9c2d11c55c2b57c37d39ffc5a57aeb71486b",
+  "completion-locales.js": "e1483f393541bff69e7297e7c277f59f732d2429612c4b70b4999849e05bcd71",
+  "operations-locales.js": "1a6b18a6538828707da198f1e0ab8bca1bfa961c6ab93670229a69b55f2b9202",
+  "operations.css": "bd7394f7da5e20d36728e7e09af845a55dae4d3aaef5bbfbb2bd7712da6df2a7",
+  "polish.css": "69046052aa303aec5e5fffe0ab4536d267be5b777ce33dcce6e3d3a2e14a7eed",
+  "locales.js": "d290c6cf8d0cddab0858d0cb8a8c5e463624587255ea34788ec7b7a2a2df8b7f",
+  "build.cjs": "3a8a95de0bb446c47d82fb43b476eb3a910e4e6815fd3602dca3e53a697d9536"
+}

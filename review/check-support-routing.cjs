@@ -1,0 +1,13 @@
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict'),path=require('node:path');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('file:///'+path.resolve('masal.html').replaceAll('\\','/'));await p.waitForFunction(()=>window.app);
+const result=await p.evaluate(async()=>{const r={},user=id=>{app.currentUser=id;app.switchUser()},blocked=fn=>{try{fn();return false}catch{return true}};
+user('U5');app.go('support');await Vue.nextTick();app.openTicket();app.ticketForm.title='Printer';app.ticketForm.description='Connection problem';app.saveTicket();app.saveTicket();await Vue.nextTick();const t=app.s.tickets.find(t=>t.title==='Printer');r.once=app.s.tickets.filter(t=>t.title==='Printer').length===1;r.cleared=!app.ticketForm.title&&!app.ticketForm.description;r.parent=t.recipient==='A3';r.skipBlocked=blocked(()=>app.engine.sendSupport({recipient:'A1',title:'test',description:'test'}));
+user('U3');r.hiddenBefore=!app.visibleTickets.some(x=>x.id===t.id);r.directBlocked=blocked(()=>app.engine.replySupport(t.id,'bad'));
+user('U4');r.received=app.visibleTickets.some(x=>x.id===t.id);app.engine.replySupport(t.id,'checking');app.engine.changeSupport(t.id,'مصعّدة');r.upOne=t.recipient==='A1';r.oldCannotEscalate=blocked(()=>app.engine.changeSupport(t.id,'مصعّدة'));
+user('U3');app.engine.replySupport(t.id,'checking at main');app.engine.changeSupport(t.id,'مصعّدة');r.upOwner=t.recipient==='@owner';user('U1');r.noAbove=blocked(()=>app.engine.changeSupport(t.id,'مصعّدة'));app.engine.changeSupport(t.id,'مغلقة');r.closed=t.status==='مغلقة';
+user('U5');r.historyVisible=app.visibleTickets.some(x=>x.id===t.id)&&t.replies.length===2&&t.history.length===3;r.closedNoReply=blocked(()=>app.engine.replySupport(t.id,'again'));
+user('U4');const down=app.engine.sendSupport({recipient:'POS1',title:'Notice',description:'Please check'});user('U5');r.downward=app.visibleTickets.some(x=>x.id===down.id);
+user('U3');app.openTicket();await Vue.nextTick();r.simpleForm=!!document.querySelector('input')&&!document.querySelector('select[v-model="ticketForm.priority"]');
+return r;});for(const [k,v]of Object.entries(result))assert.equal(v,true,k);assert.deepEqual(errors,[]);console.log('PASS title/body messaging; direct-parent routing; direct-dependent messaging; no skipped levels; access isolation; staged escalation; replies/history; closure; form reset and duplicate guard');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

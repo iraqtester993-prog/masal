@@ -1,0 +1,22 @@
+[
+  {
+    "id": "G01",
+    "finding": "Owner can fund an agent POS without an exception request; repeated calls debit twice",
+    "confirmed": true
+  },
+  {
+    "id": "G02",
+    "finding": "Import does not create operational credit, batch invoice or a batch ledger entry",
+    "confirmed": true
+  },
+  {
+    "id": "G03",
+    "finding": "Agent reprint limit is ignored; POS limit remains effective",
+    "confirmed": true
+  },
+  {
+    "id": "G04",
+    "finding": "POS does not see notification targeted at its own agent",
+    "confirmed": true
+  }
+]

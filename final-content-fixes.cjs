@@ -1,0 +1,5 @@
+const fs=require('fs');function edit(f,fn){fs.writeFileSync(f,fn(fs.readFileSync(f,'utf8')))}
+edit('index.html',s=>s.replace("s.agents.find(a=>a.id===engine.main(actor.agent))?.support", "(s.agents.find(a=>a.id===actor.agent)?.support||s.agents.find(a=>a.id===actor.agent)?.phone)"));
+edit('operations-ui.js',s=>s.replace('<div v-if="page===\'claims\'" class="card"><h2>',`<div v-if="page==='claims'" class="card"><h2>مطابقة المطالبات</h2><div class="tablewrap"><table><thead><tr><th>المطالبة</th><th>الدفعة</th><th>المسحوب</th><th>الصادر من الدفعة</th><th>البديل</th><th>التعويض</th><th>النتيجة</th></tr></thead><tbody><tr v-for="c in vm.visibleClaims"><td>{{c.id}}</td><td>{{c.batch}}</td><td>{{c.quantity}}</td><td>{{s.cards.filter(x=>x.batch===c.batch&amp;&amp;x.sale).length}}</td><td>{{c.replacement||'—'}}</td><td>{{money(c.compensation||0)}}</td><td>{{c.status}}</td></tr></tbody></table></div></div><div v-if="page==='claims'" class="card"><h2>`));
+edit('review/make-xlsx-fixture.py',s=>s.replace('print(p)',"print('Created XLSX fixture')"));
+console.log('Final content fixes applied');

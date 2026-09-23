@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),{Engine}=require('./test-credit-fixture.cjs');
+const e=new Engine(),old=e.s.prices.find(p=>p.agent==='A1'&&p.product==='C1').price;
+const sale=e.sell('POS2','C1',1,'before-price');
+const r=e.proposePrices([{agent:'A1',product:'C1',price:4900}]);
+assert.equal(r.status,'معتمد');assert.equal(r.approver,'U1');assert.equal(sale.price,old);
+assert.equal(e.s.prices.find(p=>p.agent==='A2'&&p.product==='C1').price,old);
+assert.equal(e.s.prices.find(p=>p.agent==='A3'&&p.product==='C1').price,old);
+e.s.settings.velocity=0;assert.equal(e.sell('POS2','C1',1,'after-price').price,4900);
+assert.ok(e.s.audit.some(a=>a.action==='اعتماد أسعار'&&a.entity===r.id));
+e.reversePrices(r.id);assert.equal(e.s.prices.find(p=>p.agent==='A1'&&p.product==='C1').price,old);
+assert.throws(()=>e.proposePrices([{agent:'A1',product:'C1',price:0}]));
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('file:///'+require('path').resolve('masal.html').replaceAll('\\','/'));await p.waitForSelector('.pagehead');await p.evaluate(()=>{app.go('prices');app.priceAgent='A1'});await p.locator('tbody tr').first().locator('input').fill('4900');await p.getByRole('button',{name:'حفظ وتطبيق الأسعار',exact:true}).click();assert.equal(await p.evaluate(()=>app.priceFor('A1','C1')),4900);assert.equal(await p.evaluate(()=>app.s.priceRequests[0].status),'معتمد');await p.reload();await p.waitForSelector('.pagehead');assert.equal(await p.evaluate(()=>app.priceFor('A1','C1')),4900);await p.evaluate(()=>{app.currentUser='U2';app.switchUser();app.go('prices')});assert.equal(await p.getByRole('button',{name:'إرسال للمراجعة',exact:true}).count(),1);assert.deepEqual(errors,[]);console.log('PASS owner immediate price application, audit, persistence, rollback, new-sale pricing, unchanged historical sales and other agents; other roles retain review');}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

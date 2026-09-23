@@ -1,0 +1,368 @@
+{
+  "R002": {
+    "status": "محلي",
+    "finding": "أضيف تحديد تبعية الموظف: إدارة مركزية أو موظف داخل حساب وكيل، مع بقاء الصلاحية المسماة ونطاق الوكلاء.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R008": {
+    "status": "محلي",
+    "finding": "التمويل يتطلب تبعية الموظف للممول؛ المدير أو الموظف المركزي يحتاج استثناءً موثقًا يستخدم مرة واحدة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R009": {
+    "status": "محلي",
+    "finding": "حساب وكلمة مرور مشتقة وتفعيل، مع رحلة دخول محلي واستعادة وتغيير كلمة مؤقتة وإبطال الجلسات. مصادقة الإنتاج مسؤولية الخادم.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R011": {
+    "status": "محلي",
+    "finding": "حفظ شعار المزود وصورة التطبيق والوصل، مع أولوية صورة الفئة عند العرض.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R014": {
+    "status": "محلي",
+    "finding": "صورة الفئة وترتيبها مطبقان في شاشة البيع؛ الحفظ من المنتجات والفئات.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R015": {
+    "status": "محلي",
+    "finding": "اختيار الوكلاء والمحافظات بمربعات اختيار؛ يفرض المنع عند البيع.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R017": {
+    "status": "محلي",
+    "finding": "السعر غير الصالح يمنع الإصدار ويسجل تنبيهًا للجهة المعنية.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R020": {
+    "status": "محلي",
+    "finding": "حقول إضافية مسماة للفئة، مع تحديد الإلزام والتحقق عند الاستيراد وإظهار القيم في الوصل.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R023": {
+    "status": "محلي",
+    "finding": "قراءة XLSX فعلي وCSV وTXT/TSV وربط الأعمدة وحفظ قالب المزود. اختبر Excel مع الأصفار البادئة والتاريخ. XLS القديم غير مدعوم؛ يحفظ بصيغة XLSX.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R024": {
+    "status": "محلي",
+    "finding": "رفع عدة ملفات وصفحات Excel، وتعيين الفئة والتكلفة وسعر التحميل لكل ملف. اقتراح الفئة عندما يتضمن الاسم معرفها؛ يلزم تأكيد الاختيار.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R028": {
+    "status": "محلي",
+    "finding": "تحميل دفعة جديدة ينشئ رصيد Voucher وفق سعر التحميل. الأرصدة النقدية السابقة محفوظة دون تحويل تلقائي؛ الرصيد الافتتاحي للمخزون السابق موثق بتكلفته.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R032": {
+    "status": "محلي",
+    "finding": "دفتر رصيد منفصل للبطاقات وTop-up والنقد وكل مزود API، دون مقاصة تلقائية.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R034": {
+    "status": "محلي",
+    "finding": "طلب تمويل يتضمن المصدر والمستفيد والخدمة والمبلغ والغرض وحالة الطلب.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R035": {
+    "status": "محلي",
+    "finding": "تحديد عدة طلبات واعتماد مبالغ مختلفة، مع معالجة مستقلة لكل مستفيد.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R036": {
+    "status": "محلي",
+    "finding": "اعتماد طلب منفرد يحجز المبلغ من المتاح ثم يسلم للمستفيد أو يحرر الحجز. التنفيذ الجماعي المحلي يعالج كل تحويل على حدة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R037": {
+    "status": "محلي",
+    "finding": "معرف ثابت يمنع تكرار التمويل أو طلب الخدمة؛ الطلب المختلف بنفس المعرف مرفوض.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R038": {
+    "status": "محلي",
+    "finding": "عكس تحويل مسجل مع سبب ومرجع، ويمنع العكس إذا استهلك المستفيد الرصيد.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R039": {
+    "status": "محلي",
+    "finding": "سجل تمويل حسب المستفيد والخدمة والنتيجة، وإشعار محلي للمستفيد.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R040": {
+    "status": "محلي",
+    "finding": "قراءة المستفيد والمبلغ من XLSX وCSV/TXT؛ مراجعة الأسطر ثم تنفيذ المجموعة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R042": {
+    "status": "محلي",
+    "finding": "فواتير وذمم وتحصيل مندوب أو QiCard أو مصرف وسقف يمنع تحميل دفعة تتجاوزه. إثبات تحصيل QiCard محلي وليس اتصالًا بالخدمة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R043": {
+    "status": "محلي",
+    "finding": "مطابقة قيمة البطاقات المتاحة والمحجوزة مع رصيد الرئيسي والرصيد الموزع، وإظهار الفرق.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R045": {
+    "status": "محلي",
+    "finding": "سياسة سعر للوكيل والفئة والمحافظة وتاريخ النفاذ وسعر الصرف؛ يطبق السعر في الإصدار ويحفظ السعر التاريخي.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R049": {
+    "status": "محلي",
+    "finding": "يثبت سعر التحميل في الدفعة والفاتورة عند الاعتماد.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R050": {
+    "status": "محلي",
+    "finding": "فاتورة وقيمة وتكلفة وربح ماسال عند تحميل الدفعة، دون انتظار بيع نقطة البيع. لا فواتير مختلقة للدفعات السابقة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R051": {
+    "status": "محلي",
+    "finding": "اختيار إعادة بيع أو عمولة للوحدة عند التحميل؛ نموذج الحساب محفوظ في الفاتورة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R052": {
+    "status": "محلي",
+    "finding": "عرض ربح/إيراد ماسال وهامش الوكيل وهامش النقطة منفصلة. هامش النقطة يعتمد سعر التجزئة المدخل؛ إن لم يدخل، يكون مساويًا لسعر استقطاعها.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R056": {
+    "status": "محلي",
+    "finding": "حجز البطاقات دون كشف الرموز، إلغاؤه يعيد المتاح؛ الإصدار يستخدم البطاقات نفسها ويخصم مرة واحدة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R060": {
+    "status": "محلي",
+    "finding": "الحد الفعال هو الأقل بين حد الوكيل وحد الجهاز. اختبر منع المحاولة عندما حد الوكيل صفر.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R061": {
+    "status": "محلي",
+    "finding": "طلب استثناء لعملية واحدة، اعتماد أو رفض، ثم محاولة إضافية واحدة دون تغيير الحد العام.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R062": {
+    "status": "محلي",
+    "finding": "حدود عدد ومبلغ حسب الوكيل والجهاز والفئة؛ يطبق الأقل.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R064": {
+    "status": "محلي",
+    "finding": "قالب وصورة وحقول وترويسة وتذييل وعرض لكل فئة، ولغة وصل مستقلة عن لغة الواجهة بالعربية والإنكليزية والكوردية. اختبر وصل English بواجهة عربية.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R065": {
+    "status": "محلي",
+    "finding": "كاشيرة جملة تقسم الكمية إلى عمليات ضمن الحدود وتستأنف بالمفتاح نفسه دون تكرار. إرسال الطباعة للطابعة يبقى عبر الوصل والمحاكاة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R067": {
+    "status": "محلي",
+    "finding": "تسليم البطاقات نفسها بملف مشفر وقناة ومرجع تسليم، وأداة فك تشفير محلية. لا إرسال خارجي تلقائي.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R070": {
+    "status": "ربط",
+    "finding": "واجهة ربط الجهاز والسيريال ومعرف التثبيت ومرجع الشهادة موجودة وتفرض محليًا. إصدار الشهادة والتحقق من الجهاز الحقيقي يتطلبان الربط.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R073": {
+    "status": "محلي",
+    "finding": "سياسة تنبيه أو حظر للمحافظة المسجلة واستثناء زمني؛ GPS الحقيقي وتحقق سلامة الموقع ينتظران ربط الجهاز.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R074": {
+    "status": "محلي",
+    "finding": "إعداد لكل وكيل ومزود وبيئة وصلاحية وتفعيل محلي بعد اختبار.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R075": {
+    "status": "ربط",
+    "finding": "تدوير تعريف الرمز واختبار الإعداد موجودان كمحاكاة. إصدار Token إنتاجي وخزنته واختبار اتصال المزود مسؤولية الخادم؛ لا تحفظ أسرار المزود في المتصفح.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R076": {
+    "status": "محلي",
+    "finding": "كتالوج منتجات للمزود مع تكلفة وسعر، يفحص ويحفظ بعد الاختبار ويستخدم في اختيار الخدمة؛ المزامنة الشبكية تنتظر API.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R077": {
+    "status": "محلي",
+    "finding": "محفظة Top-up مستقلة، تمويل وخصم تكلفة الطلب مرة واحدة؛ النتيجة غير المعروفة تحفظ الحجز والفشل النهائي يعكسه.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R078": {
+    "status": "محلي",
+    "finding": "محفظة لكل API، وخصم التكلفة مع فصل السعر والربح؛ محاكاة استجابة المزود فقط.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R081": {
+    "status": "محلي",
+    "finding": "أعيد التحقق: مرفق صورة التذكرة موجود مسبقًا في نموذج فتح التذكرة وتفاصيلها؛ لم يكن نقصًا فعليًا.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R082": {
+    "status": "محلي",
+    "finding": "بيانات الدعم المباشر تعرض من الوكيل المرتبط، والتذكرة مرتبطة بوكيلها مع التصعيد للإدارة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R084": {
+    "status": "محلي",
+    "finding": "تحديد عدة مستلمين وإدراج فروع ونقاط الوكلاء المختارين؛ نقطة البيع ترى إشعار وكيلها.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R085": {
+    "status": "محلي",
+    "finding": "فحص محلي للمخزون والانتهاء وفشل الطباعة، مع حد مخزون قابل للتعديل ومنع تكرار الحدث.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R086": {
+    "status": "محلي",
+    "finding": "قواعد حسب الخطورة والمستلم والقناة ومدة التصعيد، وطابور مستحق لا يكرر الحدث. الداخل يسلم محليًا، والبريد وPush يبقيان جاهزين للربط دون ادعاء إرسال.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R089": {
+    "status": "ربط",
+    "finding": "طلبات التصدير والحجر والاعتماد ومهلة إنشاء التنزيل مطبقة؛ تنزيل قابل للإلغاء من الخادم هو المتبقي، ولا يمكن إلغاء ملف سبق تنزيله.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R090": {
+    "status": "محلي",
+    "finding": "الحجر أو السحب يسحب رصيد المتبقي مرة واحدة، ويطلب استرجاع الرصيد الموزع عند عدم كفاية رصيد الرئيسي.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R091": {
+    "status": "محلي",
+    "finding": "نتائج إعادة تفعيل أو بديل أو تعويض أو رفض أو خسارة مرتبطة بتأثيراتها المحلية.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R092": {
+    "status": "محلي",
+    "finding": "ربط المطالبة بدفعة بديلة معتمدة؛ رصيد البديل يسجل عند تحميله ويمنع استخدام الدفعة بديلًا لمطالبتين.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R093": {
+    "status": "محلي",
+    "finding": "التعويض إلى محفظة النقد مستقلاً؛ الخسارة والرفض يحتاجان صلاحية اعتماد خسارة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R094": {
+    "status": "محلي",
+    "finding": "جدول مطابقة كمية المطالبة والصادر والدفعة البديلة والتعويض والنتيجة، مع مطابقة الرصيد التشغيلي.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R096": {
+    "status": "محلي",
+    "finding": "جلسات محلية وتسجيل دخول وإبطال بعد الاستعادة، وانتهاء الخمول واشتراط جلسة للعمليات عند تفعيل السياسة. بيانات الجلسات المحفوظة لا تمنح دخولًا بعد إعادة تحميل النسخة.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R097": {
+    "status": "محلي",
+    "finding": "يفرض حد التطبيق ونظام التشغيل على الإصدار المحلي وفق بيانات الجهاز المسجلة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R098": {
+    "status": "ربط",
+    "finding": "تفعيل تحقق بخطوتين وأكواد استعادة مشتقة لمرة واحدة، وتأكيد حساس لمدة خمس دقائق يفرض على الإجراءات. واجهة فحص دعم Passkey موجودة؛ التسجيل البيومتري الحقيقي يحتاج HTTPS وخادم المصادقة.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R099": {
+    "status": "محلي",
+    "finding": "رحلة نسيان كلمة وOTP مدته دقيقتان وخمس محاولات وإعادة تعيين وإبطال الجلسات، مع تغيير أول دخول وأكواد احتياطية. قناة OTP محلية ظاهرة للاختبار وليست إرسال SMS/بريد.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R100": {
+    "status": "محلي",
+    "finding": "انتهاء خمول فعلي للجلسات المحلية، وحظر IP وVPN في تسجيل الدخول وطلبات الجلسة وفق بيانات اختبار الشبكة. تحديد IP الحقيقي وكشف VPN/GPS لا يستنتج من المتصفح ويحتاج الربط.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R105": {
+    "status": "محلي",
+    "finding": "نسخ واستعادة مشفرة AES-256-GCM واشتقاق PBKDF2؛ اختبر فك التشفير ورفض كلمة خاطئة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R107": {
+    "status": "محلي",
+    "finding": "محتوى عن المنصة والخدمات والتواصل قابل للحفظ ويظهر في صفحة المنصة.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R108": {
+    "status": "محلي",
+    "finding": "تنقل بين الأخبار النشطة وروابط تطبيقات HTTPS وسياسات الخصوصية والشروط.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  },
+  "R109": {
+    "status": "محلي",
+    "finding": "ربط النصوص الثابتة والمخرجات في وحدات العمليات بمبدل اللغة، وإضافة 245 ترجمة تشغيلية لكل من الإنكليزية والكوردية وقاموس الأمان. لغة الوصل مستقلة. بقيت أسماء وسجلات المستخدمين بيانات كما أدخلت؛ جودة الصياغة الكوردية تستحسن مراجعتها لغويًا قبل النشر.",
+    "confirmed_gap": false,
+    "evidence": "completion-engine.js؛ completion-ui.js؛ operations-locales.js؛ completion-locales.js؛ test-completion.cjs؛ test-completion-ui.cjs؛ test-locales.cjs"
+  },
+  "R110": {
+    "status": "محلي",
+    "finding": "فحص الصفحات الجديدة عند عرض 390 بكسل و1440 بكسل دون تمدد أفقي للصفحة؛ الجداول تتمرر داخل حاويتها.",
+    "evidence": "operations-engine.js؛ workflow-engine.js؛ operations-ui.js؛ workflow-ui.js؛ test-operations.cjs؛ test-workflow.cjs؛ test-workflow-ui.cjs؛ test-xlsx-reader.cjs",
+    "confirmed_gap": false
+  }
+}

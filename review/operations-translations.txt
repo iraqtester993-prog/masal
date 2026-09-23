@@ -1,0 +1,245 @@
+0|Profit by sales stage|قازانج بەپێی قۆناغی فرۆشتن
+1|Masal profit / revenue at batch posting|قازانج / داهاتی ماساڵ لە کاتی تۆمارکردنی کۆمەڵە
+2|Agent margin on issued cards|قازانجی بریکار لە کارتە دەرکراوەکان
+3|POS margin|قازانجی خاڵی فرۆشتن
+4|Current totals within your scope. POS margin uses the final customer price entered at issuance. Historical batches were not invoiced retroactively.|کۆی تۆمارەکانی ئێستا لە مەودای تۆ. قازانجی خاڵ بەپێی نرخی کۆتایی کڕیارە. بۆ کۆمەڵە کۆنەکان پسوولەی پاشەکشە دروست نەکراوە.
+5|Service balances and funding|باڵانس و دابینکردنی خزمەتگوزارییەکان
+6|Card credit comes from stock intake. Each service has its own wallet; balances are not offset across services.|باڵانسی کارت لە بارکردنی کۆگا دروست دەبێت. هەر خزمەتگوزارییەک جزدانێکی جیاوازی هەیە.
+7|Total service balance in your scope|کۆی باڵانسی خزمەتگوزاری لە مەودای تۆ
+8|Funding requests awaiting action|داواکارییە چاوەڕوانەکانی دابینکردن
+9|Completed transfers|گواستنەوە تەواوکراوەکان
+10|Available:|بەردەست:
+11|Account activity|چالاکی هەژمار
+12|All accounts|هەموو هەژمارەکان
+13|Time|کات
+14|No activity for this service.|هیچ چالاکییەک بۆ ئەم خزمەتگوزارییە نییە.
+15|Previous cash balances|باڵانسە نەختە کۆنەکان
+16|These entries are preserved from before service separation and were not converted into new card credit.|ئەم تۆمارانە لە پێش جیاکردنەوەی خزمەتگوزارییەکان پارێزراون و نەگۆڕدراون بۆ باڵانسی کارتی نوێ.
+17|Request or execute funding|داواکردن یان جێبەجێکردنی دابینکردن
+18|Funding agent|بریکاری دابینکەر
+19|Beneficiary|سوودمەند
+20|Purpose / exception reason|مەبەست / هۆکاری ئیستثنا
+21|Deposit / collection reference|سەرچاوەی دانان / وەرگرتن
+22|Central administrators need a documented exception to fund on behalf of an agent.|بەڕێوەبەرانی ناوەندی بۆ دابینکردن لەبری بریکار پێویستیان بە ئیستثنای تۆمارکراو هەیە.
+23|Submit funding request|ناردنی داواکاری دابینکردن
+24|Document funding exception|تۆمارکردنی ئیستثنای دابینکردن
+25|Execute funding|جێبەجێکردنی دابینکردن
+26|Deposit to this service|دانان بۆ ئەم خزمەتگوزارییە
+27|The exception is ready for one use.|ئیستثناکە بۆ یەک بەکارهێنان ئامادەیە.
+28|Funding requests|داواکارییەکانی دابینکردن
+29|Process selected requests|جێبەجێکردنی داواکارییە دیاریکراوەکان
+30|Select|دیاریکردن
+31|IQD ·|دینار ·
+32|Deliver balance to beneficiary|گەیاندنی باڵانس بە سوودمەند
+33|Cancel reservation|هەڵوەشاندنەوەی حجز
+34|Approve and reserve amount|پەسەندکردن و حجزکردنی بڕ
+35|No requests yet.|هێشتا داواکاری نییە.
+36|Fund multiple beneficiaries|دابینکردن بۆ چەند سوودمەند
+37|Select the service and funding agent, then paste one beneficiary ID and amount per line. Results are independent. Retrying the same group does not repeat successful transfers.|خزمەتگوزاری و بریکار هەڵبژێرە، پاشان لە هەر ڕیزێک ناسنامە و بڕ دابنێ. دووبارەکردنەوەی گرووپ گواستنەوە سەرکەوتووەکان دووبارە ناکات.
+38|Funding source|سەرچاوەی دابینکردن
+39|Import beneficiary and amount from Excel or CSV|هاوردەکردنی سوودمەند و بڕ لە Excel یان CSV
+40|Process group / retry|جێبەجێکردنی گرووپ / دووبارەکردنەوە
+41|Start a new group|دەستپێکردنی گرووپی نوێ
+42|Bulk funding requires agent-employee authority. It does not automatically grant an administrative exception.|دابینکردنی کۆمەڵە پێویستی بە دەسەڵاتی کارمەندی بریکار هەیە. ئیستثنای بەڕێوەبردن خۆکار نییە.
+43|Batch invoices and receivables|پسوولەی کۆمەڵە و قەرزەکان
+44|Agent account|هەژماری بریکار
+45|Outstanding after collection:|ماوە دوای وەرگرتن:
+46|Invoice|پسوولە
+47|Load price|نرخی بارکردن
+48|Value|بەها
+49|Masal revenue / profit|داهات / قازانجی ماساڵ
+50|Historical batches were not invoiced retroactively. Prices and costs are fixed when new batches are approved.|بۆ کۆمەڵە کۆنەکان پسوولە دروست نەکراوە. نرخ و تێچوو لە پەسەندکردنی کۆمەڵەی نوێ جێگیر دەکرێن.
+51|Debtor|قەرزدار
+52|Collection amount|بڕی وەرگرتن
+53|Method|ڕێگا
+54|Representative|نوێنەر
+55|Bank transfer|گواستنەوەی بانکی
+56|Receipt reference|ژمارەی بەڵگە
+57|Record collection|تۆمارکردنی وەرگرتن
+58|Funding and reversals log|تۆماری دابینکردن و پێچەوانەکردنەوە
+59|Reversal reason|هۆکاری پێچەوانەکردنەوە
+60|Reverse transfer|پێچەوانەکردنەوەی گواستنەوە
+61|Multiple-file import • Excel, CSV and TXT|هاوردەکردنی چەند فایل • Excel و CSV و TXT
+62|Use XLSX or comma/tab-delimited text. Select the columns and category for every file. One mapping applies to all selected files, so group files with matching headers.|XLSX یان دەقی جیاکراو بە کۆما یان تاب بەکاربهێنە. ستوون و پۆل بۆ هەر فایل دیاری بکە. فایلەکان دەبێت ناونیشانی ستوونی یەکسانیان هەبێت.
+63|Default category|پۆلی بنەڕەتی
+64|Card cost|تێچووی کارت
+65|Agreed load price|نرخی ڕێککەوتووی بارکردن
+66|Batch expenses|خەرجی کۆمەڵە
+67|Contract model|جۆری گرێبەست
+68|Resale|دووبارەفرۆشتن
+69|Commission|کۆمسیۆن
+70|Commission per unit|کۆمسیۆنی هەر دانە
+71|Provider files|فایلەکانی دابینکەر
+72|Provider template name|ناوی قاڵبی دابینکەر
+73|Saved template|قاڵبی پاشەکەوتکراو
+74|Choose|هەڵبژێرە
+75|Save column mapping|پاشەکەوتکردنی پەیوەندی ستوونەکان
+76|Missing / default|نییە / بنەڕەتی
+77|Expenses|خەرجییەکان
+78|Validate and preview|پشکنین و پێشبینین
+79|Approve displayed batches|پەسەندکردنی کۆمەڵە پیشاندراوەکان
+80|valid ·|دروست ·
+81|rejected ·|ڕەتکراو ·
+82|Batch invoices|پسوولەکانی کۆمەڵە
+83|Stock quantity, purchase cost, operational credit and the agent invoice are separate values.|ژمارەی کۆگا و تێچووی کڕین و باڵانسی کارکردن و پسوولەی بریکار بەهای جیاوازن.
+84|The first invoice appears when a new batch is approved.|یەکەم پسوولە لە پەسەندکردنی کۆمەڵەی نوێ دەردەکەوێت.
+85|Category display and availability|پیشاندان و بەردەستی پۆل
+86|Category image|وێنەی پۆل
+87|Receipt language|زمانی پسوولە
+88|Agent language|زمانی بریکار
+89|Receipt image|وێنەی پسوولە
+90|Allowed agents|بریکارە ڕێگەپێدراوەکان
+91|No selections means all agents.|بەبێ هەڵبژاردن واتە هەموو بریکارەکان.
+92|Provinces|پارێزگاکان
+93|Save category display|پاشەکەوتکردنی پیشاندانی پۆل
+94|Reserve cards before issuance|حجزکردنی کارت پێش دەرکردن
+95|Uses the category, quantity and POS selected on the sales screen. Reserved cards cannot be used elsewhere and can be released before revealing codes.|پۆل و ژمارە و خاڵی هەڵبژێردراوی شاشەی فرۆشتن بەکاردەهێنێت. کارتی حجزکراو تا ئاشکراکردنی کۆد دەتوانرێت ئازاد بکرێت.
+96|Reserve current selection|حجزکردنی هەڵبژاردنی ئێستا
+97|Issue and show receipt|دەرکردن و پیشاندانی پسوولە
+98|Reprint exception for one transaction|ئیستثنای چاپکردنەوە بۆ یەک مامەڵە
+99|The lower agent/device limit applies. An exception permits one extra attempt without changing other transactions.|سنووری کەمتر لە نێوان بریکار و ئامێر جێبەجێ دەکرێت. ئیستثنا تەنها یەک هەوڵی زیادە ڕێگە دەدات.
+100|Request reason|هۆکاری داواکاری
+101|Request exception|داواکردنی ئیستثنا
+102|Approve one attempt|پەسەندکردنی یەک هەوڵ
+103|Claims reconciliation|بەراوردکردنی داواکارییەکان
+104|Claim|داواکاری
+105|Withdrawn|کشێنراوە
+106|Issued from batch|دەرکراو لە کۆمەڵە
+107|Replacement|جێگرەوە
+108|Compensation|قەرەبوو
+109|Result|ئەنجام
+110|Claim settlement and financial effect|یەکلایی داواکاری و کاریگەری دارایی
+111|Opening a claim withdraws credit for remaining cards. Reactivation restores it; replacement credit is posted with its batch; compensation goes to the cash wallet.|کردنەوەی داواکاری باڵانسی کارتە ماوەکان دەکشێنێت. چالاککردنەوە دەیگەڕێنێتەوە؛ جێگرەوە لەگەڵ کۆمەڵەکەی تۆمار دەکرێت؛ قەرەبوو دەچێتە جزدانی نەخت.
+112|Replacement batch|کۆمەڵەی جێگرەوە
+113|Compensation amount|بڕی قەرەبوو
+114|Approve settlement|پەسەندکردنی یەکلایی
+115|Device and region binding|بەستنەوەی ئامێر و ناوچە
+116|Require device binding|پێویستکردنی بەستنەوەی ئامێر
+117|Approved serial|سریاڵی پەسەندکراو
+118|App installation ID|ناسنامەی دامەزراندنی ئەپ
+119|Device certificate reference|سەرچاوەی بڕوانامەی ئامێر
+120|Operating system version|وەشانی سیستەمی کارپێکردن
+121|Region policy|سیاسەتی ناوچە
+122|Unrestricted|بێ سنوور
+123|Block|بلۆککردن
+124|Allowed province|پارێزگای ڕێگەپێدراو
+125|Temporary exception until|ئیستثنای کاتی تا
+126|Registered serial, version and province are checked locally at sale. Real device identity and GPS require integration.|سریاڵ و وەشان و پارێزگای تۆمارکراو لە فرۆشتنی ناوخۆدا دەپشکنرێن. ناسنامەی ڕاستەقینە و GPS پێویستیان بە پەیوەستکردن هەیە.
+127|Approve device settings|پەسەندکردنی ڕێکخستنی ئامێر
+128|Top-up and API request lifecycle|قۆناغەکانی داواکاری Top-up و API
+129|Local provider simulation. No real recharge or access token is issued.|هاوشێوەسازی ناوخۆی دابینکەر. هیچ شەحن یان تۆکنی ڕاستەقینە دروست ناکرێت.
+130|Local provider product catalog|کەتەلۆگی ناوخۆی بەرهەمی دابینکەر
+131|Code, name, wholesale cost, sale price — one product per line|کۆد، ناو، تێچووی کۆ، نرخی فرۆشتن — هەر بەرهەم لە ڕیزێک
+132|Validate and save catalog|پشکنین و پاشەکەوتکردنی کەتەلۆگ
+133|Integration settings|ڕێکخستنی پەیوەستکردن
+134|Test and activate locally|تاقیکردنەوە و چالاککردنی ناوخۆ
+135|Rotate token identifier|نوێکردنەوەی ناسنامەی تۆکن
+136|Service wallet|جزدانی خزمەتگوزاری
+137|Service product|بەرهەمی خزمەتگوزاری
+138|Custom test value|بەهای تایبەت بۆ تاقیکردنەوە
+139|Beneficiary number|ژمارەی سوودمەند
+140|Wholesale cost|تێچووی کۆ
+141|Sale price|نرخی فرۆشتن
+142|Create / resend the same request|دروستکردن / ناردنەوەی هەمان داواکاری
+143|New request|داواکاری نوێ
+144|Simulate success confirmation|هاوشێوەسازی پشتڕاستکردنەوەی سەرکەوتن
+145|Simulate failure and release credit|هاوشێوەسازی شکست و ئازادکردنی باڵانس
+146|Unknown result|ئەنجامی نەزانراو
+147|Send to selected recipients|ناردن بۆ وەرگرە دیاریکراوەکان
+148|Enter the title and body in the notification form below, then select recipients here.|ناونیشان و دەق لە فۆڕمی خوارەوە بنووسە، پاشان وەرگر لێرە هەڵبژێرە.
+149|Include branches and POS of selected agents|لق و خاڵەکانی بریکاری هەڵبژێردراو بگرەوە
+150|Add notification for the group|زیادکردنی ئاگاداری بۆ گرووپ
+151|Platform and app content|ناوەڕۆکی پلاتفۆرم و ئەپ
+152|About the platform|دەربارەی پلاتفۆرم
+153|Services|خزمەتگوزارییەکان
+154|Contact|پەیوەندی
+155|Android link|بەستەری Android
+156|iOS link|بەستەری iOS
+157|Privacy policy|سیاسەتی تایبەتمەندی
+158|Terms of use|مەرجەکانی بەکارهێنان
+159|Save platform content|پاشەکەوتکردنی ناوەڕۆکی پلاتفۆرم
+160|Next news item|هەواڵی دواتر
+161|Our services|خزمەتگوزارییەکانمان
+162|Android app|ئەپی Android
+163|iOS app|ئەپی iOS
+164|Encrypted backup|پاشەکەوتی کۆدکراو
+165|Password-based AES-256-GCM encryption. Keep the password; the backup cannot be restored without it.|کۆدکردنی AES-256-GCM بە وشەی نهێنی. وشەکە بپارێزە؛ بەبێ ئەو پاشەکەوت ناگەڕێتەوە.
+166|Encryption password|وشەی نهێنی کۆدکردن
+167|Download encrypted backup|داگرتنی پاشەکەوتی کۆدکراو
+168|Restore encrypted backup|گەڕاندنەوەی پاشەکەوتی کۆدکراو
+169|Local service and request monitoring|چاودێری خزمەتگوزاری و داواکاریی ناوخۆ
+170|Unresolved provider requests|داواکارییە یەکلانەکراوەکانی دابینکەر
+171|Pending funding requests|داواکارییە چاوەڕوانەکانی دابینکردن
+172|Unissued reservations|حجزە دەرنەکراوەکان
+173|Metrics use this local version's records. Server, provider and device measurements require integration.|پێوانەکان لە تۆمارە ناوخۆییەکانن. پێوانەی ڕاژەکار و دابینکەر و ئامێر پێویستی بە پەیوەستکردن هەیە.
+174|Prices by province and effective date|نرخ بەپێی پارێزگا و بەرواری کارپێکردن
+175|Province or all|پارێزگا یان هەموو
+176|Price in original currency|نرخ بە دراوی بنەڕەتی
+177|Exchange rate to IQD|نرخی گۆڕین بۆ دینار
+178|Effective date|بەرواری کارپێکردن
+179|Final price:|نرخی کۆتایی:
+180|Approve policy|پەسەندکردنی سیاسەت
+181|Custom limits and additional fields|سنووری تایبەت و خانەی زیادە
+182|Agent or device account|هەژماری بریکار یان ئامێر
+183|Daily amount limit|سنووری بڕی ڕۆژانە
+184|The lowest category, agent or device limit applies.|کەمترین سنوور لە نێوان پۆل و بریکار و ئامێر جێبەجێ دەکرێت.
+185|Save limits|پاشەکەوتکردنی سنوورەکان
+186|International card fields|خانەکانی کارتی نێودەوڵەتی
+187|One field per line: English key / display label / required or optional. Imported values appear on the receipt.|هەر خانە لە ڕیزێک: کلیلی ئینگلیزی / ناوی پیشاندان / پێویست یان ئارەزوومەندانە. بەهاکان لە پسوولە دەردەکەون.
+188|Save additional fields|پاشەکەوتکردنی خانە زیادەکان
+189|Provider images|وێنەکانی دابینکەر
+190|Save images|پاشەکەوتکردنی وێنەکان
+191|Employee affiliation|سەربەخۆیی کارمەند
+192|Central staff see their permitted scope. Agent staff may fund only from their linked agent wallet when granted funding permission.|کارمەندی ناوەندی مەودای ڕێگەپێدراوی خۆی دەبینێت. کارمەندی بریکار بە مۆڵەتی دابینکردن تەنها لە جزدانی بریکاری پەیوەست دابین دەکات.
+193|Employer|شوێنی کار
+194|Central administration|بەڕێوەبەرایەتی ناوەندی
+195|Employee within an agent account|کارمەندی ناو هەژماری بریکار
+196|Save affiliation|پاشەکەوتکردنی پەیوەندی
+197|Stock and operational credit reconciliation|بەراوردی کۆگا و باڵانسی کارکردن
+198|Value of available and reserved cards|بەهای کارتە بەردەست و حجزکراوەکان
+199|Main agent balance|باڵانسی بریکاری سەرەکی
+200|Credit distributed across the hierarchy|باڵانسی دابەشکراو لە پێکهاتە
+201|Reconciliation difference:|جیاوازی بەراورد:
+202|Reservations included in distributed credit:|حجزەکان لەناو باڵانسی دابەشکراودان:
+203|Agent credit ceiling|سنووری قەرزی بریکار
+204|Ceiling • IQD|سنوور • دینار
+205|A configured ceiling blocks batch posting when the resulting outstanding debt would exceed it.|سنووری دیاریکراو ڕێگری لە بارکردنی کۆمەڵە دەکات کاتێک قەرزی ماوە لە سنوور تێدەپەڕێت.
+206|Save credit ceiling|پاشەکەوتکردنی سنووری قەرز
+207|Withdrawal request and export approval|داواکاری کشاندنەوە و پەسەندکردنی هەناردە
+208|Withdrawal reason|هۆکاری کشاندنەوە
+209|Download window • hours|ماوەی داگرتن • کاتژمێر
+210|Quarantine and request export|ڕاگرتن و داواکردنی هەناردە
+211|Approve download|پەسەندکردنی داگرتن
+212|Select for encrypted download|هەڵبژاردن بۆ داگرتنی کۆدکراو
+213|Expiry prevents new downloads within the system. A downloaded file cannot be revoked remotely; secure links require a server.|بەسەرچوون ڕێگری لە داگرتنی نوێ دەکات. فایلی داگیراو لە دوورەوە هەڵناوەشێتەوە؛ بەستەری پارێزراو ڕاژەکاری دەوێت.
+214|Delivery instead of printing|گەیاندن لەبری چاپکردن
+215|Download the same cards encrypted and record the delivery channel without new issuance or another debit.|هەمان کارت بە کۆدکراوی دابگرە و کەناڵی گەیاندن تۆمار بکە بەبێ دەرکردن یان کەمکردنەوەی نوێ.
+216|Open file decryption tool|کردنەوەی ئامرازی کۆدکردنەوەی فایل
+217|Delivery reference|سەرچاوەی گەیاندن
+218|File encryption password|وشەی نهێنی کۆدکردنی فایل
+219|Download and record delivery|داگرتن و تۆمارکردنی گەیاندن
+220|Wholesale checkout|کاشێری فرۆشتنی کۆ
+221|Quantity is split into transactions within the category limit. Each has its own receipt. If throttled, wait and retry the same group.|ژمارە بە سنووری پۆل دابەش دەکرێت بۆ مامەڵەکان. هەر یەک پسوولەی خۆی هەیە. ئەگەر چاوەڕوانی داوا کرا، هەمان گرووپ دووبارە بکەرەوە.
+222|Total quantity for selected category and POS|کۆی ژمارە بۆ پۆل و خاڵی هەڵبژێردراو
+223|Issue / resume group|دەرکردن / بەردەوامبوونی گرووپ
+224|New group|گرووپی نوێ
+225|Local alert rules|یاساکانی ئاگاداری ناوخۆ
+226|Low-stock card threshold|سنووری کەمی کارت
+227|Checks stock, expiry and print failure without repeating the same daily alert. Severity and recipient appear in the log.|کۆگا و بەسەرچوون و شکستی چاپ دەپشکنێت بەبێ دووبارەکردنەوەی ئاگاداریی هەمان ڕۆژ. گرنگی و وەرگر لە تۆمار دەردەکەون.
+228|Save threshold and check alerts|پاشەکەوتکردنی سنوور و پشکنینی ئاگاداری
+229|External Push and email require delivery-channel integration.|Push و ئیمەیڵی دەرەکی پێویستیان بە پەیوەستکردنی کەناڵەکان هەیە.
+230|Direct support contact|پەیوەندی پشتگیری ڕاستەوخۆ
+231|The ticket belongs to its selected direct agent and can be escalated from its details.|تیکەت سەر بە بریکاری ڕاستەوخۆی هەڵبژێردراوە و لە وردەکارییەکانیدا بەرز دەکرێتەوە.
+232|Device policies and login test|سیاسەتی ئامێر و تاقیکردنەوەی چوونەژوورەوە
+233|Minimum operating system version|کەمترین وەشانی سیستەمی کارپێکردن
+234|Two-step verification in login test|پشتڕاستکردنەوەی دوو هەنگاو لە تاقیکردنەوەی چوونەژوورەوە
+235|Save policy|پاشەکەوتکردنی سیاسەت
+236|Local login and recovery test. OTPs are not sent externally. The account switcher remains a role-testing tool.|تاقیکردنەوەی ناوخۆی چوونەژوورەوە و گەڕاندنەوە. OTP بۆ دەرەوە نانێردرێت. گۆڕەری هەژمار بۆ تاقیکردنەوەی ڕۆڵەکانە.
+237|Current password|وشەی نهێنی ئێستا
+238|Temporary / new first-login password|وشەی نهێنی کاتی / نوێی یەکەم چوونەژوورەوە
+239|Set temporary password|دانانی وشەی نهێنی کاتی
+240|Test login|تاقیکردنەوەی چوونەژوورەوە
+241|Local test code:|کۆدی تاقیکردنەوەی ناوخۆ:
+242|· expires in two minutes|· دوای دوو خولەک بەسەردەچێت
+243|Verification code|کۆدی پشتڕاستکردنەوە
+244|Confirm code|پشتڕاستکردنەوەی کۆد

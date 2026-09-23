@@ -1,0 +1,5 @@
+const fs=require('fs');function edit(f,fn){fs.writeFileSync(f,fn(fs.readFileSync(f,'utf8')))}
+edit('locales.js',s=>s.replace('const keys=Object.keys(dictionaries.en)','let keys=Object.keys(dictionaries.en)').replace("if(dict[trimmed])return", "if(keys.length!==Object.keys(dict).length)keys=Object.keys(dict).sort((a,b)=>b.length-a.length);if(dict[trimmed])return"));
+edit('completion-ui.js',s=>s.replace("const mounted=o.mounted;",`o.methods.receiptTr=function(value){const label=this.receiptAgent.receiptLanguage;const lang=label==='English'?'en':label==='کوردی'?'ckb':label==='العربية'?'ar':this.lang;return MasalLocale.translate(value,lang)};const mounted=o.mounted;`));
+edit('index.html',s=>{const start=s.indexOf('<template v-else-if="modal.kind===\'receipt\'">'),end=s.indexOf('</template>',start);let html=s.slice(start,end);html=html.replaceAll('{{tr(', '{{receiptTr(').replace('<div class="receipt"','<div class="receipt" :dir="receiptAgent.receiptLanguage===\'English\'?\'ltr\':\'rtl\'"');return s.slice(0,start)+html+s.slice(end)});
+console.log('Receipt language and dynamic dictionaries connected');

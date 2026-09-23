@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict');
+const {Engine,seed}=require('./engine.js');
+const fresh=()=>{const e=new Engine();e.operations();e.s.settings.velocity=0;return e};
+const e=fresh();const legacy=JSON.stringify(e.s.ledger);e.operations();assert.equal(JSON.stringify(e.s.ledger),legacy);
+assert.throws(()=>e.fund('A1','POS2',50000,'voucher','x'),/استثناء/);
+const ex=e.authorizeFunding('A1','اختبار تمويل موثق');const initial=e.serviceBalance('A1');const t=e.fund('A1','POS2',50000,'voucher','x',ex.id);
+e.fund('A1','POS2',50000,'voucher','x',ex.id);assert.equal(e.serviceBalance('A1'),initial-50000);assert.equal(e.serviceBalance('POS2'),50000);
+assert.throws(()=>e.fund('A1','POS2',50001,'voucher','x',ex.id),/مختلف/);assert.throws(()=>e.fund('A1','POS3',100,'voucher','z',ex.id),/التابعة/);
+const r=e.reserve('POS2','C1',2,'reserve');assert.equal(e.serviceAvailable('POS2'),50000-r.credit);assert.equal(e.s.sales.length,0);const tx=e.issueReservation(r.id);assert.deepEqual(tx.cards,r.cards);assert.equal(e.s.sales.length,1);assert.equal(e.serviceBalance('POS2'),50000-tx.credit);assert.equal(JSON.stringify(e.s.ledger),legacy);assert.equal(e.issueReservation(r.id).id,tx.id);
+assert.throws(()=>e.cancelReservation(r.id));e.printResult(tx.id,false);e.s.agents.find(a=>a.id==='A1').reprint=0;assert.throws(()=>e.reprint(tx.id,'ورق'),/حد إعادة/);const pr=e.requestReprint(tx.id,'ورق');e.approveReprint(pr.id,true);e.reprint(tx.id,'ورق');assert.equal(pr.status,'مستخدم');assert.equal(tx.reprints,1);e.printResult(tx.id,true);assert.throws(()=>e.reprint(tx.id,'ورق'));
+const meta={agent:'A1',product:'C1',cost:4000,loadPrice:4500,expenses:100,expiry:'2030-01-01',postingKey:'batch1'};const b=e.importBatch(meta,[{pin:'new-pin-1',serial:'new-serial-1',expiry:'2030-01-01'}]);const inv=e.s.batchInvoices[0];assert.equal(inv.amount,4500);assert.equal(inv.profit,400);assert.equal(e.importBatch(meta,[]).id,b.id);assert.equal(e.s.batchInvoices.length,1);
+const credit=e.serviceBalance('A1'),c=e.claim(b.id,'تالف');assert.equal(e.serviceBalance('A1'),credit-4500);e.settle(c.id,'إعادة تفعيل');assert.equal(e.serviceBalance('A1'),credit);
+const c2=e.claim(b.id,'تعويض');assert.throws(()=>e.settle(c2.id,'تعويض',{}));e.settle(c2.id,'تعويض',{amount:4300});assert.equal(e.serviceBalance('A1','cash'),4300);assert.equal(e.serviceBalance('A1'),credit-4500);
+const main=new Engine(e.s,'U3');assert.throws(()=>main.fund('A2','POS3',1,'voucher','wrong'));main.fund('A1','A3',1000,'voucher','main-ok');main.reverseFunding(e.s.fundingTransfers[0].id,'عكس اختبار');assert.equal(e.s.fundingTransfers[0].status,'معكوس');
+e.serviceCredit('A1','topup',10000,'بنك','dep1');e.s.integrations.push({id:'test',agent:'A1',provider:'P5',active:true,tested:true});const api=e.startServiceOrder('A1','P5','topup','07700000000',1000,1200,'api1');e.startServiceOrder('A1','P5','topup','07700000000',1000,1200,'api1');assert.equal(e.serviceBalance('A1','topup'),9000);e.resolveServiceOrder(api.id,'غير معروف');assert.equal(e.serviceBalance('A1','topup'),9000);e.resolveServiceOrder(api.id,'فاشل');e.resolveServiceOrder(api.id,'فاشل');assert.equal(e.serviceBalance('A1','topup'),10000);
+e.configureDevice('POS2',{bindingRequired:true,boundSerial:'OTHER'});assert.throws(()=>e.sell('POS2','C1',1,'device'),/الربط/);
+console.log('PASS migration, separated services, funding scope/exception/idempotency/reversal, reservation/exposure, reprint override, invoice posting, claim accounting, API unknown/failure, device binding');

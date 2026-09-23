@@ -1,0 +1,12 @@
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');const assert=require('node:assert/strict');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(require('node:url').pathToFileURL(require('node:path').resolve('masal.html')).href);await p.evaluate(()=>{app.enterLoginDemo();app.go('pos');app.openEdit()});
+console.log(await p.locator('.overlay select').evaluateAll(xs=>xs.map(x=>({count:x.options.length,text:x.textContent.slice(0,70)}))));
+assert.ok(await p.evaluate(()=>{const f=app.schema.fields.find(f=>f.key==='city');return app.optionsFor(f).length===app.activeGovernorates.length}));
+const target=await p.evaluate(()=>app.activeGovernorates.find(c=>!app.s.pos.some(p=>p.city===c)));assert.ok(target);
+assert.ok(await p.locator('.overlay select').evaluateAll((xs,t)=>xs.some(x=>[...x.options].some(o=>o.value===t)),target));
+await p.evaluate(t=>{app.s.governorates=app.governorateRows.map(r=>({...r,active:r.name!==t}));},target);
+assert.ok(await p.evaluate(t=>!app.optionsFor(app.schema.fields.find(f=>f.key==='city')).some(o=>o.value===t),target));
+await p.evaluate(t=>{app.editForm.city=t},target);assert.ok(await p.evaluate(t=>app.optionsFor(app.schema.fields.find(f=>f.key==='city')).some(o=>o.value===t&&o.label.includes('معطلة')),target));
+await p.evaluate(()=>{app.closeModal();app.go('wallets');app.openWalletFilters()});assert.ok(await p.getByLabel('المحافظة',{exact:true}).locator('option').count()>15);
+await p.evaluate(()=>{app.closeModal();app.go('prices')});assert.ok(await p.locator('select').evaluateAll(xs=>xs.some(x=>x.options.length>15)));
+assert.deepEqual(errors,[]);await b.close();console.log('PASS POS dropdown, configured provinces, disabled province excluded from new selection, retained existing assignment, wallet and pricing lists');})().catch(e=>{console.error(e);process.exit(1)});

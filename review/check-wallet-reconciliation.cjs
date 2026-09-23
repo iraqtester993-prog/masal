@@ -1,0 +1,10 @@
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(require('node:url').pathToFileURL(require('node:path').resolve('masal.html')).href);await p.evaluate(()=>{app.enterLoginDemo();app.go('wallets')});
+const count=await p.evaluate(()=>app.walletReconciliationAgents.length);assert.ok(count>1);
+await p.evaluate(()=>app.walletFilters.account=app.walletReconciliationAgents[0].id);assert.equal(await p.locator('.ops-request').count(),1);
+await p.evaluate(()=>{app.clearWalletFilters();app.walletFilters.city=app.walletReconciliationAgents[0].city});assert.ok(await p.evaluate(()=>app.walletReconciliationAgents.every(a=>a.city===app.walletFilters.city)));
+await p.evaluate(()=>{app.clearWalletFilters();app.walletFilters.query='NO-MATCH-XYZ'});assert.equal(await p.locator('.ops-request').count(),0);
+await p.evaluate(()=>{app.clearWalletFilters();app.walletFilters.kind='pos'});assert.equal(await p.locator('.ops-request').count(),0);
+await p.evaluate(()=>app.clearWalletFilters());assert.equal(await p.locator('.ops-request').count(),count);
+assert.deepEqual(errors,[]);await b.close();console.log('PASS reconciliation cards: account, province, empty search, account type, reset, no rendering errors');})().catch(e=>{console.error(e);process.exit(1)});

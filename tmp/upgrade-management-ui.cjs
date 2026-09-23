@@ -1,0 +1,28 @@
+const fs=require('fs');let h=fs.readFileSync('index.html','utf8');
+for(const [page,file]of [['permissions','permissions-fragment.html'],['reports','reports-fragment.html']])h=h.replace(new RegExp('<template v-else-if="page===\''+page+'\'">[^\\r\\n]*'),fs.readFileSync('tmp/'+file,'utf8').trim());
+h=h.replace('<template v-if="modal.kind===\'quick\'">',`<template v-if="modal.kind==='permissionReview'"><p>{{nameOf('users',modal.user)}}</p><div class="notice">{{modal.reason}}</div><p v-if="modal.scopeChanged" class="notice warn">{{tr('يتضمن التغيير تعديل نطاق البيانات')}}</p><div class="permission-review-list"><div v-for="c in modal.changes"><b>{{tr(c.label)}}</b><span>{{tr(permissionValue(c.before))}} ← {{tr(permissionValue(c.after))}}</span></div></div><div class="formfoot"><button class="btn" @click="closeModal">{{tr('رجوع')}}</button><button class="btn primary" @click="savePermissions">{{tr('تأكيد صلاحيات الموظف')}}</button></div></template><template v-else-if="modal.kind==='quick'">`);
+h=h.replace('@click="openEdit(row)"','v-permit="can(page+\'.edit\')" @click="openEdit(row)"');
+h=h.replace('@click="toggleEntity(row)"','v-permit="can(page+\'.toggle\')" @click="toggleEntity(row)"');
+h=h.replace('<button v-if="page===\'pos\'"','<button v-if="page===\'users\'" class="btn small" v-permit="can(\'permissions.view\')" @click="editPermissions(row)">{{tr("الصلاحيات")}}</button><button v-if="page===\'pos\'"');
+h=h.replace('@click="openEdit()"','v-permit="can(page+\'.create\')" @click="openEdit()"');
+h=h.replace('@click="exportCurrent"','v-permit="can(page+\'.export\')" @click="exportCurrent"');
+const actions={logoutPOS:'pos.logout',logoutAll:'security.logoutAll',downloadImportTemplate:'import.template',readImport:'import.preview',inspectBatch:'inventory.details',askCancelBatch:'inventory.cancel',openDeposit:'wallets.deposit',downloadPrices:'prices.template',importPrices:'prices.import',approvePrices:'prices.approve',reversePrices:'prices.reverse',viewReceipt:'sell.receipt',printReceipt:'sell.print',printResult:'sell.result',openReprint:'sell.reprint',settle:'claims.settle',openTicket:'support.create',showTicket:'support.view',backup:'backup.download',prepareRestore:'backup.restore',inspect:'audit.details'};
+for(const [method,key]of Object.entries(actions))h=h.replace(new RegExp('(<(?:button|input)\\b[^>]*?)((?:@click|@change)="'+method+'(?:\\([^"\\n]*\\))?")','g'),(all,before,attr)=>before.includes('v-permit')?all:before+'v-permit="can(\''+key+'\')" '+attr);
+const forms={saveEntity:"page+'.'+(editForm.id?'edit':'create')",reviewTransfer:"'wallets.transfer'",submitPrices:"'prices.propose'",sell:"'sell.create'",saveIntegration:"'integrations.edit'",sendNotification:"'notifications.send'",saveSettings:"'security.policies'",saveBrand:"'branding.edit'",submitContact:"'landing.contact'",submitReprint:"'sell.reprint'",deposit:"'wallets.deposit'",saveTicket:"'support.create'",replyTicket:"'support.reply'"};
+for(const [method,key]of Object.entries(forms))h=h.replace('@submit.prevent="'+method+'"','v-permit="can('+key+')" @submit.prevent="'+method+'"');
+h=h.replace('@click="nextImport"','v-permit="can(importStep===2?\'import.approve\':\'import.preview\')" @click="nextImport"');
+h=h.replace('@click="doBatch(b,\'quarantine\')"','v-permit="can(\'inventory.quarantine\')" @click="doBatch(b,\'quarantine\')"');
+h=h.replace('@click="page===\'claims\'?createClaim():exportEncrypted()"','v-permit="can(page===\'claims\'?\'claims.create\':\'exports.encrypt\')" @click="page===\'claims\'?createClaim():exportEncrypted()"');
+h=h.replace('@change="setToggle(x.key,$event.target.checked)"',':disabled="!can(\'security.\'+x.key)" @change="setToggle(x.key,$event.target.checked)"');
+h=h.replace('@click="ticketStatus(\'مصعّدة\')"','v-permit="can(\'support.escalate\')" @click="ticketStatus(\'مصعّدة\')"').replace('@click="ticketStatus(\'مغلقة\')"','v-permit="can(\'support.close\')" @click="ticketStatus(\'مغلقة\')"');
+h=h.replace("v-if=\"['owner','supervisor','main'].includes(actor.role)\"",'v-if="can(\'import.view\')"');
+h=h.replace('v-if="actor.role!==\'pos\'" class="quick-tile" @click="quickAction(\'agents\',true)"','v-if="can(\'agents.create\')" class="quick-tile" @click="quickAction(\'agents\',true)"');
+h=h.replace('v-if="actor.role!==\'pos\'" class="quick-tile" @click="quickAction(\'pos\',true)"','v-if="can(\'pos.create\')" class="quick-tile" @click="quickAction(\'pos\',true)"');
+h=h.replaceAll('v-if="actor.role===\'owner\'" class="quick-tile"','v-if="can(\'wallets.deposit\')" class="quick-tile"');
+h=h.replaceAll('v-if="actor.role===\'owner\'" class="btn primary" @click="openDeposit"','v-if="can(\'wallets.deposit\')" class="btn primary" @click="openDeposit"');
+h=h.replaceAll('{{tr(c.pin)}}',"{{can('data.pin')?tr(c.pin):'••••••••'}}");
+h=h.replace('{{tr(c.cvc)}}',"{{can('data.pin')?tr(c.cvc):'•••'}}");
+// Mask cost and profit expressions consistently in all existing screens.
+h=h.replace(/\{\{tr\(money\(([^\n]*?)\)\)\}\}/g,(match,expr)=>{if(/\.cost|\.expenses|reportMetrics\[2\]|\.min\b/.test(expr))return "{{can('"+(/reportMetrics\[2\]/.test(expr)?'data.profit':'data.cost')+"')?tr(money("+expr+")):'••••'}}";return match});
+h=h.replace('<footer class="footer">','<div v-if="page===\'denied\'" class="card empty">{{tr("لا توجد وحدات مسموحة لهذا الحساب")}}</div><footer class="footer">');
+fs.writeFileSync('index.html',h);

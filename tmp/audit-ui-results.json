@@ -1,0 +1,42 @@
+{
+  "parentDeliveryButton": 1,
+  "parentDelivery": {
+    "transaction": "TX-18416a13-d17",
+    "can": true,
+    "pin": true
+  },
+  "parentDeliveryDownload": {
+    "cardCount": 1,
+    "containsPin": true,
+    "finalStatus": "Delivered"
+  },
+  "ownerReverseButtons": 0,
+  "agentImport": {
+    "page": "import",
+    "text": true,
+    "permissions": {
+      "view": true,
+      "preview": true,
+      "approve": true,
+      "collect": true
+    }
+  },
+  "retailInputCount": 0,
+  "receipt": {
+    "text": "زين العراق\nوكالة بغداد المركزية\nأهلاً بكم في شبكة ماسال\nزين • 5,000 دينار\nمركز النور للاتصالات\nDEMO-NOT-VALID-A1C11\nالسيريال: MSL-A1C11\nالانتهاء: 2027-12-31\n4,750 د.ع\nTX-18416a13-d17 · 24/09/2026, 00:21\nاحتفظ بالوصل حتى إتمام التعبئة\nدعم بغداد • 07700000001\nبطاقات تجريبية غير صالحة للشحن",
+    "internal": "MSL-A1C11"
+  },
+  "sourceTemplateChecks": {
+    "supplierUsesFile": true
+  },
+  "globalDelivery": {
+    "storedHasCvc": true,
+    "storedHasReference": true,
+    "exportedKeys": [
+      "pin",
+      "serial",
+      "expiry",
+      "extra"
+    ]
+  }
+}

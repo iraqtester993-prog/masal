@@ -1,0 +1,146 @@
+{
+  "zeroSalePrice": {
+    "accepted": false,
+    "message": "سعر الفئة غير صالح؛ تم تسجيل تنبيه"
+  },
+  "minimumPrice": {
+    "accepted": false,
+    "message": "السعر النهائي أقل من الحد التعاقدي"
+  },
+  "dailyCategory": {
+    "accepted": false,
+    "message": "تم بلوغ الحد اليومي للفئة"
+  },
+  "globalInterval": {
+    "accepted": false,
+    "message": "انتظر الفاصل المحدد بين العمليات"
+  },
+  "mainLimitsForDescendant": {
+    "direct": {
+      "accepted": false,
+      "message": "تجاوز حد عدد البطاقات في العملية"
+    },
+    "subordinate": {
+      "accepted": true,
+      "value": 2
+    }
+  },
+  "providerDailyScope": {
+    "limit": 6000,
+    "first": 4750,
+    "second": {
+      "accepted": true,
+      "value": 4750
+    },
+    "networkTotal": 9500
+  },
+  "reprintLimit": {
+    "configured": 1,
+    "approved": 3,
+    "extraDebit": 0
+  },
+  "failedIssuedCardClaim": {
+    "failedCardStatus": "Print Failed",
+    "claimQuantity": 23,
+    "failedCardIncluded": false,
+    "batchTotal": 24
+  },
+  "weakNetworkPassword": {
+    "accepted": true,
+    "value": {
+      "email": "audit@example.test",
+      "role": "pos"
+    }
+  },
+  "passwordResetPolicy": {
+    "lowercaseAndDigits": {
+      "accepted": true,
+      "value": "accepted"
+    },
+    "eightMixed": {
+      "accepted": false,
+      "message": "استخدم 10 أحرف على الأقل مع حرف إنكليزي ورقم"
+    }
+  },
+  "authAndVPN": {
+    "localCodeReturned": true,
+    "codeLength": 6,
+    "normalNetworkOmittedAccepted": true,
+    "explicitVPN": "شبكة VPN محظورة حسب السياسة"
+  },
+  "idle": {
+    "sessionActive": false,
+    "enforcementDefault": false
+  },
+  "subordinateEditPermission": {
+    "initial": true,
+    "afterDeny": false,
+    "afterRestore": true
+  },
+  "crossNetworkSale": {
+    "accepted": false,
+    "message": "هذا السجل خارج نطاق صلاحياتك"
+  },
+  "policyVsTable": {
+    "before": 4750,
+    "tableAndExcel": 5100,
+    "effectiveSellingPrice": 5100
+  },
+  "mainAndSubPricing": {
+    "main": 5100,
+    "sub": 5100,
+    "subCanSetOwn": {
+      "accepted": false,
+      "message": "التسعير للوكيل الرئيسي فقط"
+    }
+  },
+  "mapUI": {
+    "text": "ماسال\nالعربية\nEnglish\nکوردی\nمدير النظام\nمشرف — بغداد\nوكيل رئيسي — وكالة بغداد\nوكيل فرعي — توزيع الكرادة\nنقطة بيع — مركز النور\n© 2026 جميع الحقوق محفوظة لشركة عراق تكنو للحلول البرمجية",
+    "canvasCount": 0,
+    "emptyCards": 1
+  },
+  "productUI": {
+    "currencyOptions": [
+      "IQD",
+      "USD"
+    ],
+    "deleteButtons": 0,
+    "deletePermissions": []
+  },
+  "receiptLogos": {
+    "providerLogoShown": true,
+    "agentLogoShown": false,
+    "imageCount": 1
+  },
+  "importForms": {
+    "agentLabels": 2,
+    "legacyWizard": true
+  },
+  "agentList": {
+    "columns": [
+      "name",
+      "type",
+      "parent",
+      "city",
+      "active"
+    ],
+    "themeFields": [
+      "color"
+    ]
+  },
+  "auditRecord": {
+    "fields": [
+      "id",
+      "time",
+      "user",
+      "name",
+      "action",
+      "entity",
+      "before",
+      "after",
+      "source"
+    ],
+    "source": "جلسة محلية"
+  },
+  "browserErrors": []
+}
