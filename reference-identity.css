@@ -487,3 +487,6 @@ html[data-theme=dark] .main .ops-account-grid > .card :is(.caption,.help,p,small
  html[data-theme] .shell .sidebar.open{display:flex;position:fixed;inset-inline-start:0;inset-inline-end:auto;top:0;height:100dvh;max-width:85vw;z-index:40}
  html[data-theme] .shell>.main{width:100%;min-width:0;margin-inline:0}
 }
+
+/* Notifications must remain above dialogs and their backdrop. */
+html body .toast{z-index:10000;isolation:isolate;overflow-wrap:anywhere;white-space:normal;line-height:1.8;box-shadow:0 8px 30px #0005}
