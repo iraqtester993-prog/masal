@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-24T10:57:44.586Z",
+  "date": "2026-09-24T11:09:09.356Z",
   "results": [
     {
       "name": "Admin credentials, rejected wrong password, persistent demo initial state",
@@ -11,6 +11,10 @@
     },
     {
       "name": "Real account creation path: main, sub, nested branch, POS; nested branch creation blocked; permission profile saved",
+      "status": "passed"
+    },
+    {
+      "name": "Owner filters include newly created main, branch, nested branch and POS, including inactive accounts",
       "status": "passed"
     },
     {
