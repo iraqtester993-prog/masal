@@ -133,6 +133,7 @@ appOptions.data=function(){
 };
 })();
 for(const component of Object.values(appOptions.components||{})){if(component.template)component.template=component.template.replaceAll("tab==='bulk'", "tab==='bulk'&&can('wallets.bulk')").replaceAll('v-if="fundingPreview"', 'v-if="fundingPreview&&can(\'wallets.bulk\')"');}
+MasalScopeFilters.install(appOptions);
 MasalMoneyInputs.install(appOptions);
 window.app=createApp(appOptions).directive('money',MasalMoneyInputs.directive).mount('#app');
 
