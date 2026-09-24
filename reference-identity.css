@@ -531,3 +531,9 @@ html[dir="ltr"][data-theme] body select:not([multiple]):not([size]),
 html[dir="ltr"][data-theme] body select:not([multiple])[size="1"]{background-position:right 12px center!important}
 html[data-theme="dark"] body select:not([multiple]):not([size]),
 html[data-theme="dark"] body select:not([multiple])[size="1"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b2c5d5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E")!important}
+
+/* Dashboard summaries: a colored rule separates the value from supporting details. */
+.main .dashboard-kpi-footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--tile-edge,var(--line));display:flex;align-items:center;justify-content:space-between;gap:8px}
+.main .dashboard-kpi-footer .caption{margin:0;font-size:11px;line-height:1.7;min-width:0}
+.main .dashboard-kpi-footer .dashboard-kpi-action{margin:0;padding:0;flex-shrink:0}
+.main .dashboard-kpi-number{margin-bottom:12px}
