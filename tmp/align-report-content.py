@@ -1,0 +1,15 @@
+from pathlib import Path
+p=Path('enhancements.js');s=p.read_text(encoding='utf8')
+anchor='  reportDocument(){';i=s.index(anchor)
+method='''  reportSnapshot(){return {metadata:this.reportMetadata(),note:this.tr('الفلاتر الزمنية تخص الحركات؛ المخزون والشبكة والإعدادات تعرض الوضع الحالي. لا يتضمن التقرير رموز البطاقات.'),empty:this.tr('لا توجد سجلات'),sections:this.reportExportSections(true).map(section=>({...section,title:this.tr(section.title),note:this.tr(section.note||''),headers:section.columns.map(c=>this.tr(c.label)),formats:section.columns.map(c=>c.type==='percent'?'percent':['money','number'].includes(c.type)?'number':''),displayRows:section.rows.map(row=>section.columns.map(c=>this.reportCell(row[c.key],c))),values:section.rows.map(row=>section.columns.map(c=>['money','number','percent'].includes(c.type)&&typeof row[c.key]==='number'&&Number.isFinite(row[c.key])?row[c.key]:this.reportCell(row[c.key],c)))}))}},
+'''
+s=s[:i]+method+s[i:]
+s=s.replace("reportDocument(){const sections=this.reportExportSections(true),meta=this.reportMetadata(),dir=", "reportDocument(){const snapshot=this.reportSnapshot(),sections=snapshot.sections,meta=snapshot.metadata,dir=",1)
+s=s.replace("s.rows.map(r=>'<tr>'+s.columns.map(c=>'<td>'+esc(this.reportCell(r[c.key],c))+'</td>').join('')+'</tr>')", "s.displayRows.map(r=>'<tr>'+r.map(value=>'<td>'+esc(value)+'</td>').join('')+'</tr>')",1)
+a=s.index('const sections=this.reportExportSections(true);const sheets=',s.index('  downloadReportDocument'))
+b=s.index("download('masal-report-",a)
+s=s[:a]+"""const snapshot=this.reportSnapshot();const sheets=[{name:this.tr('تقرير النظام الشامل'),note:snapshot.note,headers:[this.tr('الحقل'),this.tr('القيمة')],rows:snapshot.metadata.map(m=>[this.tr(m.label),m.value])},...snapshot.sections.map(section=>({name:section.title,title:section.title+' · '+section.rows.length,note:section.note,headers:section.headers,formats:section.formats,rows:section.values,emptyMessage:snapshot.empty}))];"""+s[b:];p.write_text(s,encoding='utf8')
+p=Path('excel-export.js');s=p.read_text(encoding='utf8');s=s.replace('cell(section.name,1,0,1)','cell(section.title||section.name,1,0,1)',1);s=s.replace('cell(row[c],r+4,c)','cell(row[c],r+4,c,typeof row[c]===\'number\'?(section.formats?.[c]===\'percent\'?3:2):0)',1)
+s=s.replace(".join('')}</sheetData><autoFilter ref=", ".join('')}${!rows.length&&section.emptyMessage?`<row r=\"4\">${cell(section.emptyMessage,4,0)}</row>`:''}</sheetData><autoFilter ref=",1)
+# Only the report styles, keep other Excel exports unchanged.
+a=s.index(" files['xl/styles.xml']=");head=s[:a];tail=s[a:];tail=tail.replace('<fonts count="2">','<numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.##&quot;%&quot;"/></numFmts><fonts count="2">',1).replace('<cellXfs count="2">','<cellXfs count="4">',1).replace('</cellXfs>','<xf numFmtId="4" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs>',1);p.write_text(head+tail,encoding='utf8')
