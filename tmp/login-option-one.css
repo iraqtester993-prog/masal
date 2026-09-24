@@ -511,9 +511,3 @@ html body .toast{z-index:10000;isolation:isolate;overflow-wrap:anywhere;white-sp
 @keyframes voucher-drift{0%,100%{transform:translate(-50%,0) rotate(var(--tilt))}50%{transform:translate(-50%,-10px) rotate(calc(var(--tilt) + 2deg))}}
 @media(max-width:760px){.login-welcome{padding:22px 20px 12px}.login-card-scene{height:185px;max-width:310px;margin-top:5px}.floating-voucher{width:180px;height:112px;border-radius:13px;padding:10px 13px}.voucher-mobile{top:14px;margin-left:-35px}.voucher-games{top:39px;margin-left:40px}.voucher-internet{top:72px;margin-left:-8px}.voucher-top{font-size:12px}.voucher-top svg{width:20px;height:20px}.voucher-chip{width:23px;height:15px;margin:5px 0 3px}.floating-voucher b{font-size:11px}.voucher-bottom{font-size:9px;margin-top:3px}.voucher-bottom svg{width:14px;height:14px}.login-orbit{width:175px;height:175px;top:0}.login-scene-tags{display:none}.login-form-panel{padding:20px 26px 28px}.login-page{padding-top:65px}.login-card{min-height:0}}
 @media(prefers-reduced-motion:reduce){.floating-voucher{animation:none}}
-
-
-/* Distinct outlines for the three animated login cards. */
-.login-card-scene .voucher-mobile{border:2px solid #8ab7ff}
-.login-card-scene .voucher-games{border:2px solid #d2b4ff}
-.login-card-scene .voucher-internet{border:2px solid #64eadc}
