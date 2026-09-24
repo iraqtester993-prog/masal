@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "result": {
+    "before": [
+      3360000,
+      480000,
+      240000,
+      480000,
+      240000
+    ],
+    "after": [
+      3360000,
+      480000,
+      240000,
+      475200,
+      235200
+    ],
+    "sales": [
+      {
+        "qty": 1,
+        "agent": "DEMO-MAIN",
+        "pos": "DEMO-POS1"
+      },
+      {
+        "qty": 1,
+        "agent": "DEMO-SUBBRANCH",
+        "pos": "DEMO-POS2"
+      }
+    ],
+    "available": 998
+  }
+}

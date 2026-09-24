@@ -102,6 +102,39 @@ const owner=d.s.users.find(u=>u.active&&u.role==='owner');if(!owner)throw Error(
 owner.username='admin';owner.credentials={"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"d1d134cb85c17da3495e2efe16d480ff","hash":"7aa7dba1e72c5e7e810d0362b3076d22164a53f83ab9bb13b62800446301a954"};owner.mustChangePassword=false;owner.twoFactor=false;
 d.s.adminLoginRevision='20260924';localStorage.setItem('masal-v1',JSON.stringify(d.s));sessionStorage.removeItem('masal-login-user');d.loginScreen=true;
 }return d;};
-window.app=createApp(appOptions).mount('#app');
+// Persistent, additive demonstration network. Never reseed on ordinary reloads.
+(function(){
+const previousData=appOptions.data;
+appOptions.data=function(){
+ const d=previousData.call(this),revision='20260924-demo-network-v1';
+ if(d.s.demoNetworkRevision===revision)return d;
+ const s=Masal.clone(d.s),owner=s.users.find(u=>u.active&&u.role==='owner');
+ const ids=['DEMO-MAIN','DEMO-BRANCH','DEMO-SUBBRANCH'],names=['وكيل رئيسي','فرع','فرع فرعي'];
+ if(s.agents.some(a=>ids.includes(a.id)))throw Error('تعارض معرفات شبكة العرض؛ البيانات الحالية محفوظة');
+ MasalOperations.initialize(s);
+ ids.forEach((id,i)=>s.agents.push({id,name:names[i],type:i?'فرعي':'رئيسي',parent:i?ids[i-1]:'',city:'بغداد',phone:'0770000000'+i,active:true,color:['#0284c7','#7c3aed','#059669'][i],support:'',header:names[i],footer:'بطاقات تجريبية غير صالحة للشحن',reprint:5,demo:true}));
+ const points=['DEMO-POS1','DEMO-POS2'];
+ points.forEach((id,i)=>s.pos.push({id,name:'نقطة '+(i+1),owner:'صاحب نقطة '+(i+1),agent:ids[i?2:0],city:'بغداد',address:'بغداد',phone:'0770000001'+i,email:'',lat:33.3+i*.02,lng:44.43,serial:'DEMO-DEVICE-'+(i+1),model:'جهاز تجريبي',version:'1.0.0',active:true,online:true,lastSeen:new Date().toISOString(),reprint:5,demo:true}));
+ const credentials=[{"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"3eee129712b1b0eb58bacae4202f0986","hash":"9bcad437e3c6761940567bdea2cf6c5b0af42b04d5def75bf0f5b1222df13a13"},{"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"2825ce0e30d58279eef7e89272c5bf02","hash":"2053babf014cf95ec4a20b9042eb02f811d5aef4777897890daeb8ccad2fbabf"},{"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"013bcbdeba047acba7c8f61702612802","hash":"43eee6871b9d5ba0fb8f83b0773906b8d004f81616ef691c0b0652df44a109d0"},{"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"edd9fb2a26bdf8cecf71dadcd3bb9123","hash":"8fb39f07354a8d502d858b10dd4fafabf3dabc5dc161f5394debdc4f39c0a788"},{"algorithm":"PBKDF2-SHA256","iterations":210000,"salt":"e349f6ba00cc540556475592561447da","hash":"fc4f451d2c3e58c373a7988f1ba78fc2f90ba00e4f0f9cf3f5e3832921242a18"}];
+ const usernames=['demo.main','demo.branch','demo.subbranch','demo.pos1','demo.pos2'];
+ usernames.forEach((username,i)=>{if(s.users.some(u=>u.username===username))throw Error('اسم حساب العرض مستخدم: '+username);s.users.push({id:'DEMO-U'+i,name:i<3?names[i]:'نقطة '+(i-2),role:i===0?'main':i<3?'sub':'pos',agent:i<3?ids[i]:ids[i===3?0:2],pos:i<3?'':points[i-3],active:true,username,credentials:credentials[i],mustChangePassword:false,twoFactor:false,demo:true})});
+ const region=s.governorates.find(g=>g.name==='بغداد');if(region)region.active=true;else s.governorates.push({name:'بغداد',active:true});
+ s.providers.push({id:'DEMO-PROVIDER',name:'شركة العرض التجريبي',supplier:'مجهز تجريبي',organizer:'غير محدد',connection:'ملفات',active:true,demo:true});
+ s.products.push({id:'DEMO-PRODUCT',name:'بطاقة تجريبية • 5,000 دينار',provider:'DEMO-PROVIDER',face:5000,currency:'IQD',kind:'محلية',active:true,min:4500,limit:10,dailyQty:100,dailyAmount:500000,fields:'serial,pin,expiry',order:1,demo:true});
+ ids.forEach(agent=>s.prices.push({id:'DEMO-PRICE-'+agent,agent,product:'DEMO-PRODUCT',price:4800,effective:Masal.day(),region:'الكل'}));
+ const engine=new Masal.Engine(s,owner.id);
+ const rows=Array.from({length:1000},(_,i)=>({serial:'MASAL-DEMO-'+String(i+1).padStart(4,'0'),pin:'DEMO-NOT-VALID-'+String(i+1).padStart(4,'0'),expiry:'2029-12-31'}));
+ engine.approveCashOrder({agent:ids[0],product:'DEMO-PRODUCT',city:'بغداد',supplier:'مجهز تجريبي',cost:4400,expenses:0,loadPrice:4800,postingKey:revision,cashConfirmed:true},rows);
+ [[0,ids[0],points[0],480000],[0,ids[0],ids[1],960000],[1,ids[1],ids[2],480000],[2,ids[2],points[1],240000]].forEach(([user,from,to,amount],i)=>new Masal.Engine(s,'DEMO-U'+user).fund(from,to,amount,'voucher',revision+'-fund-'+i));
+ s.demoNetworkRevision=revision;
+ const previous=localStorage.getItem('masal-v1');if(previous)localStorage.setItem('masal-backup-before-demo-network',previous);
+ localStorage.setItem('masal-v1',JSON.stringify(s));d.s=s;
+ return d;
+};
+})();
+for(const component of Object.values(appOptions.components||{})){if(component.template)component.template=component.template.replaceAll("tab==='bulk'", "tab==='bulk'&&can('wallets.bulk')").replaceAll('v-if="fundingPreview"', 'v-if="fundingPreview&&can(\'wallets.bulk\')"');}
+MasalMoneyInputs.install(appOptions);
+window.app=createApp(appOptions).directive('money',MasalMoneyInputs.directive).mount('#app');
+
 
 

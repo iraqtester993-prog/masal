@@ -63,6 +63,7 @@ function networkPath(state,user){
  return out.length?out:null;
 }
 function can(user,key,state){
+ if(['wallets.bulk','wallets.transfer','wallets.approve','wallets.import'].includes(key)&&managementRole(state,user)==='pos')return false;
  if(['sell.view','sell.create','sell.bulk','sell.deliver','sell.print','sell.result','sell.reprint'].includes(key)&&!['sub','pos'].includes(managementRole(state,user)))return false;
  if(key.startsWith('governorates.')&&user?.role!=='owner')return false;
  if(!localCan(user,key,state))return false;if(user.role==='owner')return true;

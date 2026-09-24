@@ -1,0 +1,1 @@
+const fs=require('fs');let s=fs.readFileSync('money-inputs.js','utf8').replace('queueMicrotask(()=>render(el));};','};').replace('mounted(el,b){el._moneyEnabled=enabled(b);render(el)}',"mounted(el,b){el._moneyEnabled=enabled(b);el.addEventListener('input',()=>render(el));el.addEventListener('change',()=>render(el));render(el)}");fs.writeFileSync('money-inputs.js',s);
