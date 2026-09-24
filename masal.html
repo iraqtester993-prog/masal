@@ -648,6 +648,20 @@ html body .toast{z-index:10000;isolation:isolate;overflow-wrap:anywhere;white-sp
 .login-card-scene .voucher-mobile{border:2px solid #8ab7ff}
 .login-card-scene .voucher-games{border:2px solid #d2b4ff}
 .login-card-scene .voucher-internet{border:2px solid #64eadc}
+/* Keep the dropdown chevron centered with reserved space in both directions. */
+html[data-theme] body select:not([multiple]):not([size]),
+html[data-theme] body select:not([multiple])[size="1"]{
+ appearance:none;-webkit-appearance:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236789a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E")!important;
+ background-repeat:no-repeat!important;background-size:16px 16px!important;
+ background-position:left 12px center!important;
+ padding-inline-start:12px!important;padding-inline-end:38px!important;
+ text-align:start;text-overflow:ellipsis;cursor:pointer
+}
+html[dir="ltr"][data-theme] body select:not([multiple]):not([size]),
+html[dir="ltr"][data-theme] body select:not([multiple])[size="1"]{background-position:right 12px center!important}
+html[data-theme="dark"] body select:not([multiple]):not([size]),
+html[data-theme="dark"] body select:not([multiple])[size="1"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b2c5d5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E")!important}
 </style><script>/**
 * vue v3.5.13
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
