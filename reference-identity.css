@@ -484,7 +484,7 @@ html[data-theme=dark] .main .ops-account-grid > .card :is(.caption,.help,p,small
 @media(max-width:1100px){
  html[data-theme] .shell{display:block;grid-template-columns:none}
  html[data-theme] .shell .sidebar:not(.open){display:none}
- html[data-theme] .shell .sidebar.open{display:flex;position:fixed;inset-inline-start:0;inset-inline-end:auto;top:0;height:100dvh;max-width:85vw;z-index:40}
+ html[data-theme] .shell .sidebar.open{display:flex;position:fixed;inset-inline-start:0;inset-inline-end:auto;top:0;height:100dvh;max-width:85vw;z-index:50}
  html[data-theme] .shell>.main{width:100%;min-width:0;margin-inline:0}
 }
 
