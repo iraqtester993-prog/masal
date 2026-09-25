@@ -132,6 +132,13 @@ appOptions.data=function(){
  return d;
 };
 })();
+appOptions.methods.batchLabel=function(b){const product=this.s?.products?.find(p=>p.id===b?.product)?.name||b?.product||'غير محددة';const agent=this.s?.agents?.find(a=>a.id===b?.agent)?.name||b?.agent||'غير محدد';const created=String(b?.created||'').slice(0,10);return 'دفعة '+product+' • '+agent+(created?' • '+created:'')+' ('+(b?.id||'—')+')';};
+const originalTranslate=appOptions.methods.t;appOptions.methods.t=function(value){if(typeof value==='string'){const batch=this.s?.batches?.find(b=>b.id===value);if(batch)return this.batchLabel(batch);}return originalTranslate.call(this,value);};
+appOptions.methods.applyClaimsView=function(){const shell=this.$el?.querySelector('.two');if(!shell)return;const hide=['owner','supervisor'].includes(this.actor.role)&&this.page==='claims';const form=shell.children[0];if(form)form.style.display=hide?'none':'';};
+const exportReasonData=appOptions.data;appOptions.data=function(){const d=exportReasonData.call(this);d.exportRejectReasons??={};return d;};
+appOptions.methods.rejectExportRequest=function(r){this.run(()=>this.engine.rejectExport(r.id,this.exportRejectReasons[r.id]),'تم رفض طلب التصدير وتسجيل السبب');};
+const originalGo=appOptions.methods.go;appOptions.methods.go=function(page){const result=originalGo.call(this,page);this.$nextTick(()=>this.applyClaimsView());return result;};
+const originalMounted=appOptions.mounted;appOptions.mounted=function(){originalMounted.call(this);this.$nextTick(()=>this.applyClaimsView());};
 for(const component of Object.values(appOptions.components||{})){if(component.template)component.template=component.template.replaceAll("tab==='bulk'", "tab==='bulk'&&can('wallets.bulk')").replaceAll('v-if="fundingPreview"', 'v-if="fundingPreview&&can(\'wallets.bulk\')"');}
 MasalScopeFilters.install(appOptions);
 MasalReportGroups.install(appOptions);
