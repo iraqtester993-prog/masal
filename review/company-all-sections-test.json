@@ -1,0 +1,105 @@
+{
+  "before": {
+    "sections": [
+      {
+        "key": "about",
+        "exists": true
+      },
+      {
+        "key": "activities",
+        "exists": true
+      },
+      {
+        "key": "offers",
+        "exists": true
+      },
+      {
+        "key": "projects",
+        "exists": true
+      },
+      {
+        "key": "social",
+        "exists": true
+      },
+      {
+        "key": "care",
+        "exists": true
+      }
+    ],
+    "images": [
+      {
+        "loaded": true,
+        "alt": "ماسال — تجربة البروفايل"
+      },
+      {
+        "loaded": true,
+        "alt": "بطاقات إلكترونية في متناولك"
+      },
+      {
+        "loaded": true,
+        "alt": "توسيع شبكة نقاط البيع"
+      },
+      {
+        "loaded": true,
+        "alt": "عرض تجريبي للوكلاء"
+      },
+      {
+        "loaded": true,
+        "alt": "مشروع إدارة التوزيع"
+      }
+    ],
+    "saved": "ماسال — تجربة البروفايل"
+  },
+  "after": {
+    "sections": [
+      {
+        "key": "about",
+        "exists": true
+      },
+      {
+        "key": "activities",
+        "exists": true
+      },
+      {
+        "key": "offers",
+        "exists": true
+      },
+      {
+        "key": "projects",
+        "exists": true
+      },
+      {
+        "key": "social",
+        "exists": true
+      },
+      {
+        "key": "care",
+        "exists": true
+      }
+    ],
+    "images": [
+      {
+        "loaded": true,
+        "alt": "ماسال — تجربة البروفايل"
+      },
+      {
+        "loaded": true,
+        "alt": "بطاقات إلكترونية في متناولك"
+      },
+      {
+        "loaded": true,
+        "alt": "توسيع شبكة نقاط البيع"
+      },
+      {
+        "loaded": true,
+        "alt": "عرض تجريبي للوكلاء"
+      },
+      {
+        "loaded": true,
+        "alt": "مشروع إدارة التوزيع"
+      }
+    ],
+    "saved": "ماسال — تجربة البروفايل"
+  },
+  "errors": []
+}

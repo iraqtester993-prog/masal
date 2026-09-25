@@ -1,0 +1,4 @@
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const c=await b.newContext();c.on('page',p=>{p.on('pageerror',e=>console.log('ERROR',e.name,e.message,e.stack));p.on('console',m=>{if(m.type()==='error')console.log('CONSOLE',m.text())})});const p=await c.newPage();await p.goto('file:///'+process.cwd().replaceAll('\\','/')+'/masal.html');await p.locator('#login-name').fill('admin');await p.locator('#login-password').fill('123456789');await p.locator('.login-submit').click();await p.waitForFunction(()=>!app.loginScreen);const pop=p.waitForEvent('popup');await p.evaluate(()=>app.go('company'));const t=await pop;await t.waitForTimeout(1500);require('fs').writeFileSync('tmp/public-bootstrap.js',await t.locator('script').innerText());await b.close()})();
+
+

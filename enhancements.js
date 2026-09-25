@@ -21,7 +21,7 @@ function install(o){
   reportPageCount(){return Math.max(1,Math.ceil(this.reportFilteredRows.length/this.reportPageSize))},
   reportVisibleRows(){return this.reportFilteredRows.slice((Math.min(this.reportPage,this.reportPageCount)-1)*this.reportPageSize,Math.min(this.reportPage,this.reportPageCount)*this.reportPageSize)},
   reportKpis(){const r=this.reportBundle.sales;if(!r)return [];return [{label:'العمليات',value:r.count},{label:'البطاقات المباعة',value:r.quantity},{label:'إجمالي المبيعات',value:r.total},...(r.cost!==null?[{label:'تكلفة المباع',value:r.cost}]:[]),...(r.profit!==null?[{label:'الربح الإجمالي',value:r.profit},{label:'نسبة الربح %',value:r.margin||0}]:[])]},
-  reportTypes(){return [...new Map(this.reportBundle.sections.map(s=>[s.id.split('-')[0],s])).values()].map(s=>({id:s.id.split('-')[0],label:A.catalog.find(p=>p.key==='reports.'+s.id.split('-')[0])?.label||s.title}))}
+  reportTypes(){const sections=this.reportTypeScope||this.reportBundle.sections;return [...new Map(sections.map(s=>[s.id.split('-')[0],s])).values()].map(s=>({id:s.id.split('-')[0],label:A.catalog.find(p=>p.key==='reports.'+s.id.split('-')[0])?.label||s.title}))}
  });
  Object.assign(o.methods,{
   toggleAssignedAgent(id,checked){let ids=(this.editForm.assignedText||'').split(',').map(s=>s.trim()).filter(Boolean);ids=checked?[...new Set([...ids,id])]:ids.filter(x=>x!==id);this.editForm.assignedText=ids.join(',')},
@@ -49,8 +49,8 @@ function install(o){
   selectReport(id){this.reportSection=id;this.reportPage=1;this.reportHidden=[];this.reportSort={key:'',direction:1};this.reportSearch=''},
   sortReport(key){this.reportSort={key,direction:this.reportSort.key===key?-this.reportSort.direction:1}},
   reportPreset(mode){const now=Masal.day();this.reportTo=now;if(mode==='all'){this.reportFrom='';this.reportTo=''}else if(mode==='today')this.reportFrom=now;else if(mode==='month')this.reportFrom=now.slice(0,8)+'01';else{const date=new Date(now+'T12:00:00Z');date.setUTCDate(date.getUTCDate()-6);this.reportFrom=date.toISOString().slice(0,10)}},
-  openReportSettings(){const keys=['reportFrom','reportTo','reportKind','reportAgent','reportPOS','reportProduct','reportProvider','reportCity','reportStatus'];this.modal={kind:'reportSettings',title:'إعداد التقرير',draft:Object.fromEntries(keys.map(k=>[k,this[k]]))}},
-  resetReportDraft(){for(const k of Object.keys(this.modal.draft))this.modal.draft[k]=k==='reportKind'?'all':''},
+  openReportSettings(){const keys=['reportFrom','reportTo','reportKind','reportAgent','reportPOS','reportProduct','reportProvider','reportCity','reportStatus'];const types=this.reportTypes,kind=this.reportOpenGroup?(types.some(t=>t.id===this.reportKind)&&this.reportKind!=='all'?this.reportKind:(types[0]?.id||'all')):this.reportKind;this.modal={kind:'reportSettings',title:'إعداد التقرير',draft:Object.fromEntries(keys.map(k=>[k,k==='reportKind'?kind:this[k]]))}},
+  resetReportDraft(){const kind=this.reportOpenGroup?(this.reportTypes[0]?.id||'all'):'all';for(const k of Object.keys(this.modal.draft))this.modal.draft[k]=k==='reportKind'?kind:''},
   reportDraftPreset(mode){this.$options.methods.reportPreset.call(this.modal.draft,mode)},
   applyReportSettings(){const d=this.modal.draft;if(d.reportFrom&&d.reportTo&&d.reportFrom>d.reportTo){this.notify('تاريخ البداية يجب أن يسبق تاريخ النهاية',true);return;}if(d.reportPOS&&!this.visiblePOS.some(p=>p.id===d.reportPOS&&(!d.reportAgent||this.engine.descendants(d.reportAgent).includes(p.agent))))d.reportPOS='';Object.assign(this,d);this.reportPage=1;this.reportSearch='';this.closeModal()},
   resetReport(){for(const k of ['reportFrom','reportTo','reportAgent','reportPOS','reportProduct','reportProvider','reportCity','reportStatus','reportSearch'])this[k]='';this.reportKind='all';this.reportPage=1},

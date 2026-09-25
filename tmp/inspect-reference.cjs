@@ -1,0 +1,2 @@
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage({viewport:{width:1440,height:1000}});await p.goto('https://www.iraqtechno.com/',{waitUntil:'domcontentloaded'});await p.waitForTimeout(2000);await p.screenshot({path:'tmp/iraqtechno-reference.png'});await p.screenshot({path:'tmp/iraqtechno-full.png',fullPage:true});await b.close()})();
