@@ -1,0 +1,24 @@
+import fs from 'node:fs/promises';
+import {Workbook,SpreadsheetFile} from '@oai/artifact-tool';
+const dir=new URL('.',import.meta.url).pathname.replace(/^\/(\w:)/,'$1');
+const wb=Workbook.create(),sheet=wb.worksheets.add('TEST ONLY');
+const rows=Array.from({length:10},(_,i)=>{const n=String(i+1).padStart(2,'0');return ['E40K',`TEST-XLSX-SERIAL-E40K-${n}`,`TEST-NOT-VALID-XLSX-E40K-${n}`,new Date('2029-12-31T00:00:00Z')];});
+sheet.getRange('A1:D11').values=[['categoryCode','serial','pin','expiry'],...rows];
+sheet.showGridLines=false;
+sheet.getRange('A1:D11').format.font={name:'Arial',size:11};
+sheet.getRange('A1:D11').format.rowHeight=26;
+sheet.getRange('A1:D1').format={fill:'#008EA5',font:{name:'Arial',bold:true,color:'#FFFFFF'}};
+sheet.getRange('A1:A11').format.columnWidth=18;
+sheet.getRange('B1:C11').format.columnWidth= forty();
+sheet.getRange('D1:D11').format.columnWidth=18;
+sheet.getRange('A2:C11').setNumberFormat('@');
+sheet.getRange('D2:D11').setNumberFormat('yyyy-mm-dd');
+for(let r=2;r<=11;r+=2)sheet.getRange(`A${r}:D${r}`).format.fill='#EAF5F7';
+wb.recalculate();
+console.log(await wb.inspect({kind:'table',range:"'TEST ONLY'!A1:D11",include:'values,formulas'}));
+console.log(await wb.inspect({kind:'match',searchTerm:'#REF!|#DIV/0!|#VALUE!|#NAME\\?',options:{useRegex:true,maxResults:10}}));
+const preview=await wb.render({sheetName:'TEST ONLY',range:'A1:D11',scale:1,format:'png'});
+await fs.writeFile(new URL('preview.png',import.meta.url),new Uint8Array(await preview.arrayBuffer()));
+const xlsx=await SpreadsheetFile.exportXlsx(wb);
+await xlsx.save(decodeURIComponent(dir)+'asiacell-40000-TEST.xlsx');
+function forty(){return 40;}

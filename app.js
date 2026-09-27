@@ -159,11 +159,13 @@ MasalSupportChat.install(appOptions);
 MasalNetworkArchive.install(appOptions);
 MasalPasswordAdmin.install(appOptions);
 MasalPOSRegister.install(appOptions);
+MasalOrderSources.install(appOptions,NAV);
+MasalMultiOrders.install(appOptions);
 // Regroup the already permission-filtered navigation; retain every visible destination.
 (function(o){
  const groups=[
   {title:'نظرة عامة',direct:true,icon:'dashboard',ids:['dashboard','reports','company','wallets']},
-  {title:'البطاقات والمخزون',icon:'inventory',ids:['inventory','import','products','prices','providers']},
+  {title:'البطاقات والمخزون',icon:'inventory',ids:['inventory','import','products','prices','providers','sources']},
   {title:'عمليات البطاقات',icon:'sell',ids:['sell','exports','claims','exceptions']},
   {title:'شبكة التوزيع',icon:'agents',ids:['agents','pos','map']},
   {title:'التواصل والدعم',icon:'support',ids:['support','notifications']},
@@ -176,4 +178,5 @@ MasalPOSRegister.install(appOptions);
  const data=o.data;o.data=function(){const d=data.call(this);d.collapsedGroups={...d.collapsedGroups,...Object.fromEntries(groups.filter(g=>!g.direct).map(g=>[g.title,true])),'أقسام إضافية':true};return d};
  const go=o.methods.go;o.methods.go=function(...args){const result=go.apply(this,args);for(const group of this.navGroups){if(!group.direct)this.collapsedGroups[group.title]=!group.items.some(n=>n.id===this.page||(args[0]==='company-settings'&&n.id==='company-settings'))}return result};
 })(appOptions);
+MasalInventoryManagement.install(appOptions);
 window.app=createApp(appOptions).directive('money',MasalMoneyInputs.directive).mount('#app');

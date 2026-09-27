@@ -1155,3 +1155,23 @@ html::-webkit-scrollbar,body::-webkit-scrollbar,body *::-webkit-scrollbar{displa
 .simple-card-designer{align-items:start}.simple-card-preview{position:sticky;top:18px}.simple-card-preview>h3{margin:0 0 16px}.simple-card-preview>label{margin-bottom:18px}.simple-company-image{display:block;max-width:100%;max-height:180px;object-fit:contain;margin:16px auto}.simple-card-designer .formgrid{gap:14px}.simple-card-designer .formfoot{flex-wrap:wrap}
 @media(max-width:800px){.simple-card-designer{grid-template-columns:1fr}.simple-card-preview{position:static}}
 .pos-advanced-device{margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--raised);padding:14px}.pos-advanced-device>summary{cursor:pointer;color:var(--ink);font-weight:700}.pos-advanced-device>.formgrid{margin-top:16px}.pos-advanced-device .pos-binding-check{display:flex;align-items:center;gap:8px}.pos-advanced-device .pos-binding-check input{width:18px;min-width:18px;flex:none;margin:0}
+.reset-password-dialog{width:min(440px,calc(100vw - 28px));max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--ink);padding:24px;direction:rtl}.reset-password-dialog::backdrop{background:#071724aa;backdrop-filter:blur(4px)}.reset-password-dialog label{display:block;margin:14px 0}.reset-password-dialog input{margin-top:6px}.reset-login-link{position:fixed;bottom:48px;inset-inline-start:24px;z-index:20}
+.reset-password-field{position:relative}.reset-password-dialog .reset-password-field input{margin:0;padding-inline-end:82px;min-height:46px}.reset-password-field>.btn{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);min-height:32px;background:var(--raised);border-color:var(--line);color:var(--ink)}.reset-password-dialog label[for]{margin:14px 0 6px}
+/* Multi-file orders: compact RTL sections with inherited light/dark tokens. */
+.multi-orders .order-file{border:1px solid var(--border,#52708755);border-radius:12px;padding:16px;margin-block:16px}
+.multi-orders .order-file>header,.multi-orders .order-metrics{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-block:12px}
+.multi-orders .order-file>header b{flex:1;overflow-wrap:anywhere}
+.multi-orders .formgrid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.multi-orders .order-upload{display:block;padding:18px;border:1px dashed var(--border,#52708788);border-radius:12px;margin-block:16px}
+.multi-orders .order-exclude{display:flex;align-items:center;gap:10px;margin-block:16px}
+.multi-orders .order-exclude input{width:18px!important;min-width:18px!important;flex:0 0 18px!important}
+.multi-orders .formfoot{gap:8px;flex-wrap:wrap}
+.multi-orders td{max-width:280px;overflow-wrap:anywhere}
+.multi-orders .formfoot input{max-width:360px}
+.multi-orders .order-upload-list{list-style:none;margin:12px 0;padding:0}
+.multi-orders .order-upload-list li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #52708733}
+.multi-orders .order-upload-list li span{flex:1;overflow-wrap:anywhere}
+.multi-orders .order-preview-edit input{min-width:110px;max-width:180px}
+.multi-orders .order-preview-edit td{vertical-align:top}
+.multi-orders .actions{gap:6px;flex-wrap:wrap}
+.multi-orders .order-upload.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
