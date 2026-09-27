@@ -78,7 +78,7 @@ const component={
  data(){return {tab:'request',kind:'voucher',value:'',note:'',to:'',key:M.id('WF'),review:{},directConfirm:false,error:'',busy:false,filter:'all'}},
  computed:{
  vm(){return this.$root},e(){return this.vm.engine},s(){return this.vm.s},me(){return this.e.walletIdentity()},admin(){return this.me==='@owner'},parent(){return this.e.walletParent()},
- services(){return [{id:'voucher',name:'رصيد البطاقات'},{id:'topup',name:'Top-up'},{id:'cash',name:'النقد والتعويضات'},...this.s.providers.filter(p=>p.connection==='API').map(p=>({id:'api:'+p.id,name:p.name}))]},
+ services(){return [{id:'voucher',name:'رصيد البطاقات'},{id:'topup',name:'Top-up'},...this.s.providers.filter(p=>p.connection==='API').map(p=>({id:'api:'+p.id,name:p.name}))]},
  ownSummary(){return this.vm.walletOwnSummary(this.kind)},children(){return this.e.walletChildren()},available(){return this.admin?0:this.e.serviceAvailable(this.me,this.kind)},
  requests(){return this.s.fundingRequests.filter(r=>this.e.walletRequestVisible(r))},
  incoming(){return this.requests.filter(r=>r.from===this.me&&['بانتظار التمويل','معتمد ومحجوز'].includes(r.status))},
@@ -89,7 +89,7 @@ const component={
  watch:{incoming:{immediate:true,handler(rows){rows.forEach(r=>this.edit(r))}},'vm.currentUser'(){this.reset();this.tab=this.tabs[0]?.id||'history';this.review={};this.incoming.forEach(r=>this.edit(r))},kind(){this.directConfirm=false;this.key=M.id('WF')},value(){this.directConfirm=false;this.key=M.id('WF')},to(){this.directConfirm=false;this.key=M.id('WF')}},
  methods:{
  name(id){return id==='@owner'?'إدارة النظام':this.s.agents.find(a=>a.id===id)?.name||this.s.pos.find(p=>p.id===id)?.name||id},
- service(id){return this.services.find(s=>s.id===id)?.name||id},
+ service(id){return id==='cash'?'سجل نقدي سابق':this.services.find(s=>s.id===id)?.name||id},
  status(r){return {'بانتظار التمويل':'بانتظار الموافقة','معتمد ومحجوز':'بانتظار التسليم','ملغى':'ملغي'}[r.status]||r.status},
  reset(){this.value='';this.note='';this.to='';this.key=M.id('WF');this.directConfirm=false;this.error=''},
  act(fn,message){if(this.busy)return;this.busy=true;this.error='';try{fn();this.vm.persist();this.vm.notify(message)}catch(e){this.error=e.message}finally{this.busy=false}},
@@ -102,7 +102,7 @@ const component={
  batches(r){return this.e.walletFundingBatches(r)}
  },
  template:`<section class="simple-wallets">
- <div class="card"><div class="simple-wallet-heading"><div><h2>{{admin?'طلبات تمويل الوكلاء':'محفظتي والتمويل'}}</h2><p>{{admin?'راجع الطلبات ونفّذ التمويل إلى الوكيل الرئيسي.':'الجهة الأعلى: '+name(parent)}}</p></div><label>المحفظة<select v-model="kind" aria-label="محفظة التمويل"><option v-for="x in services" :value="x.id">{{x.name}}</option></select></label><div v-if="ownSummary" class="ops-stats wallet-own-cards"><div><span>رصيدي الحالي</span><strong>{{vm.money(ownSummary.current)}} د.ع</strong></div><div><span>رصيدي المتاح</span><strong>{{vm.money(ownSummary.available)}} د.ع</strong></div><div><span>رصيدي المحجوز</span><strong>{{vm.money(ownSummary.held)}} د.ع</strong></div></div></div>
+ <div class="card"><div class="simple-wallet-heading"><div><h2>{{admin?'طلبات تمويل الوكلاء':'محفظتي والتمويل'}}</h2><p>{{admin?'راجع الطلبات ونفّذ التمويل إلى الوكيل الرئيسي.':'الجهة الأعلى: '+name(parent)}}</p></div><div class="wallet-service-cards" role="group" aria-label="محفظة التمويل"><button type="button" v-for="x in services" :key="x.id" :aria-pressed="kind===x.id" :class="{active:kind===x.id}" @click="kind=x.id">{{x.name}}</button></div><div v-if="ownSummary" class="ops-stats wallet-own-cards"><div><span>رصيدي الحالي</span><strong>{{vm.money(ownSummary.current)}} د.ع</strong></div><div><span>رصيدي المتاح</span><strong>{{vm.money(ownSummary.available)}} د.ع</strong></div><div><span>رصيدي المحجوز</span><strong>{{vm.money(ownSummary.held)}} د.ع</strong></div></div></div>
  <div class="tabs"><button v-for="t in tabs" :class="{active:tab===t.id}" @click="tab=t.id;error='';directConfirm=false">{{t.name}}<span v-if="t.id==='incoming'&&incoming.length" class="badge">{{incoming.length}}</span></button></div>
  <form v-if="tab==='request'" @submit.prevent="request"><div class="formgrid"><label>إلى الجهة الأعلى<input :value="name(parent)" readonly></label><label>المبلغ المطلوب<input type="number" min="0.01" step="0.01" v-model="value" required></label><label>ملاحظة اختيارية<input v-model="note"></label></div><p v-if="parent==='@owner'&&kind==='voucher'" class="help">رصيد البطاقات يجهّز بطلبية مخزون معتمدة بنفس القيمة.</p><div class="actions"><button class="btn primary" :disabled="busy||!(Number(value)>0)">إرسال طلب التمويل</button></div></form>
  <form v-if="tab==='direct'" @submit.prevent="direct"><div class="formgrid"><label>المستفيد<select v-model="to" required><option value="">اختر تابعًا</option><option v-for="a in children" :value="a.id">{{a.name}}</option></select></label><label>مبلغ التمويل<input type="number" min="0.01" step="0.01" :max="available" v-model="value" required></label></div><p>المتاح: {{vm.money(available)}} د.ع · المتبقي بعد التحويل: {{vm.money(available-Number(value||0))}} د.ع</p><p v-if="directConfirm" class="notice">تأكيد تحويل {{vm.money(value)}} د.ع إلى {{name(to)}} من {{service(kind)}}.</p><button class="btn primary" :disabled="busy||!to||!(Number(value)>0)||Number(value)>available">{{directConfirm?'تأكيد التمويل':'تمويل'}}</button></form>
@@ -119,9 +119,9 @@ function install(o){
  const data=o.data;o.data=function(){return {...data.call(this),walletOrderAgent:''}};
  const form=o.components['cash-order-form'],formData=form.data;form.data=function(){const d=formData.call(this);if(this.$root.walletOrderAgent){d.draft.agent=this.$root.walletOrderAgent;this.$root.walletOrderAgent=''}return d};
  const panel=o.components['operations-panel'];panel.components??={};panel.components['simple-wallets']=component;
- panel.template=panel.template.replace("<template v-if=\"page==='wallets'\">","<template v-if=\"page==='wallets'\"><simple-wallets></simple-wallets><details class=\"wallet-advanced\"><summary>الأرصدة والحركات والفواتير والتحصيل</summary>");
+ panel.template=panel.template.replace("<template v-if=\"page==='wallets'\">","<template v-if=\"page==='wallets'\"><simple-wallets></simple-wallets><section class=\"wallet-advanced\">");
  const marker="</template>\n\n <div v-if=\"page==='exceptions'\"";if(!panel.template.includes(marker))throw Error('Wallet template boundary missing');
- panel.template=panel.template.replace(marker,"</details></template>\n\n <div v-if=\"page==='exceptions'\"");
+ panel.template=panel.template.replace(marker,"</section></template>\n\n <div v-if=\"page==='exceptions'\"");
  panel.template=panel.template.replace("{id:'fund',name:'تمويل وطلبات'},",'');
 }
 root.MasalSimpleWallets={install};
