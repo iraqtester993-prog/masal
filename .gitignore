@@ -1,0 +1,9 @@
+# Local tooling and generated previews are not website source.
+node_modules/
+.pnpm-store/
+tmp/
+output/
+outputs/
+analysis/
+.DS_Store
+Thumbs.db

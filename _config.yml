@@ -1,0 +1,9 @@
+# Defensive exclusions if a Pages configuration enables Jekyll again.
+exclude:
+  - node_modules
+  - outputs
+  - output
+  - tmp
+  - analysis
+  - review
+  - sample-orders
