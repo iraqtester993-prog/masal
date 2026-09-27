@@ -1,0 +1,12 @@
+const assert=require('node:assert/strict'),path=require('node:path'),{pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage();await p.goto(pathToFileURL(path.resolve('masal.html')).href);await p.waitForFunction(()=>window.app);await p.evaluate(()=>{app.loginScreen=false;app.go('products');app.openEdit()});
+ assert.equal(await p.getByLabel('عدد البطاقات في العملية',{exact:true}).count(),0);await p.evaluate(()=>app.closeModal());
+ await p.getByRole('button',{name:'الأعمدة',exact:true}).click();assert.equal(await p.getByText('حد العملية',{exact:true}).count(),0);
+ await p.evaluate(()=>{const s=app.s,e=new Masal.Engine(s,'DEMO-U3'),id=e.sellerID(),product=s.products.find(x=>x.id==='DEMO-PRODUCT');product.limit=1;s.settings.velocity=0;new Masal.Engine(s,s.users.find(u=>u.role==='owner').id).savePrintPolicy('',{failedRetries:2,maxCards:3,intervalSeconds:0});
+ const sale=e.sell(id,product.id,2,'removed-category-limit',5000);if(sale.quantity!==2)throw Error('Legacy limit still applied');
+ const r=e.reserve(id,product.id,2,'removed-reserve-limit');if(r.quantity!==2)throw Error('Reservation legacy limit');e.cancelReservation(r.id);
+ let denied=false;try{e.sell(id,product.id,4,'over-print-limit',5000)}catch{denied=true}if(!denied)throw Error('Print limit bypass');
+ product.dailyQty=2;denied=false;try{e.sell(id,product.id,1,'over-daily-limit',5000)}catch{denied=true}if(!denied)throw Error('Daily limit lost');
+ });console.log('PASS category field/column removed; legacy limit ignored for sale/reservation; print and daily limits retained');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

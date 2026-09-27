@@ -6,7 +6,7 @@ function init(s){s.securityPolicy??={sensitive2FA:false,enforceSessions:false,bl
 async function digest(value){const hash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));return Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');}
 function code(){return String(crypto.getRandomValues(new Uint32Array(1))[0]%1000000).padStart(6,'0');}
 function event(s,user,action){s.securityEvents.unshift({id:M.id('SEC'),user,action,time:new Date().toISOString()});}
-function user(s,id){const u=s.users.find(u=>u.id===id&&u.active);if(!u)throw Error('الحساب غير متاح');if(u.role!=='owner'&&u.staffAccount!=='@system')new M.Engine(s,id).checkOperation?.(u.pos||u.agent,'login');return u;}
+function user(s,id){const u=s.users.find(u=>u.id===id&&u.active&&!u.archivedAt);if(!u)throw Error('الحساب غير متاح');if(u.role!=='owner'&&u.staffAccount!=='@system')new M.Engine(s,id).checkOperation?.(u.pos||u.agent,'login');return u;}
 function passwordPolicy(password){if(!/^(?=.*[A-Za-z])(?=.*\d).{10,}$/.test(password))throw Error('استخدم 10 أحرف على الأقل مع حرف إنكليزي ورقم');}
 function revoke(s,id){init(s).proofs.delete(id);for(const session of s.localSessions.filter(x=>x.user===id))session.active=false;for(const [key,c]of init(s).challenges)if(c.user===id)init(s).challenges.delete(key);event(s,id,'إنهاء جميع جلسات الحساب');}
 async function challenge(s,id,purpose){init(s);user(s,id);const value=code(),key=crypto.randomUUID();init(s).challenges.set(key,{user:id,purpose,hash:await digest(value),expires:now()+120000,attempts:0});return {id:key,demoCode:value,expires:now()+120000,purpose};}

@@ -38,9 +38,9 @@ for(const [key,label]of Object.entries(detailLabels)){const module=key.split('.'
 function staffAccount(user){return user?.staffAccount||(['main','sub'].includes(user?.role)?user.agent:'@system')}
 function managementRole(state,user){if(user?.role!=='employee'||!user.staffAccount)return user?.role;return user.staffAccount==='@system'?'owner':state.agents.find(a=>a.id===user.staffAccount)?.type==='رئيسي'?'main':'sub'}
 const rolePages={owner:groups.map(g=>g[0]),supervisor:['dashboard','reports','sell','sales','inventory','import','products','providers','prices','exceptions','claims','exports','agents','pos','map','support','notifications','permissions','integrations','audit','monitoring','security'],main:['dashboard','reports','sell','sales','inventory','import','products','prices','exceptions','claims','exports','agents','pos','wallets','map','support','notifications','users','permissions','integrations','audit','branding'],sub:['users','dashboard','reports','sell','sales','exceptions','agents','pos','wallets','map','support','notifications','permissions'],pos:['wallets','dashboard','reports','sell','sales','exceptions','map','support','notifications'],employee:['dashboard']};
-function defaults(role,key){if(role==='sub'&&key==='agents.createMain')return false;const p=catalog.find(x=>x.key===key);if(!p)return false;if(role==='owner')return true;if(p.module==='company')return key==='company.view';if(key==='prices.policy'&&role==='main')return true;if(detailParents[key])return defaults(role,detailParents[key]);if(['main','sub'].includes(role)&&['permissions.manage','users.view','users.create','users.edit','users.toggle','users.role','users.export','users.reset'].includes(key))return true;if(role==='employee')return ['dashboard.view'].includes(key);if(p.module==='data')return p.key==='data.pin'||['supervisor','main'].includes(role);if(!rolePages[role]?.includes(p.module))return false;
+function defaults(role,key){if(['agents.archive','agents.archiveView'].includes(key)&&role!=='owner')return false;if(role==='sub'&&key==='agents.createMain')return false;const p=catalog.find(x=>x.key===key);if(!p)return false;if(role==='owner')return true;if(p.module==='map')return false;if(p.module==='company')return key==='company.view';if(key==='prices.policy'&&role==='main')return true;if(detailParents[key])return defaults(role,detailParents[key]);if(['main','sub'].includes(role)&&['permissions.manage','users.view','users.create','users.edit','users.toggle','users.role','users.export','users.reset'].includes(key))return true;if(role==='employee')return ['dashboard.view'].includes(key);if(p.module==='data')return p.key==='data.pin'||['supervisor','main'].includes(role);if(!rolePages[role]?.includes(p.module))return false;
  if(role==='pos'&&p.module==='wallets')return ['wallets.view','wallets.request'].includes(key);
- if(['prices.policy','wallets.creditLimit','users.reset'].includes(key))return false;
+ if(['prices.policy','wallets.creditLimit','users.reset','support.broadcast'].includes(key))return false;
  if(['wallets.exception','claims.loss','integrations.rotate'].includes(key))return false;
  if(key==='exceptions.approve')return ['main','sub','supervisor'].includes(role);
  if(key==='permissions.view')return true;if(p.module==='permissions')return false;
@@ -57,7 +57,7 @@ function branchCreationBlocked(state,user){
  const id=user.role==='employee'?user.staffAccount:user.agent,agent=state?.agents.find(a=>a.id===id),parent=state?.agents.find(a=>a.id===agent?.parent);
  return !agent||agent.type!=='فرعي'||parent?.type!=='رئيسي';
 }
-function localCan(user,key,state){if(key==='agents.create'&&branchCreationBlocked(state,user))return false;if(key==='agents.createMain'&&(user?.role==='sub'||state&&managementRole(state,user)==='sub'))return false;if(!user?.active||!catalog.some(p=>p.key===key))return false;if(user.role==='owner'||key==='company.view')return true;const [module,action]=key.split('.');if(module==='backup')return false;if(module!=='data'&&action!=='view'&&!localCan(user,module+'.view',state))return false;if(user.permissionProfileId){const profile=state?.permissionProfiles?.find(p=>p.id===user.permissionProfileId);return !!profile?.active&&(profile.permissions.includes(key)||(!profile.detailVersion&&detailParents[key]&&profile.permissions.includes(detailParents[key])));}const value=user.access?.overrides?.[key];return value==='deny'?false:value==='allow'?true:defaults(user.role,key);}
+function localCan(user,key,state){if(key==='agents.create'&&branchCreationBlocked(state,user))return false;if(key==='agents.createMain'&&(user?.role==='sub'||state&&managementRole(state,user)==='sub'))return false;if(!user?.active||user.archivedAt||!catalog.some(p=>p.key===key))return false;if(user.role==='owner'||key==='company.view')return true;const [module,action]=key.split('.');if(module==='backup')return false;if(module!=='data'&&action!=='view'&&!localCan(user,module+'.view',state))return false;if(user.permissionProfileId){const profile=state?.permissionProfiles?.find(p=>p.id===user.permissionProfileId);return !!profile?.active&&(profile.permissions.includes(key)||(!profile.detailVersion&&detailParents[key]&&profile.permissions.includes(detailParents[key])));}const value=user.access?.overrides?.[key];return value==='deny'?false:value==='allow'?true:defaults(user.role,key);}
 function networkPath(state,user){
  if(!state)return [];if(user.role==='employee'&&user.staffAccount&&user.staffAccount!=='@system')user={...user,role:'main',agent:user.staffAccount};if(!['main','sub','pos'].includes(user.role))return [];
  const out=[],seen=new Set();if(user.role==='pos'){const pos=state.pos.find(p=>p.id===user.pos&&p.agent===user.agent);if(!pos)return null;out.push(pos);}
@@ -65,6 +65,7 @@ function networkPath(state,user){
  return out.length?out:null;
 }
 function can(user,key,state){
+ if(key.startsWith('map.')&&!['owner','employee','supervisor'].includes(user?.role))return false;
  if(['wallets.bulk','wallets.transfer','wallets.approve','wallets.import'].includes(key)&&managementRole(state,user)==='pos')return false;
  if(['sell.view','sell.create','sell.bulk','sell.deliver','sell.print','sell.result','sell.reprint'].includes(key)&&!['sub','pos'].includes(managementRole(state,user)))return false;
  if(key.startsWith('governorates.')&&user?.role!=='owner')return false;
@@ -72,6 +73,7 @@ function can(user,key,state){
  const [module,action]=key.split('.');if(module!=='data'&&action!=='view'&&key!=='sell.receipt'&&!can(user,module+'.view',state))return false;
  const path=networkPath(state,user);if(path===null)return false;
  for(const node of path){
+  if(node.archivedAt)return false;
   if(user.role==='employee'&&!node.active)return false;
   if(Object.values(node.networkRules||{}).some(r=>r[key]==='deny'))return false;
   if(node.id!==user.agent||['pos','employee'].includes(user.role)){

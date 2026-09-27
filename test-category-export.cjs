@@ -1,0 +1,28 @@
+const assert=require('node:assert/strict'),path=require('node:path'),{pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{
+ const p=await b.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.goto(pathToFileURL(path.resolve('masal.html')).href);await p.waitForFunction(()=>window.app);
+ await p.evaluate(()=>{const s=Masal.seed();MasalOperations.initialize(s);app.s=s;app.currentUser='U1';app.loginScreen=false;app.go('products')});
+ await p.getByRole('button',{name:'الأعمدة',exact:true}).click();
+ await p.locator('#category-column-options').getByLabel('الشركة',{exact:true}).uncheck();
+ assert.equal(await p.locator('.category-table th').getByText('الشركة',{exact:true}).count(),0);
+ await p.evaluate(()=>app.go('dashboard'));await p.evaluate(()=>app.go('products'));
+ assert.equal(await p.locator('.category-table th').getByText('الشركة',{exact:true}).count(),0);
+ await p.reload();await p.waitForFunction(()=>window.app);
+ await p.evaluate(()=>{app.currentUser='U1';app.loginScreen=false;app.go('products')});
+ await p.locator('.category-table').waitFor();
+ assert.equal(await p.locator('.category-table th').getByText('الشركة',{exact:true}).count(),0);
+ await p.getByRole('button',{name:'الأعمدة',exact:true}).click();
+ assert.equal(await p.locator('#category-column-options').getByLabel('الشركة',{exact:true}).isChecked(),false);
+ await p.getByRole('button',{name:'الأعمدة',exact:true}).click();
+ const expected=await p.evaluate(()=>app.filteredRows.length);
+ const event=p.waitForEvent('download');await p.evaluate(()=>app.exportCurrent());const d=await event;
+ const stream=await d.createReadStream(),chunks=[];for await(const c of stream)chunks.push(c);const text=Buffer.concat(chunks).toString('utf8');
+ const headers=text.split('\r\n')[0];
+ for(const label of ['الشركة','الصورة','المحافظات المسموحة','رمز الشحن / التفعيل','عرض الوصل','الحالة','الحد المالي اليومي'])assert(headers.includes('"'+label+'"'),label);
+ assert(!headers.includes('لغة الوصل'));assert(!headers.includes('الوكلاء المسموحون'));assert(!headers.includes('الإجراءات'));
+ assert(!headers.includes('حد العملية'));assert.equal(headers.split(',').length,21);assert.equal(text.split('\r\n').length,expected+1);
+ assert(!text.includes('[object Object]'));
+ assert.deepEqual(errors,[]);console.log('PASS full export includes hidden columns; hidden choice survives navigation and reload');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

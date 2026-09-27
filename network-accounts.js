@@ -3,14 +3,23 @@
 const A=root.MasalAccess,S=root.MasalStaff,M=root.Masal;
 function linked(state,page,id){return state.users.find(u=>page==='pos'?u.role==='pos'&&u.pos===id:['main','sub'].includes(u.role)&&u.agent===id);}
 function validate(e,page,v,login){
+ if(String(v.notes||'').length>2000)throw Error('الملاحظات بحد أقصى 2000 حرف');
  const actor={...e.actor(),role:A.managementRole(e.s,e.actor())},old=e.s[page].find(x=>x.id===v.id);
  if(page==='agents'&&!old&&A.branchCreationBlocked(e.s,e.actor()))throw Error('الفرعي التابع لفرعي يمكنه إنشاء نقاط بيع فقط، ولا يمكنه إنشاء فروع');
  e.requirePermission(page+'.'+(old?'edit':'create'));
+ if(page==='pos'){
+  const deviceKeys=['bindingRequired','boundSerial','osVersion','geoPolicy','allowedCity','geoExceptionUntil','installationId','certificateHint'];
+  if(deviceKeys.some(k=>JSON.stringify(v[k])!==JSON.stringify(old?.[k]))){e.requirePermission('pos.device');e.requirePermission('pos.location');}
+ }
+ if(old?.archivedAt||v.archivedAt||v.archiveId)throw Error('الحساب المؤرشف لا يقبل التعديل');
+ root.MasalFeatureUpdates.attachment(v.image);
  if(JSON.stringify(v.networkRules||{})!==JSON.stringify(old?.networkRules||{}))throw Error('تعديل الصلاحيات يتم من نافذة صلاحيات التابع');
- if(!['owner','main','sub'].includes(actor.role))throw Error('إنشاء وإدارة حسابات الشبكة متاحة لمدير النظام والوكيل المسؤول فقط');
+ if(!['owner','main','sub'].includes(actor.role)&&!(old&&['employee','supervisor'].includes(e.actor().role)))throw Error('إنشاء وإدارة حسابات الشبكة متاحة لمدير النظام والوكيل المسؤول فقط');
  if(old)e.require(page==='agents'?old.id:old.agent);
  if(['agents','pos'].includes(page)&&v.city&&(!old||old.city!==v.city)&&!root.MasalRegions.isActive(e.s,v.city))throw Error('اختر محافظة مفعلة');
  if(page==='agents'){
+  if(JSON.stringify(v.allowedProductIds)!==JSON.stringify(old?.allowedProductIds)&&e.actor().role!=='owner')throw Error('تحديد الفئات خاص بمدير النظام');
+  if(v.type==='رئيسي'&&e.actor().role==='owner'){if(!Array.isArray(v.allowedProductIds)||!v.allowedProductIds.length)throw Error('اختر فئة واحدة على الأقل للوكيل');if(new Set(v.allowedProductIds).size!==v.allowedProductIds.length||v.allowedProductIds.some(id=>!e.s.products.some(p=>p.id===id)))throw Error('اختيار فئات غير صالح');}
   if(!String(v.city||'').trim())throw Error('اختر محافظة الوكيل');
   if(!['رئيسي','فرعي'].includes(v.type))throw Error('نوع الوكيل غير صالح');
   if(!old&&!e.s.settings.registration)throw Error('تسجيل الوكلاء موقوف');
@@ -23,7 +32,7 @@ function validate(e,page,v,login){
   if(old&&old.agent!==v.agent)throw Error('نقل نقطة بين الوكلاء يحتاج تسوية مستقلة');
  }
  const existing=old&&linked(e.s,page,old.id);
- if(existing)return {existing};
+ if(existing){if(login.password)root.MasalPasswordAdmin.validate(e,existing.id,login.password,login.confirmPassword);return {existing}};
  const email=String(login.email||'').trim().toLowerCase();
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('أدخل بريد حساب الدخول بصورة صحيحة');
  if(e.s.users.some(u=>String(u.email||'').trim().toLowerCase()===email))throw Error('البريد الإلكتروني مستخدم لحساب آخر');
@@ -31,9 +40,9 @@ function validate(e,page,v,login){
  return {email,role:page==='pos'?'pos':v.type==='رئيسي'?'main':'sub'};
 }
 function attach(e,page,entity,checked,credentials){
- if(checked.existing)return checked.existing;
+ if(checked.existing){if(credentials)root.MasalPasswordAdmin.apply(e,checked.existing,credentials);return checked.existing}
  if(linked(e.s,page,entity.id))throw Error('لهذه الجهة حساب مرتبط مسبقًا');
- const user={id:M.id('USER'),name:entity.name,email:checked.email,role:checked.role,active:true,agent:page==='agents'?entity.id:entity.agent,pos:page==='pos'?entity.id:'',credentials};
+ const user={id:M.id('USER'),createdAt:entity.createdAt||new Date().toISOString(),name:entity.name,email:checked.email,role:checked.role,active:true,agent:page==='agents'?entity.id:entity.agent,pos:page==='pos'?entity.id:'',credentials};
  // Ancestor limits are evaluated live, so later restrictions and restorations reach existing descendants.
  e.s.users.push(user);e.log('إنشاء حساب '+({main:'وكيل رئيسي',sub:'وكيل فرعي',pos:'نقطة بيع'}[user.role]),user.id,null,{name:user.name,email:user.email,role:user.role,agent:user.agent,pos:user.pos});return user;
 }
@@ -74,7 +83,7 @@ function saveNetworkPermissions(e,page,id,changes,reason){
 }
 function install(o){
  const data=o.data,open=o.methods.openEdit,save=o.methods.saveEntity,close=o.methods.closeModal,options=o.methods.optionsFor;
- o.data=function(){return {...data.call(this),networkLogin:{email:'',password:''},networkSaving:false,networkPermissionDraft:{},networkPermissionInitial:{},networkPermissionReason:'',networkPermissionSearch:''}};
+ o.data=function(){return {...data.call(this),networkLogin:{email:'',password:'',confirmPassword:''},networkSaving:false,networkImageBusy:false,networkPermissionDraft:{},networkPermissionInitial:{},networkPermissionReason:'',networkPermissionSearch:''}};
  o.methods.canManageNetwork=function(page,id){try{permissionTarget(this.engine,page,id);return true}catch{return false}};
  o.methods.openNetworkPermissions=function(page,id){this.run(()=>{
   const target=permissionTarget(this.engine,page,id);
@@ -113,20 +122,21 @@ function install(o){
  o.methods.closeModal=function(){if(this.networkSaving)return;this.networkLogin={email:'',password:''};return close.call(this)};
  o.methods.saveEntity=async function(){
   if(!['agents','pos'].includes(this.page))return save.call(this);
-  if(this.networkSaving)return;
+  if(this.networkSaving||this.networkImageBusy)return;
   const page=this.page,entity=M.clone(this.editForm),login={...this.networkLogin},actor=this.currentUser,state=this.s,dialog=this.modal;
   this.networkSaving=true;
   try{
    const first=validate(this.engine,page,entity,login);
-   const credentials=first.existing?null:await S.passwordHash(login.password);
+   const passwordBefore=JSON.stringify(first.existing?.credentials);const credentials=login.password?await S.passwordHash(login.password):null;
    if(this.s!==state||this.currentUser!==actor||this.modal!==dialog||this.page!==page||JSON.stringify(entity)!==JSON.stringify(this.editForm))throw Error('تغير الحساب أو البيانات أثناء الحفظ؛ أعد المحاولة');
+   if(first.existing&&JSON.stringify(first.existing.credentials)!==passwordBefore)throw Error('تغيرت كلمة المرور؛ أعد المحاولة');
    const checked=validate(this.engine,page,entity,login),ids=new Set(this.s[page].map(x=>x.id));
    // Existing entity validation remains in the original save path. Nothing is created if it fails.
    this.networkSaving=false;save.call(this);
    if(this.modal===dialog)return;
    const record=entity.id?this.s[page].find(x=>x.id===entity.id):this.s[page].find(x=>!ids.has(x.id));
-   if(record){attach(this.engine,page,record,checked,credentials);this.persist();this.notify(checked.existing?'تم حفظ البيانات':'تم حفظ البيانات وإنشاء حساب الدخول المرتبط')}
-  }catch(error){this.notify(error.message,true)}finally{login.password='';this.networkSaving=false}
+   if(record){if(!entity.id)record.createdAt=new Date().toISOString();attach(this.engine,page,record,checked,credentials);this.persist();this.notify(checked.existing?'تم حفظ البيانات':'تم حفظ البيانات وإنشاء حساب الدخول المرتبط')}
+  }catch(error){this.notify(error.message,true)}finally{login.password='';login.confirmPassword='';this.networkSaving=false}
  };
 }
 root.MasalNetworkAccounts={install,validate,attach,linked,permissionTarget,canEnable,saveNetworkPermissions};

@@ -18,6 +18,7 @@ const accountDetail={computed:{vm(){return this.$root},account(){return this.vm.
 
 function total(vm,id,service,available){const ids=service==='all'?['voucher','topup','cash',...vm.s.providers.filter(p=>p.connection==='API').map(p=>'api:'+p.id)]:[service];return ids.reduce((n,s)=>n+vm.engine[available?'serviceAvailable':'serviceBalance'](id,s),0)}
 function install(o){
+ o.methods.walletOwnSummary=function(service){const id=this.engine.walletIdentity();if(!this.accounts.some(a=>a.id===id))return null;const current=total(this,id,service,false),available=total(this,id,service,true);return {id,current,available,held:Math.round(Math.max(0,current-available)*100)/100}};
  o.methods.walletTableAmount=function(id,service,available=true){return total(this,id,service,available)};
  o.components["wallet-accounts-table"]=accountTable; o.components["wallet-account-detail"]=accountDetail;
  const data=o.data;o.data=function(){return {...data.call(this),walletFilters:empty()}};
@@ -32,7 +33,11 @@ function install(o){
  const panel=o.components['operations-panel'];
  panel.components={...panel.components,"wallet-accounts-table":accountTable};
  panel.computed.walletAccounts=function(){return accounts(this.vm,this.accounts,this.vm.walletFilters)};
- panel.computed.cardMetrics=function(){const ids=new Set((this.walletAccounts||[]).map(a=>this.e.main(this.e.accountAgent(a.id))));const cards=this.s.cards.filter(c=>ids.has(c.agent)&&['Available','Reserved','_Held'].includes(c.status));return {count:cards.length,cost:cards.reduce((n,c)=>n+Number(c.cost||0),0),credit:cards.reduce((n,c)=>n+Number(c.credit??c.cost??0),0)}};
+ panel.computed.walletOwnTotals=function(){return this.vm.walletOwnSummary(this.service)};
+ panel.computed.walletDisplayTotals=function(){if(this.walletOwnTotals)return this.walletOwnTotals;const current=this.walletAccounts.reduce((sum,a)=>sum+this.vm.walletTableAmount(a.id,this.service,false),0),available=this.walletAccounts.reduce((sum,a)=>sum+this.vm.walletTableAmount(a.id,this.service,true),0);return {current,available,held:Math.round(Math.max(0,current-available)*100)/100}};
+ panel.computed.walletChildrenTotal=function(){const own=this.walletOwnTotals;if(!own||this.vm.actor.role==='pos')return null;const children=new Set(this.e.descendants(own.id)),accounts=this.walletAccounts.filter(a=>a.id!==own.id&&children.has(this.e.accountAgent(a.id)));if(!accounts.length)return null;return accounts.reduce((sum,a)=>sum+this.vm.walletTableAmount(a.id,this.service,false),0)};
+ panel.computed.showStockMetrics=function(){return ['owner','main'].includes(this.vm.actor.role)&&this.can('wallets.view')&&['voucher','all'].includes(this.service)};
+ panel.computed.cardMetrics=function(){if(!this.showStockMetrics)return {count:0,cost:0,credit:0};const ids=new Set((this.walletAccounts||[]).map(a=>this.e.main(this.e.accountAgent(a.id))));const cards=this.s.cards.filter(c=>ids.has(c.agent)&&['Available','Reserved','_Held'].includes(c.status));return {count:cards.length,cost:cards.reduce((n,c)=>n+Number(c.cost||0),0),credit:cards.reduce((n,c)=>n+Number(c.credit??c.cost??0),0)}};
  panel.computed.walletAgents=function(){return this.walletAccounts.filter(a=>this.s.agents.some(x=>x.id===a.id))};
  const balance=panel.computed.balanceTotal;panel.computed.balanceTotal=function(){return this.page==='wallets'?this.walletAccounts.reduce((n,a)=>n+this.e.serviceBalance(a.id,this.service),0):balance.call(this)};
  for(const key of ['ledger','requests','transfers','invoices']){const base=panel.computed[key];panel.computed[key]=function(){const rows=base.call(this);if(this.page!=='wallets')return rows;const ids=new Set(this.walletAccounts.map(a=>a.id)),f=this.vm.walletFilters;return rows.filter(r=>(key==='ledger'?ids.has(r.account):key==='invoices'?ids.has(r.agent):ids.has(r.from)||ids.has(r.to))&&(key==='invoices'?this.service==='voucher':!r.service||r.service===this.service)&&record(this.vm,r,f))}}

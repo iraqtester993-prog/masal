@@ -11,7 +11,7 @@ function assertOwner(engine,from){if(controller(engine)!==from)throw Error('ال
 P.serviceBalance=function(account,service='voucher'){return service==='all'?serviceIds(this).reduce((sum,id)=>sum+baseBalance.call(this,account,id),0):baseBalance.call(this,account,service)};
 P.serviceAvailable=function(account,service='voucher'){return service==='all'?serviceIds(this).reduce((sum,id)=>sum+baseAvailable.call(this,account,id),0):baseAvailable.call(this,account,service)};
 const baseFund=P.fund;
-P.fund=function(from,to,amount,service,key){assertService(this,service);assertOwner(this,from);return baseFund.call(this,from,to,amount,service,key,'')};
+P.fund=function(from,to,amount,service,key){assertService(this,service);if(!this.canFundFrom(from))throw Error('ليس لديك صلاحية التمويل من الحساب المحدد');return baseFund.call(this,from,to,amount,service,key,'')};
 P.requestFunding=function(to,from,amount,service,purpose,key){assertService(this,service);return baseRequest.call(this,to,from,amount,service,purpose,key)};
 P.authorizeFunding=function(){throw Error('تم إلغاء التمويل الاستثنائي؛ التمويل ينفذه حساب الوكيل فقط')};
 P.reserveFunding=function(id,amount){const request=this.s.fundingRequests.find(r=>r.id===id);if(!request)throw Error('الطلب غير موجود');assertService(this,request.service);assertOwner(this,request.from);return baseReserve.call(this,id,amount,'')};

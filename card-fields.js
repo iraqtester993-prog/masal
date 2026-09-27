@@ -1,6 +1,6 @@
 (function(root){
 'use strict';
-const catalog=[{key:'pin',label:'رمز الشحن / التفعيل',fixed:true},{key:'expiry',label:'تاريخ الانتهاء',fixed:true},{key:'serial',label:'الرقم التسلسلي'},{key:'cvc',label:'رمز التحقق'},{key:'reference',label:'الرقم المرجعي'}];
+const catalog=[{key:'pin',label:'رمز الشحن / التفعيل — PIN Code',fixed:true},{key:'expiry',label:'تاريخ الانتهاء — Expiry Date',fixed:true},{key:'serial',label:'الرقم التسلسلي — Serial Number'},{key:'cvc',label:'رمز التحقق — CVC / CVV'},{key:'reference',label:'الرقم المرجعي — Reference'}];
 function policy(product){const old=String(product.fields||'').split(',').map(s=>s.trim());return Object.fromEntries(catalog.map(f=>[f.key,f.fixed?'required':(product.fieldPolicy?.[f.key]?product.fieldPolicy[f.key]!=='unused':old.includes(f.key))?'required':'unused']))}
 function normalize(product){const p=policy(product);for(const value of Object.values(p))if(!['required','unused'].includes(value))throw Error('اختيار حالة حقل غير صالح');product.fieldPolicy=p;product.fields=catalog.filter(f=>p[f.key]!=='unused').map(f=>f.key).join(',');return product;}
 function install(o){const open=o.methods.openEdit,save=o.methods.saveEntity;Object.assign(o.methods,{

@@ -39,3 +39,25 @@
 @media(max-width:760px){.site-premium .site-menu-toggle{background:#fff9;border-color:#dfe4f2;color:#7b89ad}.site-premium .site-header nav button{border-color:#e8ecf6}.site-ambient i{opacity:.1}}
 /* Keep secondary text readable on the light surfaces. */
 .site-premium .site-card-body p,.site-premium .site-about .site-copy,.site-premium .site-contact-links a,.site-premium .site-contact-links span{color:#606d89}.site-premium .site-card-body .site-text-link,.site-premium .site-text-link{color:#526a9e}.site-premium .site-contact-form label,.site-premium .site-contact-links small,.site-premium .site-footer,.site-premium .site-footer button{color:#667492}.site-premium .site-eyebrow,.site-premium .site-care .site-eyebrow,.site-premium .site-social a{color:#756093}
+.company-intro-dialog{position:fixed;inset:0;margin:auto;padding:0;border:1px solid #bdcfe3;border-radius:24px;width:min(460px,calc(100vw - 32px));max-height:90dvh;background:#f7faff;color:#243052;box-shadow:0 28px 90px #07132755;overflow:auto}
+.company-intro-dialog::backdrop{background:#0b152b99;backdrop-filter:blur(7px)}
+.company-intro-dialog .company-opening{position:relative;min-height:410px;height:auto;padding:28px 16px;box-sizing:border-box}
+.company-intro-close{position:absolute;top:12px;inset-inline-end:12px;width:36px;height:36px;border:1px solid #c9d5e5;border-radius:50%;background:#fff;color:#304263;font-size:24px;cursor:pointer;z-index:2}
+.company-intro-dialog .company-opening h2{margin:12px 0 8px}
+.site-premium .site-theme-toggle{order:4;flex:none;border:1px solid #bac8e7;border-radius:12px;background:#edf2ff;color:#354f84;padding:10px 14px;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+[data-site-theme=dark]{color-scheme:dark;--panel:#152237;--muted:#a4b2cb;--line:#31445e}
+[data-site-theme=dark] .site-premium{background:#091221;color:#dae5f7}
+[data-site-theme=dark] .site-premium .site-header{background:#101d30ed;border-color:#30435d}
+[data-site-theme=dark] .site-premium .site-topbar,[data-site-theme=dark] .site-premium .site-footer{background:#0c1829;border-color:#30435d;color:#b4c5dc}
+[data-site-theme=dark] .site-premium .site-header nav button,[data-site-theme=dark] .site-premium .site-topbar a,[data-site-theme=dark] .site-premium .site-footer button,[data-site-theme=dark] .site-premium .site-contact-links a,[data-site-theme=dark] .site-premium .site-contact-links span{color:#c2d3ee}
+[data-site-theme=dark] .site-premium .site-wordmark span,[data-site-theme=dark] .site-premium .site-hero h1{background-image:linear-gradient(270deg,#e1ecff,#9bbcff 55%,#c2a5f0)}
+[data-site-theme=dark] .site-premium .site-section h2,[data-site-theme=dark] .site-premium .site-card-body h3,[data-site-theme=dark] .site-quick-panel h2{color:#e0eaff}
+[data-site-theme=dark] .site-premium .site-hero-content p,[data-site-theme=dark] .site-premium .site-copy,[data-site-theme=dark] .site-premium .site-card-body p,[data-site-theme=dark] .site-premium .site-care p{color:#b1c2dc}
+[data-site-theme=dark] .site-premium .site-content-card,[data-site-theme=dark] .site-quick-panel,[data-site-theme=dark] .site-premium .site-hero-visual,[data-site-theme=dark] .site-premium .site-contact-form{background:#142238;border-color:#31445e}
+[data-site-theme=dark] .site-quick-panel h2,[data-site-theme=dark] .site-premium .site-card-media,[data-site-theme=dark] .site-premium .site-about,[data-site-theme=dark] .site-premium .site-offers,[data-site-theme=dark] .site-premium .site-care{background:#0e1b2e;border-color:#31445e}
+[data-site-theme=dark] .site-quick-panel button,[data-site-theme=dark] .site-premium .site-text-link,[data-site-theme=dark] .site-premium .site-contact-form label{color:#bdcef0;border-color:#31445e}
+[data-site-theme=dark] .site-premium .site-hero .site-text-link,[data-site-theme=dark] .site-premium .site-hero .site-eyebrow,[data-site-theme=dark] .site-premium .site-social a,[data-site-theme=dark] .site-premium .site-slider-controls button,[data-site-theme=dark] .site-premium .site-theme-toggle{background:#1d304b;color:#c7d8fc;border-color:#40587a}
+[data-site-theme=dark] .site-premium .site-contact-form input,[data-site-theme=dark] .site-premium .site-contact-form textarea{background:#0b1728!important;color:#e1eafb!important;border-color:#405574!important}
+[data-site-theme=dark] .company-intro-dialog,[data-site-theme=dark] .company-intro-close,[data-site-theme=dark] .company-profile-content .modal{background:#142238;color:#e1eafb;border-color:#405574}
+[data-site-theme=dark] .site-premium .site-section{border-color:#31445e}
+@media(max-width:600px){.company-intro-dialog .company-animation{width:260px}.company-intro-dialog .company-opening{min-height:370px}.site-premium .site-theme-toggle{padding:8px 10px}}
