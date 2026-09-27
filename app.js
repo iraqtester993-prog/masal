@@ -179,4 +179,16 @@ MasalMultiOrders.install(appOptions);
  const go=o.methods.go;o.methods.go=function(...args){const result=go.apply(this,args);for(const group of this.navGroups){if(!group.direct)this.collapsedGroups[group.title]=!group.items.some(n=>n.id===this.page||(args[0]==='company-settings'&&n.id==='company-settings'))}return result};
 })(appOptions);
 MasalInventoryManagement.install(appOptions);
+// Display aliases only for the six original demo accounts in the profile picker.
+appOptions.methods.profileAccountLabel=function(user){
+ if(user.role==='owner'&&user.name==='مدير النظام')return 'محمد علي — مدير النظام';
+ const aliases={
+  'DEMO-U0':['وكيل رئيسي','أحمد محمد — وكيل رئيسي'],
+  'DEMO-U1':['فرع','علي حسن — فرع'],
+  'DEMO-U2':['فرع فرعي','مصطفى علي — فرع فرعي'],
+  'DEMO-U3':['نقطة 1','حسين كاظم — نقطة بيع'],
+  'DEMO-U4':['نقطة 2','عمر أحمد — نقطة بيع']
+ };
+ const alias=aliases[user.id];return alias&&user.demo&&user.name===alias[0]?alias[1]:user.name;
+};
 window.app=createApp(appOptions).directive('money',MasalMoneyInputs.directive).mount('#app');
