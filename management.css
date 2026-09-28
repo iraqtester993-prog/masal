@@ -58,3 +58,28 @@
 .agent-category-image{width:100%;text-align:start}.category-image-tools{display:grid;gap:12px;margin:16px 0}.category-image-tools .actions{gap:8px;flex-wrap:wrap}.agent-category-image .receipt{margin-inline:auto}.agent-category-image .attachment-preview img{max-height:140px;object-fit:contain}
 .simple-card-workspace{display:grid;gap:16px}.simple-card-heading{display:flex;align-items:center;gap:24px}.simple-card-heading h3{margin:0;white-space:nowrap}.simple-card-selectors{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1}.simple-card-controls fieldset{display:grid;gap:14px;border:0;padding:0;margin:0;min-width:0}.simple-card-controls h3{margin:4px 0}.card-order-list{display:grid;gap:6px}.card-order-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--subtle)}.card-order-row .actions{gap:6px}.card-order-row .btn{min-width:34px}.personal-card-color{display:flex;align-items:center;gap:12px}.personal-card-color input{width:64px;height:40px}.receipt-template-header,.receipt-agent-text{white-space:pre-wrap;overflow-wrap:anywhere}.simple-card-preview .receipt{margin-inline:auto}.receipt-agent-image{object-fit:contain}@media(max-width:700px){.simple-card-heading{display:block}.simple-card-heading h3{margin-bottom:14px}.simple-card-selectors{grid-template-columns:1fr}.simple-card-workspace .two{grid-template-columns:1fr}}
 .receipt-template-footer{white-space:pre-wrap;overflow-wrap:anywhere}.receipt .receipt-company-image,.receipt .receipt-agent-image{display:block;margin:0 auto 6px;object-fit:contain}
+.claim-preview-dialog{width:min(820px,calc(100vw - 32px));max-height:88vh;overflow:auto}
+.claim-preview-dialog .ops-request{border:0;padding:0;margin:0;display:grid;gap:16px}
+.claim-preview-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.claim-preview-fields>div{display:grid;gap:6px;padding:12px;border:1px solid var(--border,#b9ccd8);border-radius:10px;min-width:0}
+.claim-preview-fields small{opacity:.7}.claim-preview-fields b{overflow-wrap:anywhere}
+.claim-preview-fields .claim-reason{grid-column:1/-1}
+.claim-upload{position:relative;justify-self:start;overflow:hidden;cursor:pointer}
+.claim-file-input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.claim-upload:focus-within{outline:2px solid #00a0bc;outline-offset:3px}
+.claim-preview-dialog .btn.primary{width:auto;justify-self:start}
+@media(max-width:600px){.claim-preview-fields{grid-template-columns:1fr}.claim-preview-dialog h2{font-size:16px}}
+.badge.settlement-status{display:inline-flex;width:fit-content;align-items:center;gap:6px;white-space:nowrap;border:1px solid var(--status-edge);background:var(--status-bg)!important;color:var(--status-text)!important;padding:5px 10px;border-radius:8px;font-weight:700}
+.settlement-status::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.settled-green{--status-bg:#e4f5ec;--status-text:#12613a;--status-edge:#a6d9be}
+.settled-blue{--status-bg:#e7f0fe;--status-text:#225ba3;--status-edge:#b5cdf0}
+.settled-red{--status-bg:#fdeaea;--status-text:#a32832;--status-edge:#efb9bd}
+.settled-purple{--status-bg:#f2eafa;--status-text:#723e99;--status-edge:#d7bee9}
+.settled-amber{--status-bg:#fff2d9;--status-text:#865600;--status-edge:#e8cb8c}
+.settled-neutral{--status-bg:#edf1f5;--status-text:#475569;--status-edge:#cbd5e1}
+[data-theme="dark"] .settled-green{--status-bg:#153b30;--status-text:#81e5b0;--status-edge:#2b6c50}
+[data-theme="dark"] .settled-blue{--status-bg:#1b3554;--status-text:#99c8ff;--status-edge:#375f8c}
+[data-theme="dark"] .settled-red{--status-bg:#48262d;--status-text:#ffacb2;--status-edge:#82434d}
+[data-theme="dark"] .settled-purple{--status-bg:#38294b;--status-text:#d7b3fa;--status-edge:#654581}
+[data-theme="dark"] .settled-amber{--status-bg:#42351c;--status-text:#f4cf7b;--status-edge:#7a6130}
+[data-theme="dark"] .settled-neutral{--status-bg:#273646;--status-text:#c7d6e5;--status-edge:#496074}
