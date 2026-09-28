@@ -476,7 +476,7 @@ html[data-theme=dark] .main .ops-account-grid > .card :is(.caption,.help,p,small
 @media(max-width:600px){.main .metrics.report-kpis>.card.metric{flex-basis:calc(50% - 12px)}}
 @media(max-width:400px){.main .metrics.report-kpis>.card.metric{flex-basis:100%}}
 /* Preserve artwork proportions in both preview and printed receipts. */
-.receipt .receipt-logo{width:auto;height:auto;max-width:85px;max-height:60px;object-fit:contain;display:block}
+.receipt .receipt-logo{width:auto;height:auto;max-width:85px;max-height:60px;object-fit:contain;display:block;margin-inline:auto;float:none}
 .receipt .receipt-art{display:block;width:auto;height:auto;max-width:100%;max-height:160px;object-fit:contain;margin-inline:auto}
 .receipt .receipt-identities{flex-wrap:wrap;gap:12px;max-width:100%}
 @media print{.receipt .receipt-block{break-inside:avoid}}
