@@ -179,7 +179,27 @@ MasalMultiOrders.install(appOptions);
  const go=o.methods.go;o.methods.go=function(...args){const result=go.apply(this,args);for(const group of this.navGroups){if(!group.direct)this.collapsedGroups[group.title]=!group.items.some(n=>n.id===this.page||(args[0]==='company-settings'&&n.id==='company-settings'))}return result};
 })(appOptions);
 MasalInventoryManagement.install(appOptions);
-// Display aliases only for the six original demo accounts in the profile picker.
+// Keep demo identities consistent in account lists, maps and record references.
+// Only replace untouched default names; preserve names already edited by the user.
+const beforeDemoNames=appOptions.data;
+appOptions.data=function(){
+ const data=beforeDemoNames.call(this),s=data.s;
+ const names=[
+  ['DEMO-U0','agents','DEMO-MAIN','وكيل رئيسي','أحمد محمد — وكيل رئيسي'],
+  ['DEMO-U1','agents','DEMO-BRANCH','فرع','علي حسن — فرع'],
+  ['DEMO-U2','agents','DEMO-SUBBRANCH','فرع فرعي','مصطفى علي — فرع فرعي'],
+  ['DEMO-U3','pos','DEMO-POS1','نقطة 1','حسين كاظم — نقطة بيع'],
+  ['DEMO-U4','pos','DEMO-POS2','نقطة 2','عمر أحمد — نقطة بيع']
+ ];
+ for(const [userId,key,id,oldName,newName]of names){
+  const user=s.users.find(u=>u.id===userId&&u.demo),record=s[key].find(r=>r.id===id&&r.demo);
+  if(user?.name===oldName)user.name=newName;
+  if(record?.name===oldName)record.name=newName;
+  if(key==='pos'&&record?.owner==='صاحب '+oldName)record.owner=newName.split(' — ')[0];
+ }
+ for(const user of s.users)if(user.role==='owner'&&user.name==='مدير النظام')user.name='محمد علي — مدير النظام';
+ return data;
+};
 appOptions.methods.profileAccountLabel=function(user){
  if(user.role==='owner'&&user.name==='مدير النظام')return 'محمد علي — مدير النظام';
  const aliases={

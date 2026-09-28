@@ -63,7 +63,7 @@ function candidateRules(e,target,key,value){
  rules[authority]??={};rules[authority][key]=value?'allow':'deny';return rules;
 }
 function canEnable(e,page,id,key,draft={}){
- try{const target=permissionTarget(e,page,id);if(!A.defaults(target.user.role,key)||!e.can(key))return false;
+ try{const target=permissionTarget(e,page,id);if(!A.defaults(target.user.role,key)||(e.actor().role!=='owner'&&!e.can(key)))return false;
  const candidate={...target.record,networkRules:M.clone(target.record.networkRules||{})};
  for(const [other,value]of Object.entries(draft))candidate.networkRules=candidateRules(e,{...target,record:candidate},other,value);
  candidate.networkRules=candidateRules(e,{...target,record:candidate},key,true);
@@ -76,7 +76,7 @@ function saveNetworkPermissions(e,page,id,changes,reason){
  const entries=Object.entries(changes);if(!entries.length)throw Error('لم تغير أي صلاحية');
  // Work on a copy so a rejected grant never leaves partial changes.
  const candidate={...target.record,networkRules:M.clone(target.record.networkRules||{})},state={...e.s,[page]:e.s[page].map(r=>r.id===id?candidate:r)},temp=new M.Engine(state,e.user);
- for(const [key,value]of entries){if(typeof value!=='boolean'||!A.catalog.some(p=>p.key===key)||!A.defaults(target.user.role,key))throw Error('صلاحية غير قابلة للإسناد لهذا الدور');if(value&&!e.can(key))throw Error('لا يمكنك منح صلاحية لا تملكها');candidate.networkRules=candidateRules(temp,{...target,record:candidate},key,value);}
+ for(const [key,value]of entries){if(typeof value!=='boolean'||!A.catalog.some(p=>p.key===key)||!A.defaults(target.user.role,key))throw Error('صلاحية غير قابلة للإسناد لهذا الدور');if(value&&e.actor().role!=='owner'&&!e.can(key))throw Error('لا يمكنك منح صلاحية لا تملكها');candidate.networkRules=candidateRules(temp,{...target,record:candidate},key,value);}
  for(const [key,value]of entries)if(value&&!A.can({...target.user,active:true},key,state))throw Error('هذه الصلاحية ممنوعة من الأعلى أو تتطلب صلاحية عرض القسم');
  const before=M.clone(target.record.networkRules||{});target.record.networkRules=candidate.networkRules;
  e.log('تعديل صلاحيات تابع',id,before,{rules:candidate.networkRules,changes,reason:reason.trim()});return target.record;
@@ -116,6 +116,8 @@ function install(o){
   this.engine.log('بدء جلسة جهاز تجريبية',p.id,{online:false},{online:true,mode:'local-demo'});
  },'بدأت جلسة الجهاز التجريبية؛ يمكنك متابعة الإصدار')};
  o.computed.networkLinkedAccount=function(){return ['agents','pos'].includes(this.page)&&this.editForm.id?linked(this.s,this.page,this.editForm.id):null};
+ o.methods.networkLoginEmail=function(page,id){return linked(this.s,page,id)?.email||'غير مسجل'};
+ o.methods.showNetworkDetails=function(page,id){this.run(()=>{if(!['agents','pos'].includes(page))throw Error('جهة غير صالحة');this.engine.requirePermission(page+'.view');const r=this.s[page].find(r=>r.id===id);if(!r)throw Error('الحساب غير موجود');this.engine.require(page==='pos'?r.agent:r.id);this.modal={kind:'inspect',title:'تفاصيل '+r.name,data:{'الاسم':r.name,'بريد تسجيل الدخول':this.networkLoginEmail(page,id),'المحافظة':r.city||'—','الهاتف':r.phone||'—','الحالة':r.active?'مفعل':'موقوف','الملاحظات':r.notes||'—'}}})};
  o.methods.networkFieldLocked=function(f){return ['agents','pos'].includes(this.page)&&((!!this.editForm.id&&['type','parent','agent'].includes(f.key))||(!this.editForm.id&&this.managementRole!=='owner'&&['type','parent','agent'].includes(f.key)))};
  o.methods.optionsFor=function(f){let out=options.call(this,f);if(this.page==='agents'&&f.key==='parent'&&this.editForm.id)out=out.filter(x=>!this.engine.descendants(this.editForm.id).includes(x.value));return out};
  o.methods.openEdit=function(row){if(!row&&this.page==='agents'&&A.branchCreationBlocked(this.s,this.actor)){this.notify('الفرعي التابع لفرعي يمكنه إنشاء نقاط بيع فقط، ولا يمكنه إنشاء فروع',true);return}open.call(this,row);if(!['agents','pos'].includes(this.page)||this.modal?.kind!=='edit')return;this.networkLogin={email:'',password:''};if(!row&&this.managementRole!=='owner'){if(this.page==='agents'){this.editForm.type='فرعي';this.editForm.parent=this.actor.agent}else this.editForm.agent=this.actor.agent}};
