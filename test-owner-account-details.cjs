@@ -6,6 +6,8 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
  await page.locator('#login-name').fill('admin');await page.locator('#login-password').fill('123456789');await page.getByRole('button',{name:'تسجيل الدخول',exact:false}).click();await page.waitForFunction(()=>!app.loginScreen);
  const identity=await page.evaluate(()=>{const u=app.actor;app.showAccountDetails(u);return u.username||u.email||u.name});
  const details=page.locator('.account-details');await details.waitFor();
+ assert.equal(await details.locator('.account-event').count(),0);
+ assert.doesNotMatch(await details.innerText(),/مدخلات المستخدم وتعديلاته|يعرض السجل العمليات المنفذة/);
  assert.equal(await details.getByText('صلاحيات كاملة',{exact:true}).count(),1);
  assert.equal(await details.getByText('عرض جميع الصلاحيات',{exact:true}).count(),0);
  assert.equal(await details.getByText('نقاط البيع والأجهزة ضمن النطاق',{exact:true}).count(),0);
