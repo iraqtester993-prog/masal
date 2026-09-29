@@ -1,0 +1,19 @@
+require('./setup.cjs');
+const assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(require('url').pathToFileURL(require('path').resolve('masal.html')).href);await p.locator('#login-name').fill('admin');await p.locator('#login-password').fill('123456789');await p.getByRole('button',{name:'تسجيل الدخول',exact:false}).click();await p.waitForFunction(()=>!app.loginScreen);
+ if(process.argv.includes('--audit')){const missing=await p.evaluate(()=>[...MasalUILocalization.missing].filter(s=>/[\u0600-\u06ff]/.test(MasalLocale.translate(s,'en'))));console.log(JSON.stringify(missing,null,2));return;}
+ if(process.argv.includes('--visible')){const out={};await p.evaluate(()=>{app.lang='en';app.setLanguage()});const pages=await p.evaluate(()=>app.navGroups.flatMap(g=>g.items).map(n=>n.id));for(const page of pages){await p.evaluate(page=>app.go(page),page);await p.waitForTimeout(30);out[page]=await p.evaluate(()=>{const w=document.createTreeWalker(document.getElementById('app'),NodeFilter.SHOW_TEXT),texts=new Set();let n;while(n=w.nextNode()){if(!n.parentElement?.getClientRects().length)continue;let s=n.textContent.trim();for(const name of app.translationRecordNames)s=s.split(name).join('');if(/[\u0600-\u06ff]/.test(s))texts.add(s)}return [...texts]});}console.log(JSON.stringify(await p.evaluate(()=>[...MasalLocale.untranslated]),null,2));return;}
+ for(const lang of ['en','ckb','ar']){await p.evaluate(lang=>{app.lang=lang;app.setLanguage()},lang);await p.waitForTimeout(50);assert.equal(await p.locator('html').getAttribute('dir'),lang==='en'?'ltr':'rtl');
+ const pages=await p.evaluate(()=>app.navGroups.flatMap(g=>g.items).map(n=>n.id));for(const page of pages){await p.evaluate(page=>app.go(page),page);await p.waitForTimeout(30);assert.equal(await p.evaluate(()=>app.lang),lang);}
+ const out=await p.evaluate(()=>({name:app.tr(app.actor.name),original:app.actor.name,translated:app.tr('تأكيد التعويض'),raw:MasalLocale.dictionaries[app.lang]?.['تأكيد التعويض']||'تأكيد التعويض'}));assert.equal(out.name,out.original);assert.equal(out.translated,out.raw);
+ }
+ const check=await p.evaluate(async()=>{
+  const el=document.createElement('div');document.body.append(el);
+  const fixture=Vue.createApp({data:()=>({lang:'en',value:'بغداد',options:['بغداد'],message:{body:'حذف حساب'},s:app.s}),methods:{tr(v){return MasalLocale.translate(v,this.lang)}},template:MasalUILocalization.template('<div><select v-model="value"><option v-for="x in options">{{x}}</option><option>البصرة</option></select><p>{{message.body}}</p><button title="تأكيد التعويض">تأكيد التعويض</button></div>')}).mount(el);
+  const en={text:el.querySelector('option').textContent,value:el.querySelector('option').value,message:el.querySelector('p').textContent,title:el.querySelector('button').title};
+  el.querySelector('select').value='البصرة';el.querySelector('select').dispatchEvent(new Event('change'));await Vue.nextTick();en.selected=fixture.value;
+  fixture.lang='ckb';await Vue.nextTick();en.ckb=el.querySelector('button').textContent;fixture.lang='ar';await Vue.nextTick();en.ar=el.querySelector('button').textContent;el.remove();return en;
+ });assert.equal(check.text,'Baghdad');assert.equal(check.value,'بغداد');assert.equal(check.selected,'البصرة');assert.equal(check.message,'حذف حساب');assert.equal(check.title,'Confirm compensation');assert.equal(check.ar,'تأكيد التعويض');assert.notEqual(check.ckb,check.ar);
+ assert.deepEqual(errors,[]);console.log('PASS all available navigation pages in 3 languages, RTL/LTR, names, user content, tooltips and stable option values');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

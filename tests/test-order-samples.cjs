@@ -1,0 +1,9 @@
+require('./setup.cjs');
+// Read-only inspection of the supplied files. Never submits their vouchers.
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage();await p.goto(require('url').pathToFileURL(require('path').resolve('masal.html')).href);await p.waitForFunction(()=>typeof app.go==='function');
+const samples=[['references/eVouchersDownload_2022-01-04 12 06.txt',100,'EVD1'],['references/ك5.xlsx',6000,'E5K']];
+for(const [path,count,code] of samples){const data=fs.readFileSync(path).toString('base64');const result=await p.evaluate(async({data,name})=>{const bytes=Uint8Array.from(atob(data),c=>c.charCodeAt(0)),before=app.s.cards.length,files=await MasalOrderParser.read(new File([bytes],name));return {files:files.length,count:files.reduce((n,f)=>n+f.rows.length,0),codes:[...new Set(files.map(f=>f.categoryCode))],errors:files.flatMap(f=>f.rows).filter(r=>r.parseError).length,zeros:files.flatMap(f=>f.rows).filter(r=>r.pin.startsWith('0')).length,expiry:files[0].rows[0].expiry,untouched:app.s.cards.length===before}}, {data,name:require('path').basename(path)});assert.equal(result.count,count);assert.deepEqual(result.codes,[code]);assert.equal(result.errors,0);assert.equal(result.files,1);assert.equal(result.untouched,true);console.log('PASS sample',code,JSON.stringify(result));}
+const dictionary=fs.readFileSync('references/New Text Dسocument.txt','utf8');assert.equal(await p.evaluate(text=>{try{MasalOrderParser.parseText(text);return false}catch{return true}},dictionary),true);console.log('PASS code dictionary rejected as voucher file');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

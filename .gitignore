@@ -7,3 +7,8 @@ outputs/
 analysis/
 .DS_Store
 Thumbs.db
+desktop.ini
+# Local historical material and original reference files are not public website assets.
+archive/
+references/
+dist/

@@ -1,0 +1,26 @@
+require('./setup.cjs');
+const assert=require('node:assert/strict'),path=require('node:path'),{pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{
+ const p=await b.newPage({viewport:{width:1440,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.goto(pathToFileURL(path.resolve('masal.html')).href);await p.waitForFunction(()=>window.app);
+ await p.evaluate(()=>{const s=Masal.seed();MasalOperations.initialize(s);app.s=s;app.currentUser='U1';app.loginScreen=false;app.go('support')});
+ await p.locator('.support-composer').waitFor();assert.equal(await p.evaluate(()=>app.modal),null);
+ assert.equal(await p.getByLabel('مستخدمو رسالة الدعم',{exact:true}).inputValue(),'all');
+ await p.evaluate(()=>{app.ticketForm.title='مسودة';app.ticketForm.description='رسالة اختبار';app.supportAudience='custom';app.supportSelected=[];app.saveTicket()});
+ assert.equal(await p.evaluate(()=>app.ticketForm.title),'مسودة');
+ await p.evaluate(()=>{app.supportSelected=['U3'];app.saveTicket()});
+ assert.equal(await p.evaluate(()=>app.ticketForm.title),'');
+ assert.equal(await p.locator('.support-thread').filter({hasText:'مسودة'}).count(),1);
+ await p.screenshot({path:'tmp/output/previews/support-inline-desktop.png',fullPage:true});
+ await p.setViewportSize({width:390,height:844});
+ assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ await p.screenshot({path:'tmp/output/previews/support-inline-mobile.png',fullPage:true});
+ await p.evaluate(()=>{app.currentUser='U3';app.go('support')});
+ await p.waitForFunction(()=>app.supportAudience==='direct');
+ assert.equal(await p.getByLabel('مستخدمو رسالة الدعم',{exact:true}).count(),0);
+ await p.evaluate(()=>app.openTicket());assert.equal(await p.evaluate(()=>app.modal),null);
+ await p.evaluate(()=>{app.ticketForm.title='دعم مباشر';app.ticketForm.description='اختبار';app.saveTicket()});
+ assert.equal(await p.evaluate(()=>app.ticketForm.title),'');
+ assert.deepEqual(errors,[]);console.log('PASS inline composer, default recipients, draft on failure, successful reset, direct send, no modal, mobile and runtime');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

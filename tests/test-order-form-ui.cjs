@@ -1,0 +1,27 @@
+require('./setup.cjs');
+const assert=require('node:assert/strict'),path=require('node:path'),{pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});try{
+ const p=await browser.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.goto(pathToFileURL(path.resolve('masal.html')).href);await p.waitForFunction(()=>window.app);
+ await p.evaluate(()=>{const s=Masal.seed();MasalOperations.initialize(s);app.s=s;app.currentUser='U3';app.loginScreen=false;app.go('import')});
+ const agent=p.locator('label').filter({hasText:/^الوكيل الرئيسي$/});
+ await p.locator('input[readonly]').first().waitFor();
+ assert.equal(await agent.locator('select').count(),0);
+ assert.equal(await agent.locator('input').inputValue(),await p.evaluate(()=>app.nameOf('agents',app.actor.agent)));
+ assert.equal(await p.getByText('خيارات إضافية',{exact:true}).count(),0);
+ assert(await p.getByLabel('مصاريف الدفعة • د.ع (اختياري)').isVisible());
+ const previous=p.getByRole('button',{name:'السابق',exact:true});assert(await previous.isDisabled());
+ await p.locator('label').filter({hasText:/^الفئة/}).locator('select').selectOption('C1');
+ await p.getByLabel('المجهز',{exact:true}).fill('TEST');
+ await p.getByLabel('تكلفة البطاقة • د.ع',{exact:true}).fill('4400');
+ await p.getByLabel('مصاريف الدفعة • د.ع (اختياري)').fill('');
+ await p.getByRole('button',{name:/التالي/}).click();
+ await p.getByLabel('ملف البطاقات',{exact:true}).waitFor();assert(await previous.isEnabled());
+ await previous.click();assert(await agent.locator('input').isVisible());
+ await p.evaluate(()=>{app.currentUser='U1';app.go('products');app.openEdit()});
+ assert.equal(await p.locator('.category-editor').getByText('لغة الوصل',{exact:true}).count(),0);
+ await p.evaluate(()=>{app.modal=null;app.go('import')});
+ assert.equal(await p.locator('label').filter({hasText:/^الوكيل الرئيسي/}).locator('select').count(),1);
+ assert.deepEqual(errors,[]);console.log('PASS locked agent, optional fields, navigation, category language removal, admin selection');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

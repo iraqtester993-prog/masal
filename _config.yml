@@ -7,3 +7,9 @@ exclude:
   - analysis
   - review
   - sample-orders
+  - archive
+  - references
+  - tests
+  - docs
+  - samples
+  - tools

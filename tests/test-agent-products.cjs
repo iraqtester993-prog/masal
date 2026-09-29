@@ -1,0 +1,28 @@
+require('./setup.cjs');
+const assert=require('node:assert/strict'),path=require('node:path'),{pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{
+const p=await b.newPage({viewport:{width:1400,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));
+await p.goto(pathToFileURL(path.resolve('masal.html')).href);await p.waitForFunction(()=>window.app);
+await p.evaluate(async()=>{const s=Masal.seed();for(const [k,v]of Object.entries(app.s))if(/Revision$/.test(k))s[k]=v;MasalOperations.initialize(s);const base=s.products[0];for(let i=0;i<520;i++)s.products.push({...base,id:'TEST-'+i,name:'فئة اختبار '+i,face:1000+i,allowedAgents:[]});app.s=s;app.currentUser='U1';app.loginScreen=false;app.go('agents');await Vue.nextTick();app.openEdit(s.agents.find(a=>a.id==='A1'))});
+await p.getByRole('button',{name:'معاينة وتعديل الفئات',exact:true}).click();const d=p.getByRole('dialog',{name:'اختيار الفئات',exact:true});await d.waitFor();assert.equal(await d.locator('.agent-product-item').count(),25);
+await d.getByLabel('بحث الفئات المسموحة').fill('TEST-');await d.getByRole('button',{name:'إلغاء تحديد النتائج',exact:true}).click();assert.equal(await d.locator('input[type=checkbox]:checked').count(),0);
+await d.getByRole('button',{name:/تحديد كل نتائج البحث \(520\)/}).click();assert.equal(await d.locator('.agent-product-item input:checked').count(),25);
+await d.getByRole('button',{name:'التالي',exact:true}).click();assert.equal(await d.locator('.agent-product-item input:checked').count(),25);
+await d.locator('.agent-product-item input').first().uncheck();await d.getByRole('button',{name:'السابق',exact:true}).click();assert.equal(await d.locator('.agent-product-item input:checked').count(),25);
+const initial=await p.evaluate(()=>app.editForm.allowedProductIds.length);await d.getByRole('button',{name:'إلغاء',exact:true}).click();assert.equal(await p.evaluate(()=>app.editForm.allowedProductIds.length),initial);
+await p.getByRole('button',{name:'معاينة وتعديل الفئات',exact:true}).click();await d.getByRole('button',{name:'إلغاء تحديد النتائج',exact:true}).click();await d.getByLabel('بحث الفئات المسموحة').fill('C1');await d.getByRole('button',{name:/تحديد كل نتائج البحث/}).click();await d.getByRole('button',{name:/تأكيد الاختيار/}).click();assert.deepEqual(await p.evaluate(()=>[...app.editForm.allowedProductIds]),['C1']);
+await p.evaluate(async()=>{await app.saveEntity()});assert.deepEqual(await p.evaluate(()=>app.s.agents.find(a=>a.id==='A1').allowedProductIds),['C1']);
+const checks=await p.evaluate(async()=>{const s=app.s,e=app.engine,a=s.agents.find(a=>a.id==='A1');s.products.push({...s.products[0],id:'NEW',name:'جديدة'});const point=s.pos.find(p=>p.id==='POS1');let rejected=false;try{e.previewPriceEdit('A1',[{product:'C2',price:10000}])}catch{rejected=true}let denied=false;try{MasalNetworkAccounts.validate(new Masal.Engine(s,'U3'),'agents',{...a,allowedProductIds:['C2']},{})}catch{denied=true}app.currentUser='U3';app.go('products');await Vue.nextTick();return {newAllowed:e.agentProductAllowed('A1','NEW'),branch:e.agentProductAllowed('A3','C1'),point:e.productAvailable(point.agent,'C1',point.city),rejected,denied,rows:app.filteredRows.map(p=>p.id)}});
+assert.equal(checks.newAllowed,false);assert.equal(checks.branch,true);assert.equal(checks.point,true);assert(checks.rejected&&checks.denied);assert.deepEqual(checks.rows,['C1']);
+await p.evaluate(async()=>{app.currentUser='U1';app.go('products');await Vue.nextTick();app.openEdit(app.s.products[0])});assert.equal(await p.locator('.category-editor').getByText('الوكلاء المسموحون',{exact:true}).count(),0);
+await p.evaluate(async()=>{app.closeModal();app.go('agents');await Vue.nextTick();app.previewAgentProducts(app.s.agents.find(a=>a.id==='A1'))});assert.equal(await p.locator('.agent-product-item').count(),1);
+await p.evaluate(async()=>{app.closeModal();app.openEdit()});assert.equal(await p.getByRole('button',{name:'اختيار الفئات',exact:true}).count(),1);assert.deepEqual(await p.evaluate(()=>app.editForm.allowedProductIds),[]);
+await p.getByRole('button',{name:'اختيار الفئات',exact:true}).click();await p.setViewportSize({width:390,height:844});const box=await d.boundingBox();assert(box.x>=0&&box.x+box.width<=390);await p.screenshot({path:'tmp/output/previews/agent-products-mobile.png',fullPage:true});
+await d.getByRole('button',{name:'إلغاء',exact:true}).click();
+await p.evaluate(async()=>{app.editForm={...Masal.clone(app.s.agents.find(a=>a.id==='A1')),name:'وكيل اختبار جديد',allowedProductIds:['C1']};delete app.editForm.id;app.networkLogin={email:'new-agent@example.test',password:'TestPass123!'};await app.saveEntity()});
+assert.equal(await p.evaluate(()=>app.s.agents.filter(a=>a.name==='وكيل اختبار جديد'&&a.allowedProductIds.join()==='C1').length),1);
+const deniedSale=await p.evaluate(()=>{const e=new Masal.Engine(app.s,'U5');try{e.sell('POS1','C2',1,'forbidden-category');return false}catch{return true}});assert(deniedSale);
+await p.reload();await p.waitForFunction(()=>typeof window.app?.go==='function');assert.equal(await p.evaluate(()=>app.s.agents.filter(a=>a.name==='وكيل اختبار جديد'&&a.allowedProductIds.join()==='C1').length),1);
+assert.deepEqual(errors,[]);console.log('PASS 520 categories, paging/search, bulk selection, cancel/confirm/save, scoped inheritance, new categories excluded, forbidden edits, readonly preview and mobile');
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});
