@@ -1242,6 +1242,10 @@ html[data-theme=dark] .main :is(.report-group-card,.report-tile) :is(small,.repo
 html[data-theme=dark] .main .report-group-grid .card.report-group-card{background:linear-gradient(130deg,color-mix(in srgb,var(--report-accent,#83cedf) 22%,#192437),#192437)!important;border-color:color-mix(in srgb,var(--report-accent,#83cedf) 55%,#304059)!important}
 html[data-theme=dark] .main .report-related .card.report-related-card.report-tile{background:linear-gradient(130deg,color-mix(in srgb,var(--report-accent,#83cedf) 22%,#192437),#192437)!important;border-color:color-mix(in srgb,var(--report-accent,#83cedf) 55%,#304059)!important}
 /* Wallet subcards follow the parent tint; all other styling uses the shared report theme. */
+.main .wallet-funding-content{padding:0!important;margin-top:12px}
+.wallet-funding-content .wallet-funding-body{border-top:0}
+.wallet-funding-count{margin-inline-start:5px;min-width:20px;padding:2px 5px;font-size:10px}
+@media(min-width:1000px) and (max-width:1450px){html .main .wallet-filter-toolbar{gap:5px}html .main .wallet-filter-toolbar :is(.wallet-navigation-tabs button,.actions .btn,.wallet-service-cards button){font-size:11px;padding-inline:7px}html .main .wallet-filter-toolbar .wallet-service-cards{gap:4px}}
 @media(min-width:1000px){
  .main .wallet-filter-toolbar{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;max-width:100%;overflow-x:auto;scrollbar-width:none}
  .main .wallet-filter-toolbar::-webkit-scrollbar{display:none}
