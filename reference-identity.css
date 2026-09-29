@@ -182,7 +182,7 @@ html[data-theme=light] .main .card{background:#fff;border-color:#d5e3e9;color:#1
 html[data-theme=light] .main .owner-summary .card:nth-child(n),html[data-theme=light] .main .metrics .card:nth-child(n),html[data-theme=light] .main .reference-metrics .card:nth-child(n),html[data-theme=light] .main .ops-stats>div:nth-child(n){--tile-accent:#0798b7;--tile-edge:#91d2e2;--tile-wash:#e8f5f8;background:linear-gradient(125deg,var(--tile-wash),#fff);border-color:var(--tile-edge);color:#123d57;box-shadow:0 3px 12px #123d5703}
 html[data-theme=light] .main .owner-summary .card:nth-child(4n+2),html[data-theme=light] .main .metrics .card:nth-child(4n+2),html[data-theme=light] .main .reference-metrics .card.purchase-card,html[data-theme=light] .main .ops-stats>div:nth-child(4n+2){--tile-accent:#079b78;--tile-edge:#9ed6c6;--tile-wash:#e9f5f1}
 html[data-theme=light] .main .owner-summary .card:nth-child(4n+3),html[data-theme=light] .main .metrics .card:nth-child(4n+3),html[data-theme=light] .main .reference-metrics .card.growth-card,html[data-theme=light] .main .ops-stats>div:nth-child(4n+3){--tile-accent:#8654d8;--tile-edge:#c6b1ef;--tile-wash:#f1ecfa}
-html[data-theme=light] .main .owner-summary .card:nth-child(4n+4),html[data-theme=light] .main .metrics .card:nth-child(4n+4),html[data-theme=light] .main .reference-metrics .card.volume-card,html[data-theme=light] .main .ops-stats>div:nth-child(4n+4){--tile-accent:#ca820d;--tile-edge:#e8c697;--tile-wash:#fbf3e8}
+html[data-theme=light] .main .owner-summary .card:nth-child(4n+4),html[data-theme=light] .main .metrics .card:nth-child(4n+4),html[data-theme=light] .main .reference-metrics .card.volume-card,html[data-theme=light] .main .ops-stats>div:nth-child(4n+4){--tile-accent:#526779;--tile-edge:#bbc8d2;--tile-wash:#edf1f4}
 html[data-theme=light] .main .metricvalue,html[data-theme=light] .main .owner-summary strong,html[data-theme=light] .main .ops-stats strong{color:var(--tile-accent,#123d57)}
 html[data-theme=light] .main .metriclabel,html[data-theme=light] .main .owner-summary article>span:not(.summary-icon){color:#58778e}
 html[data-theme=light] .main .owner-summary .summary-icon{background:#ffffffbf;color:var(--tile-accent,#0898b5)}
@@ -263,7 +263,7 @@ html[data-theme=light] .gauge svg stop:first-child{stop-color:#0898b5}html[data-
 html[data-theme=dark] .main .owner-summary .card:nth-child(n),html[data-theme=dark] .main .metrics .card:nth-child(n),html[data-theme=dark] .main .reference-metrics .card:nth-child(n),html[data-theme=dark] .main .ops-stats>div:nth-child(n){--tile-accent:#78cde0;--tile-edge:#355768;--tile-wash:#1c3544;--ink:#edf4fa;--text:#dae6ef;--muted:#b2c5d5;--blue-bg:#294655;--blue-text:#8ed6e5;background:linear-gradient(125deg,var(--tile-wash),#1b2939);border-color:var(--tile-edge);color:var(--text);box-shadow:none}
 html[data-theme=dark] .main .owner-summary .card:nth-child(4n+2),html[data-theme=dark] .main .metrics .card:nth-child(4n+2),html[data-theme=dark] .main .reference-metrics .card.purchase-card,html[data-theme=dark] .main .ops-stats>div:nth-child(4n+2){--tile-accent:#8bd5b8;--tile-edge:#365951;--tile-wash:#203c38}
 html[data-theme=dark] .main .owner-summary .card:nth-child(4n+3),html[data-theme=dark] .main .metrics .card:nth-child(4n+3),html[data-theme=dark] .main .reference-metrics .card.growth-card,html[data-theme=dark] .main .ops-stats>div:nth-child(4n+3){--tile-accent:#c4aff0;--tile-edge:#514866;--tile-wash:#322e45}
-html[data-theme=dark] .main .owner-summary .card:nth-child(4n+4),html[data-theme=dark] .main .metrics .card:nth-child(4n+4),html[data-theme=dark] .main .reference-metrics .card.volume-card,html[data-theme=dark] .main .ops-stats>div:nth-child(4n+4){--tile-accent:#e5c28e;--tile-edge:#5c5242;--tile-wash:#39362f}
+html[data-theme=dark] .main .owner-summary .card:nth-child(4n+4),html[data-theme=dark] .main .metrics .card:nth-child(4n+4),html[data-theme=dark] .main .reference-metrics .card.volume-card,html[data-theme=dark] .main .ops-stats>div:nth-child(4n+4){--tile-accent:#b6c5d3;--tile-edge:#4a5b6c;--tile-wash:#29343f}
 html[data-theme=dark] .main :is(.metrics,.owner-summary,.reference-metrics,.ops-stats) :is(.metricvalue,.dashboard-kpi-number strong,.ops-stats strong){color:var(--tile-accent,#edf4fa)}
 html[data-theme=dark] .main :is(.metrics,.owner-summary,.reference-metrics,.ops-stats) :is(.metriclabel,.dashboard-kpi-head){color:#dae6ef}
 html[data-theme=dark] .main :is(.metrics,.owner-summary,.reference-metrics,.ops-stats) :is(.caption,.metricsub,.dashboard-kpi-number small){color:#b2c5d5}
@@ -555,7 +555,7 @@ html[data-theme="dark"] body select:not([multiple])[size="1"]{background-image:u
 .report-group-card strong{font-size:16px}.report-group-card span,.report-group-card small{font-size:12px;color:var(--muted)}
 .report-group-card .report-group-action{margin-top:auto;border-color:var(--report-accent,#0891b2);color:var(--report-accent,#0891b2)}
 .report-group-card.selected{outline:2px solid var(--report-accent,#0891b2);outline-offset:2px}
-.report-group-wallets{--report-accent:#16a085}.report-group-inventory{--report-accent:#b88631}.report-group-network{--report-accent:#8b6bd1}.report-group-admin{--report-accent:#5796bd}
+.report-group-wallets{--report-accent:#285e65}.report-group-inventory{--report-accent:#526779}.report-group-network{--report-accent:#8b6bd1}.report-group-admin{--report-accent:#5796bd}
 .report-related h2{font-size:18px}.main .report-related-card{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:18px;border-top:3px solid var(--accent,#0799b3)}
 .report-related-card h3{font-size:14px;margin:0}.report-related-card>strong{font-size:23px}.report-related-card small{font-size:12px;color:var(--muted)}.report-related-card .btn{margin-top:auto}
 .modal:has(.report-detail-dialog){width:min(1200px,96vw);max-width:96vw}
@@ -1175,3 +1175,71 @@ html::-webkit-scrollbar,body::-webkit-scrollbar,body *::-webkit-scrollbar{displa
 .multi-orders .order-preview-edit td{vertical-align:top}
 .multi-orders .actions{gap:6px;flex-wrap:wrap}
 .multi-orders .order-upload.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.main .exceptions-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.main .exceptions-toolbar>input{min-width:0;flex:1 1 300px}
+.main .exceptions-toolbar>select{min-width:0;flex:0 1 190px}
+.main .exceptions-toolbar>.workspace-actions{display:flex;flex:none;width:auto;margin:0;margin-inline-start:auto;padding:0;border:0;background:transparent!important}
+.main .exceptions-toolbar .workspace-more{margin:0}
+.main .exceptions-toolbar .workspace-more summary{height:42px;width:40px;box-sizing:border-box}
+@media(max-width:600px){.main .exceptions-toolbar>select{width:125px!important;flex:0 1 125px}.main .exceptions-toolbar{gap:6px}}
+[data-theme=dark] .report-group-inventory{--report-accent:#b6c5d3}
+/* Report surfaces share the night palette; accents distinguish groups only. */
+html[data-theme=dark] :is(.report-group-sales,.report-related){--report-accent:#83cedf}
+html[data-theme=dark] .report-group-wallets{--report-accent:#9bc7cb}
+html[data-theme=dark] .report-group-inventory{--report-accent:#b6c5d3}
+html[data-theme=dark] .report-group-network{--report-accent:#c4aff0}
+html[data-theme=dark] .report-group-admin{--report-accent:#a2c7e5}
+html[data-theme=dark] .main :is(.report-group-card,.report-related .report-related-card){background:linear-gradient(135deg,color-mix(in srgb,var(--report-accent) 7%,#192437),#192437)!important;border-color:color-mix(in srgb,var(--report-accent) 35%,#304059)!important;box-shadow:none;color:#dae6ef}
+html[data-theme=dark] .main :is(.report-group-card,.report-related-card) :is(h3,strong){color:#edf4fa}
+html[data-theme=dark] .main :is(.report-group-card,.report-related-card) :is(span,small){color:#b2c5d5}
+html[data-theme=dark] .main .report-related .report-related-card>strong{color:var(--report-accent)}
+html[data-theme=dark] .main :is(.report-group-card,.report-related-card) .btn{color:var(--report-accent);background:#202e43;border-color:color-mix(in srgb,var(--report-accent) 40%,#304059)}
+html[data-theme=dark] .main :is(.report-group-card,.report-related-card):hover{border-color:var(--report-accent)!important}
+html[data-theme=dark] :is(.report-unified-toolbar,.modal:has(.report-detail-dialog),.modal:has(.report-filters)){--panel:#192437;--raised:#202e43;--line:#354b63;--ink:#edf4fa;--text:#dae6ef;--muted:#b2c5d5;background:var(--panel);color:var(--text);border-color:var(--line)}
+html[data-theme=dark] :is(.report-detail-dialog,.report-filters) :is(input:not([type=checkbox]),select,textarea){background:#202e43!important;color:#edf4fa!important;border-color:#405973!important}
+html[data-theme=dark] :is(.report-detail-dialog,.report-filters) :is(input,textarea)::placeholder{color:#a9bfd2;opacity:1}
+html[data-theme=dark] .report-detail-dialog .report-table-tools{background:#162333;border-color:#354b63}
+html[data-theme=dark] .report-detail-dialog :is(.tablewrap,.report-record-panel,.report-record-fields>div,.column-picker>div){background:#192437;border-color:#354b63;color:#dae6ef}
+html[data-theme=dark] .report-detail-dialog .report-record-fields>div{background:#202e43}
+html[data-theme=dark] .report-detail-dialog th{background:#203748!important;color:#bedce9!important;border-color:#354b63}
+html[data-theme=dark] .report-detail-dialog td{background:#192437!important;color:#dae6ef;border-color:#304459}
+html[data-theme=dark] .report-detail-dialog tbody tr:nth-child(even) td{background:#1c293b!important}
+html[data-theme=dark] .report-detail-dialog tbody tr:hover td{background:#233c4e!important}
+html[data-theme=dark] :is(.report-detail-dialog,.report-filters,.report-unified-toolbar) .btn:not(.primary):not(.danger){background:#202e43;border-color:#405973;color:#dae6ef}
+html[data-theme=dark] :is(.report-detail-dialog,.report-filters,.report-unified-toolbar) :is(input,select,.btn,summary):focus-visible{outline:2px solid #83cedf;outline-offset:2px}
+/* Compact report tiles: restrained surfaces, clear title and count hierarchy. */
+.main .report-related .report-related-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+html .main .report-related .report-related-card.report-tile{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:22px;padding:20px;border:1px solid color-mix(in srgb,var(--report-accent,#0891b2) 30%,var(--line))!important;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--report-accent,#0891b2) 10%,var(--panel)),color-mix(in srgb,var(--report-accent,#0891b2) 4%,var(--panel)))!important;box-shadow:0 3px 12px #123d5705;transition:border-color .18s,box-shadow .18s,transform .18s;min-width:0}
+.report-tile-heading{display:flex;align-items:center;gap:12px;min-width:0}
+.report-tile-icon{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:12px;background:color-mix(in srgb,var(--report-accent,#0891b2) 12%,var(--panel));color:var(--report-accent,#0891b2)!important}
+.report-tile-icon svg{width:22px;height:22px}
+.main .report-tile-heading h3{margin:0;color:var(--ink);font-size:14px;font-weight:700;line-height:1.7;overflow-wrap:anywhere}
+.report-tile-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:16px;border-top:1px solid var(--soft-line)}
+.report-tile-count{display:flex;align-items:baseline;gap:6px;min-width:max-content;flex-shrink:0}
+.main .report-tile-count strong{font-size:26px;line-height:1.2;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.report-tile-count small{color:var(--muted);font-size:12px}
+html .main .report-related .report-tile .report-tile-open{display:flex;align-items:center;gap:8px;flex-shrink:0;margin:0;padding:8px 10px;border:1px solid transparent;background:color-mix(in srgb,var(--report-accent,#0891b2) 78%,#102b40);color:#fff;box-shadow:0 2px 6px #123d5712;font-weight:700;font-size:12px}
+html .main .report-related .report-tile .report-tile-open span{color:inherit}
+.report-tile-open svg{width:17px;height:17px;flex-shrink:0}
+[dir=ltr] .report-tile-open svg{transform:rotate(180deg)}
+html .main .report-related .report-tile:hover,html .main .report-related .report-tile:focus-within{border-color:var(--report-accent,#0891b2)!important;box-shadow:0 7px 20px #123d570d}
+html .main .report-related .report-tile .report-tile-open:hover{background:color-mix(in srgb,var(--report-accent,#0891b2) 65%,#102b40)}
+.report-tile-open:focus-visible{outline:2px solid var(--report-accent,#0891b2);outline-offset:2px}
+html[data-theme=dark] .report-group-sales{--report-surface:#1b303b;--report-edge:#355463;--report-button:#284957}
+html[data-theme=dark] .report-group-wallets{--report-surface:#203339;--report-edge:#3b6067;--report-button:#2b4b53}
+html[data-theme=dark] .report-group-inventory{--report-surface:#242f3c;--report-edge:#425366;--report-button:#34475a}
+html[data-theme=dark] .report-group-network{--report-surface:#2b293d;--report-edge:#4c4565;--report-button:#403653}
+html[data-theme=dark] .report-group-admin{--report-surface:#203040;--report-edge:#3b536c;--report-button:#2d4660}
+html[data-theme=dark] .main :is(.report-group-card,.report-related .report-related-card.report-tile){background:var(--report-surface,#202e3d)!important;border:1px solid var(--report-edge,#3a4d61)!important;box-shadow:none}
+html[data-theme=dark] .report-tile-footer{border-color:var(--report-edge,#3a4d61)}
+html[data-theme=dark] .report-tile-icon{background:var(--report-button,#2c4356);color:var(--report-accent)!important}
+@media(prefers-reduced-motion:reduce){.main .report-related .report-related-card.report-tile{transition:none}}
+html[data-theme=dark] .main :is(.report-group-card .report-group-action,.report-related .report-tile .report-tile-open){background:var(--report-button,#2c4356)!important;color:#e9f1f8!important;border:1px solid var(--report-edge,#3a4d61)!important;box-shadow:none}
+html[data-theme=dark] .main :is(.report-group-card .report-group-action,.report-related .report-tile .report-tile-open):hover{background:color-mix(in srgb,var(--report-button,#2c4356) 85%,var(--report-accent,#83cedf))!important;border-color:var(--report-accent)!important}
+html[data-theme=dark] .main :is(.report-group-card,.report-tile) :is(h3,strong){color:#e9f1f8}
+html[data-theme=dark] .main :is(.report-group-card,.report-tile) :is(small,.report-group-action span){color:#b8c6d4}
+/* Main report groups retain the daytime hue-to-panel gradient in night mode. */
+html[data-theme=dark] .main .report-group-grid .card.report-group-card{background:linear-gradient(130deg,color-mix(in srgb,var(--report-accent,#83cedf) 22%,#192437),#192437)!important;border-color:color-mix(in srgb,var(--report-accent,#83cedf) 55%,#304059)!important}
+html[data-theme=dark] .main .report-related .card.report-related-card.report-tile{background:linear-gradient(130deg,color-mix(in srgb,var(--report-accent,#83cedf) 22%,#192437),#192437)!important;border-color:color-mix(in srgb,var(--report-accent,#83cedf) 55%,#304059)!important}
+/* Wallet subcards follow the parent tint; all other styling uses the shared report theme. */
+html[data-theme=light] .main .report-related.report-group-wallets .card.report-related-card.report-tile{background:linear-gradient(130deg,color-mix(in srgb,var(--report-accent) 12%,var(--panel)),var(--panel))!important}

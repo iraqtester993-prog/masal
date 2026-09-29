@@ -728,8 +728,18 @@ const additional=`
 `.trim().split('\n');
 for(const row of additional){const [ar,en,ckb]=row.split('|');dictionaries.en[ar.trim()]=en;dictionaries.ckb[ar.trim()]=ckb;}
 const latin=value=>String(value).replace(/[٠-٩۰-۹]/g,c=>String(c.charCodeAt(0)-(c>='۰'?1776:1632)));
-let keys=Object.keys(dictionaries.en).sort((a,b)=>b.length-a.length);
-function translate(value,lang){if(value==null||typeof value==='object'||typeof value==='boolean')return value;const source=latin(value);if(lang==='ar')return source;const trimmed=source.trim(),dict=dictionaries[lang]||dictionaries.en;if(keys.length!==Object.keys(dict).length)keys=Object.keys(dict).sort((a,b)=>b.length-a.length);if(dict[trimmed])return source.replace(trimmed,dict[trimmed]);let text=source;for(const key of keys){if(key.length>=3&&text.includes(key))text=text.split(key).join(dict[key]||key);}return text;}
+const translationPatterns={},untranslated=new Set();
+function translate(value,lang){
+ if(value==null||typeof value==='object'||typeof value==='boolean')return value;
+ const source=latin(value);if(lang==='ar')return source;
+ const trimmed=source.trim(),dict=dictionaries[lang]||dictionaries.en;
+ if(dict[trimmed])return source.replace(trimmed,()=>dict[trimmed]);
+ const count=Object.keys(dict).length;let cache=translationPatterns[lang];
+ if(!cache||cache.count!==count){const keys=Object.keys(dict).filter(k=>k.trim()&&typeof dict[k]==='string').sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));cache=translationPatterns[lang]={count,re:new RegExp('(?<![\\p{L}\\p{N}_])(?:'+keys.join('|')+')(?![\\p{L}\\p{N}_])','gu')};}
+ const text=source.replace(cache.re,key=>dict[key]??key);
+ if(lang==='en'&&/[\u0600-\u06ff]/.test(text))untranslated.add(trimmed);
+ return text;
+}
 function localDate(value,lang,mode){const d=new Date(value);if(lang!=='ckb')return latin(new Intl.DateTimeFormat(lang==='en'?'en-GB-u-nu-latn':'ar-IQ-u-nu-latn',mode==='weekday'?{weekday:'short',timeZone:'Asia/Baghdad'}:mode==='long'?{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Asia/Baghdad'}:{dateStyle:'short',timeStyle:'short',timeZone:'Asia/Baghdad'}).format(d));const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB-u-nu-latn',{year:'numeric',month:'numeric',day:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Baghdad'}).formatToParts(d).map(x=>[x.type,x.value]));const days={Sun:'یەکشەممە',Mon:'دووشەممە',Tue:'سێشەممە',Wed:'چوارشەممە',Thu:'پێنجشەممە',Fri:'هەینی',Sat:'شەممە'},months=['کانوونی دووەم','شوبات','ئازار','نیسان','ئایار','حوزەیران','تەمووز','ئاب','ئەیلوول','تشرینی یەکەم','تشرینی دووەم','کانوونی یەکەم'];return mode==='weekday'?days[p.weekday]:mode==='long'?days[p.weekday]+'، '+p.day+' '+months[Number(p.month)-1]+' '+p.year:p.day+'/'+p.month+'/'+p.year+' '+p.hour+':'+p.minute;}
-root.MasalLocale={dictionaries,translate,latin,date:localDate};
+root.MasalLocale={dictionaries,translate,latin,date:localDate,untranslated};
 })(globalThis);

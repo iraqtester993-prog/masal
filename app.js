@@ -211,4 +211,5 @@ appOptions.methods.profileAccountLabel=function(user){
  };
  const alias=aliases[user.id];return alias&&user.demo&&user.name===alias[0]?alias[1]:user.name;
 };
+MasalUILocalization.install(appOptions);
 window.app=createApp(appOptions).directive('money',MasalMoneyInputs.directive).mount('#app');
