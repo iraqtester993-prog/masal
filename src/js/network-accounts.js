@@ -118,7 +118,7 @@ function install(o){
   this.engine.log('بدء جلسة جهاز تجريبية',p.id,{online:false},{online:true,mode:'local-demo'});
  },'بدأت جلسة الجهاز التجريبية؛ يمكنك متابعة الإصدار')};
  o.computed.networkLinkedAccount=function(){return ['agents','pos'].includes(this.page)&&this.editForm.id?linked(this.s,this.page,this.editForm.id):null};
- o.methods.networkLoginEmail=function(page,id){return linked(this.s,page,id)?.email||'غير مسجل'};
+ o.methods.networkLoginEmail=function(page,id){const account=linked(this.s,page,id);return account?.email||account?.username||'غير مسجل'};
  o.methods.showNetworkDetails=function(page,id){this.run(()=>{if(!['agents','pos'].includes(page))throw Error('جهة غير صالحة');this.engine.requirePermission(page+'.view');const r=this.s[page].find(r=>r.id===id);if(!r)throw Error('الحساب غير موجود');this.engine.require(page==='pos'?r.agent:r.id);this.modal={kind:'inspect',title:'تفاصيل '+r.name,data:{'الاسم':r.name,'بريد تسجيل الدخول':this.networkLoginEmail(page,id),'المحافظة':r.city||'—','الهاتف':r.phone||'—','الحالة':r.active?'مفعل':'موقوف','الملاحظات':r.notes||'—'}}})};
  o.methods.networkFieldLocked=function(f){return ['agents','pos'].includes(this.page)&&((!!this.editForm.id&&['type','parent','agent'].includes(f.key))||(!this.editForm.id&&this.managementRole!=='owner'&&['type','parent','agent'].includes(f.key)))};
  o.methods.optionsFor=function(f){let out=options.call(this,f);if(this.page==='agents'&&f.key==='parent'&&this.editForm.id)out=out.filter(x=>!this.engine.descendants(this.editForm.id).includes(x.value));return out};
