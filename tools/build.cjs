@@ -7,6 +7,7 @@ fs.writeFileSync('assets/map-places.js','globalThis.MasalMapPlaces='+JSON.string
 fs.writeFileSync('assets/map-countries.js','globalThis.MasalMapCountries='+JSON.stringify({type:'FeatureCollection',features:mapCountries.features.map(f=>({type:'Feature',properties:{name:f.properties.NAME_AR||f.properties.NAME,id:f.properties.ADM0_A3},geometry:f.geometry}))})+';');
 fs.writeFileSync('src/js/company-public-runtime.js','globalThis.MasalCompanyVueSource='+JSON.stringify(fs.readFileSync('assets/vue.global.prod.js','utf8'))+';');
 let html=fs.readFileSync('index.html','utf8');
+html=html.replace('<input type="text" dir="ltr" readonly :value="networkLinkedAccount.email||tr(\'غير مسجل\')" aria-label="بريد تسجيل الدخول">','<input type="text" dir="ltr" v-model="networkLogin.email" required autocomplete="username" aria-label="بريد أو اسم مستخدم تسجيل الدخول">');
 html=html.replace('<link rel="stylesheet" href="src/css/support-chat.css">','<style>'+fs.readFileSync('src/css/support-chat.css','utf8')+'</style>');
 html=html.replace('<link rel="stylesheet" href="src/css/agent-products.css">','<style>'+fs.readFileSync('src/css/agent-products.css','utf8')+'</style>');
 html=html.replace('<link rel="stylesheet" href="src/css/network-tree.css">','');

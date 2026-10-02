@@ -32,17 +32,18 @@ function validate(e,page,v,login){
   if(old&&old.agent!==v.agent)throw Error('نقل نقطة بين الوكلاء يحتاج تسوية مستقلة');
  }
  const existing=old&&linked(e.s,page,old.id);
- if(existing){if(login.password)root.MasalPasswordAdmin.validate(e,existing.id,login.password,login.confirmPassword);return {existing}};
- const email=String(login.email||'').trim().toLowerCase();
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('أدخل بريد حساب الدخول بصورة صحيحة');
- if(e.s.users.some(u=>String(u.email||'').trim().toLowerCase()===email))throw Error('البريد الإلكتروني مستخدم لحساب آخر');
+ const identifier=String(login.email||'').trim().toLowerCase();
+ const isEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier),isUsername=/^[a-z][a-z0-9._-]{2,79}$/i.test(identifier);
+ if(!isEmail&&!isUsername)throw Error('أدخل بريدًا إلكترونيًا أو اسم مستخدم صحيحًا');
+ if(e.s.users.some(u=>u.id!==existing?.id&&[u.email,u.username].some(v=>String(v||'').trim().toLowerCase()===identifier)))throw Error('بريد أو اسم المستخدم مستخدم لحساب آخر');
+ if(existing){const current=String(existing.email||existing.username||'').trim().toLowerCase();if(identifier!==current&&e.actor().role!=='owner')throw Error('تغيير بريد أو اسم مستخدم الحساب متاح لمدير النظام فقط');if(login.password)root.MasalPasswordAdmin.validate(e,existing.id,login.password,login.confirmPassword);return {existing,identifier,isEmail}};
  if(String(login.password||'').length<8)throw Error('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
- return {email,role:page==='pos'?'pos':v.type==='رئيسي'?'main':'sub'};
+ return {identifier,isEmail,role:page==='pos'?'pos':v.type==='رئيسي'?'main':'sub'};
 }
 function attach(e,page,entity,checked,credentials){
- if(checked.existing){if(credentials)root.MasalPasswordAdmin.apply(e,checked.existing,credentials);return checked.existing}
+ if(checked.existing){const before={email:checked.existing.email||'',username:checked.existing.username||''};if(checked.isEmail){checked.existing.email=checked.identifier;delete checked.existing.username}else{checked.existing.username=checked.identifier;delete checked.existing.email}if(credentials)root.MasalPasswordAdmin.apply(e,checked.existing,credentials);if(before.email!==checked.existing.email||before.username!==checked.existing.username)e.log('تعديل معرف تسجيل الدخول',checked.existing.id,before,{email:checked.existing.email||'',username:checked.existing.username||''});return checked.existing}
  if(linked(e.s,page,entity.id))throw Error('لهذه الجهة حساب مرتبط مسبقًا');
- const user={id:M.id('USER'),createdAt:entity.createdAt||new Date().toISOString(),name:entity.name,email:checked.email,role:checked.role,active:true,agent:page==='agents'?entity.id:entity.agent,pos:page==='pos'?entity.id:'',credentials};
+ const user={id:M.id('USER'),createdAt:entity.createdAt||new Date().toISOString(),name:entity.name,email:checked.isEmail?checked.identifier:'',username:checked.isEmail?'':checked.identifier,role:checked.role,active:true,agent:page==='agents'?entity.id:entity.agent,pos:page==='pos'?entity.id:'',credentials};
  // Ancestor limits are evaluated live, so later restrictions and restorations reach existing descendants.
  e.s.users.push(user);e.log('إنشاء حساب '+({main:'وكيل رئيسي',sub:'وكيل فرعي',pos:'نقطة بيع'}[user.role]),user.id,null,{name:user.name,email:user.email,role:user.role,agent:user.agent,pos:user.pos});return user;
 }
@@ -82,6 +83,7 @@ function saveNetworkPermissions(e,page,id,changes,reason){
  e.log('تعديل صلاحيات تابع',id,before,{rules:candidate.networkRules,changes,reason:reason.trim()});return target.record;
 }
 function install(o){
+ o.template=o.template?.replace('<input type="text" dir="ltr" readonly :value="networkLinkedAccount.email||tr(\'غير مسجل\')" aria-label="بريد تسجيل الدخول">','<input type="text" dir="ltr" v-model="networkLogin.email" required autocomplete="username" aria-label="بريد أو اسم مستخدم تسجيل الدخول">');
  const data=o.data,open=o.methods.openEdit,save=o.methods.saveEntity,close=o.methods.closeModal,options=o.methods.optionsFor;
  o.data=function(){return {...data.call(this),networkLogin:{email:'',password:'',confirmPassword:''},networkSaving:false,networkImageBusy:false,networkPermissionDraft:{},networkPermissionInitial:{},networkPermissionReason:'',networkPermissionSearch:''}};
  o.methods.canManageNetwork=function(page,id){try{permissionTarget(this.engine,page,id);return true}catch{return false}};
@@ -120,7 +122,7 @@ function install(o){
  o.methods.showNetworkDetails=function(page,id){this.run(()=>{if(!['agents','pos'].includes(page))throw Error('جهة غير صالحة');this.engine.requirePermission(page+'.view');const r=this.s[page].find(r=>r.id===id);if(!r)throw Error('الحساب غير موجود');this.engine.require(page==='pos'?r.agent:r.id);this.modal={kind:'inspect',title:'تفاصيل '+r.name,data:{'الاسم':r.name,'بريد تسجيل الدخول':this.networkLoginEmail(page,id),'المحافظة':r.city||'—','الهاتف':r.phone||'—','الحالة':r.active?'مفعل':'موقوف','الملاحظات':r.notes||'—'}}})};
  o.methods.networkFieldLocked=function(f){return ['agents','pos'].includes(this.page)&&((!!this.editForm.id&&['type','parent','agent'].includes(f.key))||(!this.editForm.id&&this.managementRole!=='owner'&&['type','parent','agent'].includes(f.key)))};
  o.methods.optionsFor=function(f){let out=options.call(this,f);if(this.page==='agents'&&f.key==='parent'&&this.editForm.id)out=out.filter(x=>!this.engine.descendants(this.editForm.id).includes(x.value));return out};
- o.methods.openEdit=function(row){if(!row&&this.page==='agents'&&A.branchCreationBlocked(this.s,this.actor)){this.notify('الفرعي التابع لفرعي يمكنه إنشاء نقاط بيع فقط، ولا يمكنه إنشاء فروع',true);return}open.call(this,row);if(!['agents','pos'].includes(this.page)||this.modal?.kind!=='edit')return;this.networkLogin={email:'',password:''};if(!row&&this.managementRole!=='owner'){if(this.page==='agents'){this.editForm.type='فرعي';this.editForm.parent=this.actor.agent}else this.editForm.agent=this.actor.agent}};
+ o.methods.openEdit=function(row){if(!row&&this.page==='agents'&&A.branchCreationBlocked(this.s,this.actor)){this.notify('الفرعي التابع لفرعي يمكنه إنشاء نقاط بيع فقط، ولا يمكنه إنشاء فروع',true);return}open.call(this,row);if(!['agents','pos'].includes(this.page)||this.modal?.kind!=='edit')return;const account=row?linked(this.s,this.page,row.id):null;this.networkLogin={email:account?.email||account?.username||'',password:'',confirmPassword:''};if(!row&&this.managementRole!=='owner'){if(this.page==='agents'){this.editForm.type='فرعي';this.editForm.parent=this.actor.agent}else this.editForm.agent=this.actor.agent}};
  o.methods.closeModal=function(){if(this.networkSaving)return;this.networkLogin={email:'',password:''};return close.call(this)};
  o.methods.saveEntity=async function(){
   if(!['agents','pos'].includes(this.page))return save.call(this);
