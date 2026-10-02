@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^demo\.our-qiq\.com$ [NC]
+RewriteRule ^(.*)$ https://our-qiq.com/direct-store-demo/$1 [R=302,L]
+</IfModule>
+Options -Indexes
+<IfModule mod_headers.c>
+<FilesMatch "^(sw\.js|index\.html|manifest\.webmanifest)$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+</IfModule>

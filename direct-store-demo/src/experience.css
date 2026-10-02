@@ -1,0 +1,92 @@
+/* Shared, restrained system styling for customer and management surfaces. */
+html:root[data-theme]{--action:#007aff;--action-ink:#fff;--action-hover:#0064d2}
+html:root[data-theme][data-theme=dark]{--action:#0a84ff;--action-hover:#409cff;--action-ink:#fff}
+html:root[data-theme] .app-header{height:76px}
+html:root[data-theme] .brand small{font-size:10px;color:var(--muted)}
+html:root[data-theme] .app-shell>main{padding-top:6px}
+html:root[data-theme] .campaign{border:1px solid var(--line);box-shadow:none;position:relative}
+html:root[data-theme] .campaign-copy{position:relative;z-index:1}
+html:root[data-theme] .campaign-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+html:root[data-theme] .campaign-with-image:has(.campaign-copy):after{content:'';position:absolute;inset:0;background:linear-gradient(270deg,#000b,transparent 90%);pointer-events:none}
+html:root[data-theme] .campaign-with-image .campaign-copy{color:white;max-width:65%}
+html:root[data-theme] .campaign-with-image h2,html:root[data-theme] .campaign-with-image .campaign-label{color:white}
+html:root[data-theme] .slide-controls{position:absolute;z-index:2;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:7px;align-items:center;padding:7px 10px;border-radius:20px;background:#8882;backdrop-filter:blur(12px)}
+html:root[data-theme] .slide-controls button{width:7px;height:7px;border:0;border-radius:50%;background:#8e8e9377;padding:0}
+html:root[data-theme] .slide-controls button.active{width:22px;border-radius:9px;background:var(--action)}
+html:root[data-theme] .campaign-with-image .slide-controls{background:#0003}
+html:root[data-theme] .campaign-with-image .slide-controls button{background:#fff8}
+html:root[data-theme] .campaign-with-image .slide-controls button.active{background:white}
+html:root[data-theme] .trust-row{color:var(--muted)}
+html:root[data-theme] .product-grid{gap:18px}
+html:root[data-theme] .product-card{background:var(--surface);border:1px solid var(--line);padding:22px;border-radius:24px;box-shadow:0 4px 18px #00000003;transition:transform .2s,box-shadow .2s}
+html:root[data-theme] .product-card:before{display:none}
+html:root[data-theme] .product-card:hover{transform:translateY(-2px);box-shadow:0 8px 25px #00000008}
+html:root[data-theme] .product-image{display:block;width:calc(100% + 44px);max-width:none;height:160px;object-fit:contain;background:var(--inset);margin:-22px -22px 20px;padding:12px}
+html:root[data-theme] .product-top{margin-bottom:20px}
+html:root[data-theme] .product-company{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:6px}
+html:root[data-theme] .product-name{margin:0;color:var(--ink);font-weight:600;font-size:16px;letter-spacing:0;line-height:1.6}
+html:root[data-theme] .face-value{color:var(--ink);font-size:32px;line-height:1.5;font-weight:650;margin-top:6px;letter-spacing:-.6px}
+html:root[data-theme] .face-value small{font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+html:root[data-theme] .product-card>p{color:var(--muted);font-size:11px;margin:3px 0 19px}
+html:root[data-theme] .product-bottom{border-top:1px solid var(--line);gap:15px;padding-top:18px}
+html:root[data-theme] .product-bottom small{color:var(--muted)}
+html:root[data-theme] .product-bottom strong{color:var(--ink);font-weight:600;font-size:18px}
+html:root[data-theme] .product-bottom strong span{color:var(--muted);font-size:10px;font-weight:400}
+html:root[data-theme][data-theme] .product-bottom>button{background:var(--action);color:var(--action-ink);border:0;width:100%;height:42px;border-radius:13px;font-weight:600;font-size:13px;gap:7px;box-shadow:none}
+html:root[data-theme][data-theme] .product-bottom>button:hover{background:var(--action-hover);color:var(--action-ink)}
+html:root[data-theme][data-theme] .product-bottom>button:disabled{background:var(--inset);color:var(--muted);opacity:1;cursor:default}
+html:root[data-theme] .company-rail>button{border-radius:22px;box-shadow:none;border-color:var(--line);padding:23px 14px 19px}
+html:root[data-theme] .company-rail>button:before{height:72px;background:linear-gradient(160deg,color-mix(in srgb,var(--company-brand) 8%,var(--surface)),var(--surface))}
+html:root[data-theme] .company-rail b{color:var(--ink);font-weight:600}
+html:root[data-theme] .company-rail small{color:var(--muted)}
+html:root[data-theme] .company-logo img{width:100%;height:100%;object-fit:contain;border-radius:inherit;background:white}
+html:root[data-theme] .header-profile,html:root[data-theme] .header-search-button,html:root[data-theme] .theme-toggle{border-color:var(--line);color:var(--ink)}
+html:root[data-theme] .header-search-button[aria-expanded=true]{color:white;background:var(--action)}
+html:root[data-theme] .primary{background:var(--action);color:var(--action-ink);border-radius:12px;box-shadow:none}
+html:root[data-theme] .primary:hover{background:var(--action-hover)}
+html:root[data-theme] .support-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:20px;align-items:start;margin-bottom:40px}
+html:root[data-theme] .support-list,html:root[data-theme] .support-conversation{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px}
+html:root[data-theme] .support-list>button{display:flex;align-items:flex-start;flex-direction:column;text-align:right;gap:7px;padding:15px 12px;width:100%;color:var(--ink);border-radius:12px;border:0;border-bottom:1px solid var(--line);background:transparent;margin-bottom:5px}
+html:root[data-theme] .support-list>button.active{background:var(--inset)}
+html:root[data-theme] .support-list>button.new-ticket{flex-direction:row;align-items:center;color:var(--action);font-weight:600}
+html:root[data-theme] .support-list small{color:var(--muted);font-size:11px;line-height:1.7}
+html:root[data-theme] .support-list code{color:var(--muted);font-size:10px}
+html:root[data-theme] .support-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
+html:root[data-theme] .support-heading h2{font-size:19px;line-height:1.6;margin:0}
+html:root[data-theme] .messages{display:flex;flex-direction:column;gap:12px;max-height:440px;overflow:auto;padding:0 0 20px}
+html:root[data-theme] .message{background:var(--inset);border:1px solid var(--line);border-radius:17px;padding:15px;max-width:90%;align-self:flex-start;min-width:150px}
+html:root[data-theme] .message.support{align-self:flex-end;background:color-mix(in srgb,var(--action) 9%,var(--surface));border-color:color-mix(in srgb,var(--action) 15%,var(--line))}
+html:root[data-theme] .message b{font-size:11px;color:var(--muted)}
+html:root[data-theme] .message p{color:var(--ink);font-size:14px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}
+html:root[data-theme] .message time{font-size:10px;color:var(--muted)}
+html:root[data-theme] .support-conversation label{display:flex;flex-direction:column;gap:9px;margin-bottom:17px;font-size:13px;color:var(--ink)}
+html:root[data-theme] .support-conversation input,html:root[data-theme] .support-conversation textarea{width:100%;background:var(--inset);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px;font:inherit;resize:vertical}
+html:root[data-theme] .support-conversation .primary{padding:12px 20px;display:flex;align-items:center;gap:10px}
+html:root[data-theme] .closed-ticket{color:var(--muted);padding:12px}
+html:root[data-theme] .upload-preview{display:block;width:100%;max-height:200px;object-fit:contain;border:1px solid var(--line);border-radius:14px;background:var(--inset);margin:12px 0}
+html:root[data-theme] .slide-editor{border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0;background:var(--inset)}
+html:root[data-theme] .slide-editor>label{margin-top:15px}
+html:root[data-theme] .slider-editor{margin:20px 0}
+html:root[data-theme] .slider-editor .panel-heading{padding:0;border:0;margin-bottom:12px}
+html:root[data-theme] .catalog-advanced{border:1px solid var(--line);padding:16px;border-radius:14px;margin:18px 0}
+html:root[data-theme] summary{cursor:pointer;color:var(--ink);font-size:14px;font-weight:600;padding:8px 0}
+html:root[data-theme] .city-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+html:root[data-theme] .extra-field{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+html:root[data-theme] .extra-field>input{flex:1;min-width:150px}
+html:root[data-theme] .detail-fields{margin:15px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+html:root[data-theme] .detail-fields>div{padding:14px 0;border-bottom:1px solid var(--line);min-width:0}
+html:root[data-theme] .detail-fields dt{color:var(--muted);font-size:11px;margin-bottom:7px}
+html:root[data-theme] .detail-fields dd{color:var(--ink);font-size:14px;line-height:1.7;margin:0;overflow-wrap:anywhere}
+html:root[data-theme] .detail-codes{display:grid;gap:10px;max-height:300px;overflow:auto;background:var(--inset);border-radius:12px;padding:15px;direction:ltr}
+html:root[data-theme] .company-supplier{color:var(--muted);font-size:11px;margin:8px 0}
+html:root[data-theme] .secondary{background:var(--inset);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:12px}
+html:root[data-theme] .batch-row{flex-wrap:wrap}
+html:root[data-theme] .city-checkout{display:flex;flex-direction:column;gap:8px;margin:16px 0;font-size:13px}
+html:root[data-theme] .city-checkout select{width:100%;padding:12px;border:1px solid var(--line);background:var(--inset);color:var(--ink);border-radius:12px}
+@media(max-width:700px){html:root[data-theme] .support-layout{grid-template-columns:1fr;gap:14px}html:root[data-theme] .support-list{max-height:260px;overflow:auto}html:root[data-theme] .support-conversation{padding:18px}html:root[data-theme] .detail-fields{gap:0 12px}html:root[data-theme] .city-options{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){html:root[data-theme] .app-header{height:70px}html:root[data-theme] .app-shell{padding:0 18px}html:root[data-theme] .brand small{font-size:9px}html:root[data-theme] .product-grid{gap:12px}html:root[data-theme] .product-card{padding:17px 14px;border-radius:21px}html:root[data-theme] .product-image{width:calc(100% + 28px);margin:-17px -14px 17px;height:125px;padding:10px}html:root[data-theme] .product-top{margin-bottom:15px}html:root[data-theme] .product-name{font-size:13px}html:root[data-theme] .product-company{font-size:10px}html:root[data-theme] .face-value{font-size:27px;letter-spacing:-.4px}html:root[data-theme] .face-value small{font-size:10px}html:root[data-theme] .product-card>p{font-size:10px;margin-bottom:16px}html:root[data-theme] .product-bottom{padding-top:15px;gap:12px}html:root[data-theme] .product-bottom strong{font-size:16px}html:root[data-theme][data-theme] .product-bottom>button{height:38px;border-radius:12px;font-size:12px}html:root[data-theme] .campaign-with-image .campaign-copy{max-width:80%}html:root[data-theme] .campaign-with-image h2{font-size:28px}html:root[data-theme] .slide-controls{bottom:10px}html:root[data-theme] .company-rail>button{min-width:115px;border-radius:21px;padding:22px 12px 17px}html:root[data-theme] .support-heading{flex-wrap:wrap}}
+
+html:root[data-theme] .product-media{display:flex;align-items:center;justify-content:center;width:calc(100% + 44px);height:155px;background:var(--inset);margin:-22px -22px 20px;padding:15px}html:root[data-theme] .product-media>img{width:100%;height:100%;object-fit:contain;border-radius:12px}html:root[data-theme] .voucher-art{width:145px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 8px 20px #00000008;transform:rotate(-7deg)}html:root[data-theme] .voucher-brand{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:20px}html:root[data-theme] .voucher-art>span{display:block;font-size:10px;color:var(--ink);margin:8px 0 14px}html:root[data-theme] .voucher-scratch{height:12px;border-radius:4px;background:repeating-linear-gradient(110deg,var(--line),var(--line) 2px,var(--inset) 2px,var(--inset) 4px)}@media(max-width:600px){html:root[data-theme] .product-media{width:calc(100% + 28px);height:125px;margin:-17px -14px 17px;padding:12px}html:root[data-theme] .voucher-art{width:115px;padding:12px;border-radius:12px}html:root[data-theme] .voucher-art>span{font-size:9px;margin:7px 0 10px}}
+html:root[data-theme=dark] .voucher-brand{color:var(--ink)}html:root[data-theme] .voucher-brand svg{color:var(--action)}html:root[data-theme] .count{background:var(--inset);color:var(--muted)}html:root[data-theme] .product-grid{align-items:stretch}html:root[data-theme] .product-card{display:flex;flex-direction:column}html:root[data-theme] .product-bottom{margin-top:auto}html:root[data-theme] .import-files{margin:20px 0}html:root[data-theme] .import-files select{min-width:180px}html:root[data-theme] .import-files input{min-width:100px}
+html:root[data-theme] .mini-logo img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
+html:root[data-theme][data-theme] .bottom-nav{background:var(--glass)!important;backdrop-filter:blur(24px);border:1px solid var(--line);box-shadow:0 6px 24px #0002}html:root[data-theme][data-theme] .bottom-nav button{color:var(--muted)}html:root[data-theme][data-theme] .bottom-nav button.active{color:var(--action);background:var(--inset)}

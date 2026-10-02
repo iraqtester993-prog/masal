@@ -1,0 +1,18 @@
+.theme-toggle{width:38px;height:38px;border-radius:50%;background:#eee8f6;color:#59367e;flex-shrink:0}.theme-toggle:hover{background:#e1d5ef}
+html[data-theme=dark] body{background:#14111d;color:#eee7fa}
+html[data-theme=dark] .product-card,html[data-theme=dark] .account-card,html[data-theme=dark] .purchase-card,html[data-theme=dark] .checkout,html[data-theme=dark] .admin-panel,html[data-theme=dark] .stats-grid article,html[data-theme=dark] .company-admin-card,html[data-theme=dark] .edit-modal,html[data-theme=dark] .dashboard-header,html[data-theme=dark] .login-form,html[data-theme=dark] .bottom-nav{background:#211b2d;color:#eee7fa;border-color:#3b304a}
+html[data-theme=dark] .login-page{background:#14111d}
+html[data-theme=dark] input,html[data-theme=dark] select,html[data-theme=dark] textarea,html[data-theme=dark] .search-box,html[data-theme=dark] .file-drop,html[data-theme=dark] .code-row,html[data-theme=dark] .import-results{background:#2b2339;color:#eee7fa;border-color:#4b3b5d}
+html[data-theme=dark] .search-box input{background:transparent}
+html[data-theme=dark] th{background:#2a2237;color:#bfb0d2;border-color:#40334f}
+html[data-theme=dark] td,html[data-theme=dark] td b,html[data-theme=dark] .breadcrumb b,html[data-theme=dark] .face-value,html[data-theme=dark] .total-row strong{color:#eee7fa}
+html[data-theme=dark] td,html[data-theme=dark] .panel-heading,html[data-theme=dark] .stock-alert,html[data-theme=dark] .batch-row,html[data-theme=dark] .quantity-row,html[data-theme=dark] .modal-heading,html[data-theme=dark] .app-header,html[data-theme=dark] .company-card-meta,html[data-theme=dark] .admin-footer{border-color:#3b304a}
+html[data-theme=dark] .theme-toggle,html[data-theme=dark] .header-profile,html[data-theme=dark] .category-pills button,html[data-theme=dark] .quantity-row button,html[data-theme=dark] .row-actions button{background:#362847;color:#e2c6ff}
+html[data-theme=dark] .category-pills button.active,html[data-theme=dark] .bottom-nav button.active{color:#d3f4a2;background:#49365e}
+html[data-theme=dark] .install-banner{background:#30243e;border-color:#4a375c}
+html[data-theme=dark] .pay-method{background:#352f1f;border-color:#5d5031}
+html[data-theme=dark] .brand small,html[data-theme=dark] .stat-caption,html[data-theme=dark] .stats-grid small,html[data-theme=dark] .stats-grid em,html[data-theme=dark] .product-card p,html[data-theme=dark] .product-bottom small,html[data-theme=dark] .product-bottom strong,html[data-theme=dark] .company-admin-card p,html[data-theme=dark] label,html[data-theme=dark] .store-footer,html[data-theme=dark] .empty-state,html[data-theme=dark] .sync-state{color:#c2b3d2}
+html[data-theme=dark] .availability{background:#283b2c;color:#b1dfae}
+html[data-theme=dark] .availability.empty{background:#3b2e28;color:#e1bea4}
+html[data-theme=dark] .badge.green{background:#243d30;color:#a6d8b9}html[data-theme=dark] .badge.orange{background:#443425;color:#e3c198}html[data-theme=dark] .badge.purple,html[data-theme=dark] .badge.gray{background:#3c2d4e;color:#d8c3ef}html[data-theme=dark] .badge.red{background:#492832;color:#f1b5c2}
+.app-header{gap:12px}.desktop-nav{margin-right:auto}.login-form>.theme-toggle{float:left;margin-bottom:12px}
