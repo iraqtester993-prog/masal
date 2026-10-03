@@ -41,7 +41,7 @@ P.fund=function(from,to,amount,service,key,exception=''){
  const ex=this.s.fundingExceptions.find(e=>e.id===exception&&e.from===from&&e.user===u.id&&!e.used);
  if(!own&&!ex)throw Error('التمويل من حساب الوكيل يتطلب موظفًا تابعًا له أو استثناء تمويل موثقًا');
  if(this.serviceAvailable(from,service)<amount)throw Error('الرصيد المتاح للخدمة غير كافٍ');
- const t={id:M.id('FT'),key,from,to,amount,service,user:this.user,exception:ex?.id||'',status:'منفذ',time:now()};
+ const t={id:M.id('FT'),key,from,to,amount,service,user:this.user,exception:ex?.id||'',status:'منفذ',time:now()};this.stampFundingRecovery?.(t);
  this.serviceEntry(from,service,-amount,'تمويل صادر',t.id,to);this.serviceEntry(to,service,amount,'تمويل وارد',t.id,from);if(ex)ex.used=true;
  this.s.fundingTransfers.unshift(t);this.s.notifications.unshift({id:M.id('NT'),target:to,title:'تمويل محفظة',body:'تم استلام '+amount+' د.ع لخدمة '+service,time:now(),user:this.user});this.log('تمويل خدمة',t.id,null,t);return t;
 };

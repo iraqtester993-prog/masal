@@ -59,6 +59,7 @@ MasalCompanySite.install(appOptions);
 MasalCardLayout.install(appOptions);
 MasalProvidersUI.install(appOptions);
 MasalInventoryUI.install(appOptions);
+MasalCatalogFilters.install(appOptions);
 MasalWalletFilters.install(appOptions);
 const beforeNetworkFilter=appOptions.computed.filteredRows;
 appOptions.computed.filteredRows=function(){const rows=beforeNetworkFilter.call(this);if(this.page!=='agents'||!['main','sub','subsub'].includes(this.networkKind))return rows;return rows.filter(a=>this.networkKind==='main'?a.type==='رئيسي':this.networkKind==='subsub'?a.type==='فرعي'&&this.s.agents.some(p=>p.id===a.parent&&p.type==='فرعي'):a.type!=='رئيسي')};
