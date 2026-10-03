@@ -5,8 +5,9 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
  for(const [kind,id]of [['agents','DEMO-MAIN'],['agents','DEMO-BRANCH'],['agents','DEMO-SUBBRANCH'],['pos','DEMO-POS1']]){
   const email=id.toLowerCase()+'@example.test';
   await p.evaluate(({kind,id,email})=>{app.closeModal();const r=app.s[kind].find(r=>r.id===id);r.email='contact@example.test';MasalNetworkAccounts.linked(app.s,kind,id).email=email;app.go(kind);app.openEdit(r)},{kind,id,email});
-  const field=p.locator('.modal').getByLabel('بريد تسجيل الدخول',{exact:true});await field.waitFor();assert.equal(await field.inputValue(),email);assert.equal(await field.getAttribute('readonly'),'');
-  await p.evaluate(({kind,id})=>{app.closeModal();app.showNetworkDetails(kind,id)},{kind,id});assert.equal(await p.evaluate(()=>app.modal.data['بريد تسجيل الدخول']),email);assert.ok((await p.locator('.modal').innerText()).includes(email));
+  const field=p.locator('.modal').getByLabel('بريد تسجيل الدخول',{exact:true});await field.waitFor();assert.equal(await field.inputValue(),email);assert.equal(await field.getAttribute('readonly'),null);
+  const changed='changed-'+email;await field.fill(changed);await p.locator('.modal form').evaluate(form=>form.requestSubmit());await p.waitForFunction(()=>!app.modal);assert.equal(await p.evaluate(({kind,id})=>MasalNetworkAccounts.linked(app.s,kind,id).email,{kind,id}),changed);
+  await p.evaluate(({kind,id})=>{app.showNetworkDetails(kind,id)},{kind,id});assert.equal(await p.evaluate(()=>app.modal.data['بريد تسجيل الدخول']),changed);assert.ok((await p.locator('.modal').innerText()).includes(changed));
  }
- assert.deepEqual(errors,[]);console.log('PASS login email visible read-only in edit and details for main agent, branch, subbranch and POS');
+ assert.deepEqual(errors,[]);console.log('PASS owner can edit the login email or username and details update for main agent, branch, subbranch and POS');
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

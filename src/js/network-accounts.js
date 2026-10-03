@@ -83,7 +83,6 @@ function saveNetworkPermissions(e,page,id,changes,reason){
  e.log('تعديل صلاحيات تابع',id,before,{rules:candidate.networkRules,changes,reason:reason.trim()});return target.record;
 }
 function install(o){
- o.template=o.template?.replace('<input type="text" dir="ltr" readonly :value="networkLinkedAccount.email||tr(\'غير مسجل\')" aria-label="بريد تسجيل الدخول">','<input type="text" dir="ltr" v-model="networkLogin.email" required autocomplete="username" aria-label="بريد أو اسم مستخدم تسجيل الدخول">');
  const data=o.data,open=o.methods.openEdit,save=o.methods.saveEntity,close=o.methods.closeModal,options=o.methods.optionsFor;
  o.data=function(){return {...data.call(this),networkLogin:{email:'',password:'',confirmPassword:''},networkSaving:false,networkImageBusy:false,networkPermissionDraft:{},networkPermissionInitial:{},networkPermissionReason:'',networkPermissionSearch:''}};
  o.methods.canManageNetwork=function(page,id){try{permissionTarget(this.engine,page,id);return true}catch{return false}};
