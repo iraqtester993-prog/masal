@@ -5,3 +5,5 @@
 [data-theme="dark"] .pos-related-editor,[data-theme="dark"] .pos-documents-editor,[data-theme="dark"] .viewer-personal,[data-theme="dark"] .viewer-document{background:linear-gradient(145deg,#1d3445,#162737);border-color:#36566e;color:#e7f2f7;box-shadow:0 10px 24px rgba(0,0,0,.16)}
 [data-theme="dark"] .pos-related-editor .help,[data-theme="dark"] .pos-documents-editor .help{color:#a9c0ce}
 [data-theme="dark"] .representative-dropdown>summary,[data-theme="dark"] .representative-dropdown-panel{background:#142739;border-color:#36566e;color:#e7f2f7}
+.serial-binding-policy{display:flex;align-items:center;justify-content:space-between;gap:18px}.serial-binding-policy h3{margin:0 0 4px}.serial-binding-policy p{margin:0}.serial-binding-toggle{min-width:110px;white-space:nowrap}.serial-binding-toggle[aria-pressed="false"]{background:var(--raised,#eef3f7);color:var(--muted,#687b8c)}
+@media(max-width:620px){.serial-binding-policy{align-items:stretch;flex-direction:column}.serial-binding-toggle{width:100%}}

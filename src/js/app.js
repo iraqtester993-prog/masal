@@ -169,7 +169,7 @@ MasalMultiOrders.install(appOptions);
   {title:'نظرة عامة',direct:true,icon:'dashboard',ids:['dashboard','reports','company','wallets']},
   {title:'البطاقات والمخزون',icon:'inventory',ids:['inventory','import','products','prices','providers','sources']},
   {title:'عمليات البطاقات',icon:'sell',ids:['sell','exports','claims','exceptions']},
-  {title:'شبكة التوزيع',icon:'agents',ids:['agents','pos','map']},
+  {title:'شبكة التوزيع',icon:'agents',ids:['agents','pos','representatives','posTypes','map']},
   {title:'التواصل والدعم',icon:'support',ids:['support','notifications']},
   {title:'المستخدمون والصلاحيات',icon:'users',ids:['users','permissions','accountTime','deletedAccounts']},
   {title:'إعدادات النظام',icon:'security',ids:['security','backup','governorates','integrations']},
