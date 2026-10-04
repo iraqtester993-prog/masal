@@ -844,7 +844,7 @@ function template(source){
 }
 function install(options){
  const visited=new Set();function visit(component){if(!component||visited.has(component))return;visited.add(component);if(component.template&&!/meeting-receipt|receipt/.test(component.name||''))component.template=template(component.template);for(const [name,child]of Object.entries(component.components||{}))if(!/receipt/.test(name))visit(child);}
- visit(options);if(!options.template)options.template=template(document.getElementById('app').innerHTML);
+ visit(options);const target=document.getElementById('app');if(!options.template&&target)options.template=template(target.innerHTML);
  options.computed.translationRecordNames=function(){return [...new Set(['agents','pos','users','products','providers','orderSources'].flatMap(key=>(this.s[key]||[]).flatMap(r=>[r.name,r.owner,r.email,r.username,r.notes,r.reason,r.content,r.title])).filter(v=>typeof v==='string'&&v))].sort((a,b)=>b.length-a.length)};
  options.methods.t=function(value){if(typeof value!=='string')return MasalLocale.translate(value,this.lang);if(this.lang==='ar')return value;let source=value;const saved=[];for(const name of this.translationRecordNames){if(source.includes(name)){const token='\u0001'+saved.length+'\u0002';saved.push(name);source=source.split(name).join(token)}}source=MasalLocale.translate(source,this.lang);return source.replace(/\u0001(\d+)\u0002/g,(_,i)=>saved[Number(i)]);};
 }

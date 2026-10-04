@@ -7,7 +7,7 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
  const server=http.createServer((req,res)=>{
   const name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   if(!name.startsWith('/masal/')){res.writeHead(404).end();return}
-  const file=path.resolve(root,name.slice(7)||'index.html');
+  const file=path.resolve(root,'dist',name.slice(7)||'index.html');
   if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404).end();return}
   res.setHeader('Content-Type',mime[path.extname(file)]||'application/octet-stream');fs.createReadStream(file).pipe(res);
  });
@@ -16,7 +16,7 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
  try{
   browser=await chromium.launch({channel:'msedge',headless:true});
   const base='http://127.0.0.1:'+server.address().port+'/masal/';
-  for(const url of [pathToFileURL(path.join(root,'masal.html')).href,pathToFileURL(path.join(root,'index.html')).href,base,base+'masal.html']){
+  for(const url of [pathToFileURL(path.join(root,'masal.html')).href,base,base+'masal.html']){
    const context=await browser.newContext(),page=await context.newPage(),errors=[],missing=[];
    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push(r.url())});
    await page.goto(url);await page.locator('#login-name').fill('admin');await page.locator('#login-password').fill('123456789');

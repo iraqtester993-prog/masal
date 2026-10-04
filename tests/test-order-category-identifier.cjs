@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 (async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{
  const page=await b.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(require('url').pathToFileURL(require('path').resolve('masal.html')).href);await page.waitForFunction(()=>window.app);
+ await page.goto(process.env.MASAL_TEST_URL||require('url').pathToFileURL(require('path').resolve('masal.html')).href);await page.waitForFunction(()=>window.app);
  await page.evaluate(async()=>{
   app.currentUser='U1';app.loginScreen=false;
   const s=app.s,e=app.engine,a=s.agents.find(a=>a.active&&!a.parent),p=s.products.find(p=>p.active&&s.prices.some(x=>x.agent===a.id&&x.product===p.id));

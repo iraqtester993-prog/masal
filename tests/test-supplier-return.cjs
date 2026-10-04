@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 (async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});try{
  const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(require('url').pathToFileURL(require('path').resolve('masal.html')).href);await page.waitForFunction(()=>window.app);
+ await page.goto(process.env.MASAL_TEST_URL||require('url').pathToFileURL(require('path').resolve('masal.html')).href);await page.waitForFunction(()=>window.app);
  const result=await page.evaluate(async()=>{
   const check=(v,m)=>{if(!v)throw Error(m)},deny=fn=>{try{fn()}catch{return true}return false};
   const s=Masal.seed();MasalOperations.initialize(s);s.cards=[];s.batches=[];s.serviceLedger=[];s.batchInvoices=[];const e=new Masal.Engine(s,'U1');
