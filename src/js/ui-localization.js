@@ -141,7 +141,10 @@ const translations=`
 إيقاف الدخول|Suspend sign-in|ڕاگرتنی چوونەژوورەوە
 إيقاف الطباعة|Suspend printing|ڕاگرتنی چاپ
 إيقاف رفع الطلبيات|Suspend order uploads|ڕاگرتنی بارکردنی داواکاری
-تنزيل النسخة|Download backup|داگرتنی پاشەکەوت
+نسخ احتياطي|Back up|پاشەکەوتکردن
+جارٍ النسخ الاحتياطي…|Backing up…|پاشەکەوت دەکرێت…
+النسخ الاحتياطي على السيرفر غير مربوط بعد|Server backup is not connected yet|پاشەکەوتی سێرڤەر هێشتا نەبەستراوەتەوە
+تم النسخ الاحتياطي على السيرفر|Server backup completed|پاشەکەوتی سێرڤەر تەواو بوو
 اختيار نسخة احتياطية من الحاسبة|Choose a backup from this computer|هەڵبژاردنی پاشەکەوت لە کۆمپیوتەر
 بغداد|Baghdad|بەغدا
 البصرة|Basra|بەسرە

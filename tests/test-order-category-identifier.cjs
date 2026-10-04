@@ -20,8 +20,9 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
   f.draft.product=other.id;check(deny(()=>e.checkMultiOrder(f.draft)),'selection conflict blocked');f.draft.product=p.id;
   const record=e.submitMultiOrder(f.draft);check(MasalMultiOrders.draftOf(record).product===p.id,'selection persists');e.reviewMultiOrder(record.id,'approve');check(s.cards.some(c=>c.serial==='ID-S2'&&c.product===p.id),'correct inventory');
   check(e.resolveOrderProduct(p.provider,'125').length===0,'zeros distinguish identifier');
-  app.go('products');app.openEdit(other);app.editForm.dailyLimitType='quantity';app.editForm.dailyQty=100;app.editForm.orderIdentifier=' 00125 ';app.saveEntity();check(s.products.find(x=>x.id===other.id).orderIdentifier==='00126','duplicate identifier rejected');
+  for(const identifier of ['EVS-E5K','EVD-EV5','EVD1','EVD2','EV5C','EB25','EVS-EU50K']){p.orderIdentifier=identifier;check(e.resolveOrderProduct(p.provider,MasalOrderParser.code(identifier))[0]?.id===p.id,'full identifier prefixes: '+identifier)}p.orderIdentifier='00125';
+  app.go('products');app.openEdit(p);check(app.editForm.importCodes.includes('00125')&&!Object.hasOwn(app.editForm,'orderIdentifier'),'legacy identifier merged into single field');app.openEdit(other);app.editForm.dailyLimitType='quantity';app.editForm.dailyQty=100;app.editForm.importCodes=' 00125 ';app.saveEntity();check(s.products.find(x=>x.id===other.id).orderIdentifier==='00126','duplicate identifier rejected');
  });
- await assert.equal(await page.locator('input[placeholder="00125"]').count(),1);assert.deepEqual(errors,[]);
+ await assert.equal(await page.locator('input[placeholder="EVS-E5K, EVD-EV5"]').count(),1);assert.deepEqual(errors,[]);
  console.log('PASS optional category upload, identifier matching, leading zeros, conflict guard, persistence, inventory and duplicate prevention');
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

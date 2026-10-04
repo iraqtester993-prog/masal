@@ -59,7 +59,7 @@
 <template v-else-if="page==='branding'"></template>
 <!-- Landing and CMS -->
 <!-- Backup -->
-<template v-else-if="page==='backup'"><div class="two"><div class="card"><button class="btn primary" v-permit="can('backup.download')" @click="backup">{{tr('تنزيل النسخة')}}</button></div><div class="card"><input type="file" accept=".json" :aria-label="tr('اختيار نسخة احتياطية من الحاسبة')" v-permit="can('backup.restore')" @change="prepareRestore"></div></div></template>
+<template v-else-if="page==='backup'"><div class="two"><div class="card"><button class="btn primary" v-permit="can('backup.download')" @click="backup" :disabled="serverBackupBusy">{{tr(serverBackupBusy?'جارٍ النسخ الاحتياطي…':'نسخ احتياطي')}}</button></div><div class="card"><input type="file" accept=".json" :aria-label="tr('اختيار نسخة احتياطية من الحاسبة')" v-permit="can('backup.restore')" @change="prepareRestore"></div></div></template>
 <div v-if="page==='denied'" class="card empty">{{tr("لا توجد وحدات مسموحة لهذا الحساب")}}</div><footer class="footer app-footer" style="justify-content:center;text-align:center"><span>© {{new Date().getFullYear()}} جميع الحقوق محفوظة لشركة عراق تكنو للحلول البرمجية</span></footer></main></div>
 <!-- Forms modal -->
 

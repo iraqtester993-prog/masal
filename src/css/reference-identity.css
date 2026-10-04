@@ -1325,22 +1325,6 @@ html[data-theme=light] .main .report-related.report-group-wallets .card.report-r
 .funding-record-detail dd{overflow-wrap:anywhere}
 @media(max-width:700px){.funding-settings-limit,.main .funding-request-fields{grid-template-columns:minmax(0,1fr)}.funding-settings-heading{flex-wrap:wrap}.funding-amount-options{grid-template-columns:minmax(0,1fr)}}
 .main .recovery-page{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-block:16px 20px;min-width:0}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline){display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;align-items:center;scrollbar-width:none}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline)>.wallet-navigation-tabs{order:0;min-width:0;flex-wrap:nowrap}
-.main .wallet-filter-toolbar>.recovery-policy-inline{order:3;display:flex;flex:0 0 auto;align-items:center;gap:5px;margin:0;white-space:nowrap}
-.main .recovery-policy-inline>label{display:flex;align-items:center;gap:6px;margin:0;font-size:11px}
-.main .recovery-policy-inline input{width:58px;min-width:58px;height:36px;min-height:36px;margin:0;padding:5px}
-.main .recovery-policy-inline>.btn{height:36px;min-height:36px;font-size:11px;padding:6px 9px}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline)>.actions{order:1;flex:0 0 auto;margin:0;gap:4px}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline)>.wallet-service-cards{order:2;flex:0 0 auto;flex-wrap:nowrap;gap:4px;width:auto}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline) :is(.wallet-navigation-tabs button,.wallet-service-cards button,.actions .btn){min-width:0;height:36px;min-height:36px;margin:0;padding:6px;font-size:11px;white-space:nowrap}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline)>.wallet-navigation-tabs{flex:1 0 auto;gap:2px;padding:3px;margin:0}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline) .recovery-policy-inline>.btn{height:36px;min-height:36px;font-size:11px;padding:5px 7px}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline) .recovery-policy-inline>label{font-size:10px;gap:4px}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline) .recovery-policy-inline input{width:64px;min-width:64px;font-size:12px;appearance:textfield;-moz-appearance:textfield}
-.recovery-policy-inline input::-webkit-inner-spin-button,.recovery-policy-inline input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
-@media(max-width:1450px){.main .wallet-filter-toolbar:has(.recovery-policy-inline){gap:4px}.main .wallet-filter-toolbar:has(.recovery-policy-inline) :is(.wallet-navigation-tabs button,.wallet-service-cards button,.actions .btn){font-size:10px;padding-inline:4px}}
-.main .wallet-filter-toolbar:has(.recovery-policy-inline) .wallet-navigation-tabs button{font-size:11px;padding-inline:7px;min-width:0}
 .main .recovery-page>.card{margin:0;padding:18px;min-width:0}
 .main .recovery-policy{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px}
 .main .recovery-policy>label{display:grid;gap:7px;flex:0 1 360px;margin:0;min-width:0}
