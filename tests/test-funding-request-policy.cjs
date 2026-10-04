@@ -1,0 +1,44 @@
+require('./setup.cjs');
+const assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});try{
+ const page=await browser.newPage({viewport:{width:1366,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(require('node:url').pathToFileURL(require('node:path').resolve('masal.html')).href);await page.waitForFunction(()=>window.app);
+ await page.evaluate(async()=>{
+  const s=Masal.seed();MasalOperations.initialize(s);const owner=new Masal.Engine(s,'U1'),pos=new Masal.Engine(s,'U5');
+  const check=(v,m)=>{if(!v)throw Error(m)},deny=f=>{try{f();return false}catch{return true}};
+  check(pos.fundingRequestPolicy().dailyLimit===1,'default one per day');
+  const id=pos.walletIdentity(),parent=pos.walletParent(),balance=pos.serviceBalance(id,'voucher');
+  check(deny(()=>pos.requestWalletFunding(123,'voucher','','bad')),'unlisted amount');
+  const r=pos.requestWalletFunding(50000,'voucher','','first');check(pos.serviceBalance(id,'voucher')===balance,'request is not a deposit');
+  check(pos.requestWalletFunding(50000,'voucher','','first').id===r.id,'retry does not use quota');
+  check(deny(()=>pos.requestWalletFunding(50000,'topup','','second')),'cross-wallet daily limit');
+  check(deny(()=>pos.requestFunding(id,parent,50000,'voucher','legacy','legacy')),'legacy cannot bypass');
+  pos.cancelWalletFunding(r.id);check(deny(()=>pos.requestWalletFunding(50000,'voucher','','cancel-bypass')),'cancel still counted');
+  owner.saveFundingRequestPolicy({amounts:[50000,100000],dailyLimit:3});
+  const r2=pos.requestWalletFunding(50000,'voucher','','second-ok');const payerUser=s.users.find(u=>u.agent===parent&&['main','sub'].includes(u.role));const payer=new Masal.Engine(s,payerUser.id);
+  payer.reviewWalletFunding(r2.id,'reject',{reason:'اختبار الرفض'});check(r2.approverName===payer.actor().name&&!!r2.reviewedAt,'review attribution');
+  pos.requestWalletFunding(100000,'topup','','third');check(deny(()=>pos.requestWalletFunding(50000,'voucher','','fourth')),'configurable maximum');
+  const yesterday=new Date(Date.now()-86400000).toISOString();s.fundingRequests.forEach(r=>r.time=yesterday);pos.requestWalletFunding(50000,'voucher','','new-day');
+  const probe={to:id,time:'2026-10-04T20:59:59.000Z'};s.fundingRequests.push(probe);check(Masal.businessDay(probe.time)==='2026-10-04'&&Masal.businessDay('2026-10-04T21:00:00.000Z')==='2026-10-05','Baghdad midnight');s.fundingRequests.pop();
+  check(deny(()=>pos.saveFundingRequestPolicy({amounts:[1],dailyLimit:9})),'owner only');
+  for(const draft of [{amounts:[1,1],dailyLimit:1},{amounts:[-1],dailyLimit:1},{amounts:[1],dailyLimit:0},{amounts:[1],dailyLimit:1.5}])check(deny(()=>owner.saveFundingRequestPolicy(draft)),'invalid policy');
+  owner.saveFundingRequestPolicy({amounts:[],dailyLimit:3});check(deny(()=>pos.requestWalletFunding(50000,'voucher','','deleted')),'empty list stops new requests');check(r.amount===50000,'history preserved');
+  owner.saveFundingRequestPolicy({amounts:[50000,100000],dailyLimit:2});
+  app.s=s;app.currentUser='U1';app.loginScreen=false;app.switchUser();app.go('security');await Vue.nextTick();
+ });
+ const settings=page.locator('.funding-request-settings');await settings.waitFor();
+ await settings.getByRole('button',{name:'إضافة مبلغ',exact:true}).click();await settings.getByLabel('مبلغ التمويل 3',{exact:true}).fill('150000');
+ await settings.getByLabel('مبلغ التمويل 1',{exact:true}).fill('25000');await settings.getByLabel('عدد طلبات التمويل اليومية').fill('4');await settings.getByRole('button',{name:'حفظ إعدادات التمويل',exact:true}).click();
+ assert.deepEqual(await page.evaluate(()=>app.s.settings.posFundingRequests),{amounts:[25000,100000,150000],dailyLimit:4});
+ await settings.getByRole('button',{name:'حذف مبلغ التمويل 2',exact:true}).click();await settings.getByRole('button',{name:'حفظ إعدادات التمويل',exact:true}).click();assert.deepEqual(await page.evaluate(()=>app.s.settings.posFundingRequests.amounts),[25000,150000]);
+ for(const theme of ['light','dark']){await page.evaluate(t=>document.documentElement.dataset.theme=t,theme);await settings.screenshot({path:`tmp/review/funding-policy-${theme}.png`});}
+ await page.evaluate(async()=>{app.currentUser='U5';app.switchUser();app.locationReady=true;app.go('wallets');await Vue.nextTick();app.$refs.operations.service='voucher';app.$refs.operations.tab='fundingRequests';await Vue.nextTick()});
+ const form=page.locator('.simple-wallets');await form.waitFor();await page.evaluate(async()=>{app.locationReady=true;await Vue.nextTick()});await form.getByRole('button',{name:'طلب تمويل',exact:true}).click();
+ await form.getByLabel('مبلغ طلب التمويل').selectOption('25000');await form.getByRole('button',{name:'إرسال طلب التمويل',exact:true}).click();
+ await form.getByRole('button',{name:'التفاصيل',exact:true}).first().click();await form.locator('.funding-record-detail').waitFor();
+ assert.ok((await form.locator('.funding-record-detail').innerText()).includes('مقدم الطلب'));
+ await form.getByRole('button',{name:'طلب تمويل',exact:true}).click();await form.screenshot({path:'tmp/review/funding-request-form.png'});
+ await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
+ assert.deepEqual(errors,[]);console.log('PASS default/dynamic daily quota across wallets, retries, canceled/rejected requests, legacy guard, amount CRUD, owner permissions, Baghdad day, history details, settings/request UI and mobile');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

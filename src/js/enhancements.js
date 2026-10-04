@@ -74,8 +74,10 @@ function install(o){
 }
 function validateEntity(vm){
  const v=vm.editForm,key=vm.schema.key,old=vm.s[key].find(r=>r.id===v.id);
- if(old&&key==='pos')for(const [permission,fields]of [['device',['serial','model','version']],['location',['lat','lng','city','address']],['reprintLimit',['reprint']]])if(fields.some(f=>String(v[f]??'')!==String(old[f]??'')))vm.engine.requirePermission('pos.'+permission);
+ if(key==='pos'&&!old&&v.serialBinding)vm.engine.requirePermission('pos.device');
+ if(old&&key==='pos')for(const [permission,fields]of [['device',['serial','model','version','serialBinding']],['location',['lat','lng','city','address']],['reprintLimit',['reprint']]])if(fields.some(f=>String(v[f]??'')!==String(old[f]??'')))vm.engine.requirePermission('pos.'+permission);
  if(old&&key==='products')for(const [permission,fields]of [['priceFloor',['min']],['limits',['limit','dailyQty','dailyAmount']]])if(fields.some(f=>String(v[f])!==String(old[f])))vm.engine.requirePermission('products.'+permission);
+ if(key==='pos')for(const [permission,fields]of [['documents',['documents','personalImage']],['representatives',['representativeIds']],['type',['posTypeId']]])if(fields.some(f=>JSON.stringify(v[f]??null)!==JSON.stringify(old?.[f]??null)&&(old||v[f]&&(!Array.isArray(v[f])||v[f].length))))vm.engine.requirePermission('pos.'+permission);
  if(key!=='users')return;
  if(!['owner','supervisor','main','sub','pos','employee'].includes(v.role))throw Error('دور غير صالح');
  if(old){if(v.role!==old.role)vm.engine.requirePermission('users.role');if(v.agent!==old.agent||v.pos!==old.pos||JSON.stringify((v.assignedText||'').split(',').map(x=>x.trim()).filter(Boolean))!==JSON.stringify(old.assigned||[]))vm.engine.requirePermission('users.scope');if(old.role==='owner'&&vm.actor.role!=='owner')throw Error('حساب الإدارة محمي');if(vm.actor.role!=='owner'&&!A.scope(vm.s,old).every(a=>vm.engine.allowed(a)))throw Error('الموظف خارج نطاقك');v.access=Masal.clone(old.access||{overrides:{}});v.active=old.active;

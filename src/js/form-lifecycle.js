@@ -35,7 +35,7 @@ function install(o){
   nextImport(){if(this.importStep===0){this.imp={agent:'',product:'',city:'',supplier:'',expiry:'',cost:'',loadPrice:'',expenses:0};this.importText='';this.importPreview=[]}},
   createClaim(){this.claimForm={batch:'',reason:''}},
   settle(c){delete this.settlements[c.id]},
-  sendNotification(){this.notificationForm={target:'',title:'',body:'',image:''}},
+  sendNotification(){this.notificationForm={target:'',title:'',body:'',image:'',translations:{en:{title:'',body:''},ckb:{title:'',body:''}}}},
   saveTicket(){this.ticketForm={recipient:'',title:'',description:''}},
   replyTicket(){this.reply=''},
   submitPrices(){this.priceDraft={}},
@@ -66,7 +66,7 @@ function install(o){
   reserve(){saleReset(this.vm)},
   requestPrint(t){delete this.requestReasons[t.id];this.reason=''},
   settle(c){delete this.claimDetails[c.id];delete this.vm.settlements[c.id]},
-  sendGroup(){this.notificationTargets=[];this.vm.notificationForm={target:'',title:'',body:'',image:''}},
+  sendGroup(){this.notificationTargets=[];this.vm.notificationForm={target:'',title:'',body:'',image:'',translations:{en:{title:'',body:''},ckb:{title:'',body:''}}}},
   serviceOrder(){this.apiRecipient='';this.apiCost='';this.apiPrice='';this.serviceSKU='';this.newApiKey()},
   syncCatalog(){this.catalogText=''}
  },['authorize','approveRequests','saveProduct','saveDevice','approvePrint','issue','cancel','resolve','testIntegration','rotate','savePublic']);

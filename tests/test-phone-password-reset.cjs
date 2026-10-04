@@ -1,0 +1,21 @@
+require('./setup.cjs');
+const assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});try{
+ const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(require('node:url').pathToFileURL(require('node:path').resolve('masal.html')).href);await page.waitForFunction(()=>window.app);
+ await page.evaluate(()=>{const s=Masal.seed();MasalOperations.initialize(s);MasalStaff.initialize(s);s.users.forEach((u,i)=>u.phone='0771000'+String(i).padStart(4,'0'));s.users.find(u=>u.id==='U5').phone='07512345678';app.s=s;app.logoutToLogin();});
+ const checks=await page.evaluate(()=>{const api=MasalPasswordAdmin,s=Masal.clone(app.s),u=s.users.find(u=>u.id==='U5'),deny=f=>{try{f();return false}catch{return true}},results=[];
+ results.push(api.findByPhone(s,'+9647512345678').id==='U5',api.findByPhone(s,'٠٧٥١٢٣٤٥٦٧٨').id==='U5',deny(()=>api.findByPhone(s,'071')),deny(()=>api.findByPhone(s,'07999999999')));
+ const other=s.users.find(x=>x.id!==u.id&&x.role!=='owner');other.phone='009647512345678';results.push(deny(()=>api.findByPhone(s,u.phone)));other.phone='07710009999';u.active=false;results.push(deny(()=>api.findByPhone(s,u.phone)));u.active=true;
+ api.requestFromLogin(s,u.id);results.push(deny(()=>api.requestFromLogin(s,u.id)));for(let i=0;i<5;i++)results.push(deny(()=>api.verify(s,u.id,'000000')));results.push(deny(()=>api.verify(s,u.id,'123456')));
+ u.passwordResetRequest.requestedAt=Date.now()-300001;results.push(deny(()=>api.verify(s,u.id,'123456')));return results;});assert.ok(checks.every(Boolean));
+ await page.getByRole('button',{name:'إعادة تعيين كلمة المرور',exact:true}).click();assert.equal(await page.locator('#reset-account-id').count(),0);
+ await page.locator('#reset-account-phone').fill('+9647512345678');await page.getByRole('button',{name:'إرسال رمز التحقق',exact:true}).click();await page.locator('#reset-otp').waitFor();assert.ok((await page.locator('.reset-password-dialog').innerText()).includes('678'));
+ await page.locator('#reset-otp').fill('000000');await page.getByRole('button',{name:'تحقق من الرمز',exact:true}).click();assert.match(await page.locator('.reset-password-dialog [role=alert]').innerText(),/غير صحيح/);
+ await page.locator('#reset-otp').fill('123456');await page.getByRole('button',{name:'تحقق من الرمز',exact:true}).click();await page.locator('#reset-new-password').fill('Ab12');await page.locator('#reset-confirm-password').fill('Ab12');await page.getByRole('button',{name:'حفظ كلمة المرور',exact:true}).click();assert.match(await page.locator('.reset-password-dialog [role=alert]').innerText(),/8/);
+ await page.locator('#reset-new-password').fill('PhoneNew123');await page.locator('#reset-confirm-password').fill('Different123');await page.getByRole('button',{name:'حفظ كلمة المرور',exact:true}).click();assert.match(await page.locator('.reset-password-dialog [role=alert]').innerText(),/غير مطابق/);
+ await page.locator('#reset-confirm-password').fill('PhoneNew123');await page.getByRole('button',{name:'حفظ كلمة المرور',exact:true}).click();await page.waitForFunction(()=>!app.loginScreen&&app.currentUser==='U5');
+ assert.equal(await page.evaluate(async()=>{const u=app.s.users.find(u=>u.id==='U5');return !u.passwordResetRequest&&await MasalStaff.verifyPassword('PhoneNew123',u.credentials)&&MasalAuth.valid(app.s,'U5')?.user==='U5'&&sessionStorage.getItem('masal-login-user')==='U5'}),true);
+ assert.deepEqual(errors,[]);console.log('PASS phone-only reset, normalization, duplicate/unknown/inactive phones, throttling, attempts/expiry, password validation, verified auto-login to matching account');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -7,7 +7,10 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
   await page.setViewportSize({width,height:950});await page.evaluate(t=>document.documentElement.dataset.theme=t,theme);
   const layout=await page.locator('.recovery-page').evaluate(el=>{const boxes=[...el.children].filter(n=>n.checkVisibility()).map(n=>n.getBoundingClientRect());return{gaps:boxes.slice(1).map((b,i)=>b.top-boxes[i].bottom),overflow:el.scrollWidth>el.clientWidth+2,text:el.textContent}});
   assert.ok(layout.gaps.every(g=>g>=15),`${role} ${width}: separated cards`);assert.equal(layout.overflow,false);assert.ok(!layout.text.includes('تُطبّق على التمويلات الجديدة'));
-  if(width===1366)await page.locator('.recovery-page').screenshot({path:`tmp/review/recovery-${role}-${theme}.png`});
+  if(width===1366){await page.locator('.recovery-page').screenshot({path:`tmp/review/recovery-${role}-${theme}.png`});if(role==='owner'){
+   const toolbar=page.locator('.wallet-filter-toolbar');await toolbar.screenshot({path:`tmp/review/recovery-toolbar-${theme}.png`});
+   const row=await toolbar.evaluate(el=>{const boxes=[...el.querySelectorAll('button,input')].filter(n=>n.checkVisibility()).map(n=>n.getBoundingClientRect()),ys=boxes.map(b=>b.y+b.height/2);return{aligned:Math.max(...ys)-Math.min(...ys)<3,fits:el.scrollWidth<=el.clientWidth+2}});assert.ok(row.aligned&&row.fits,JSON.stringify(row));
+  }}
  }};
  await page.goto(require('node:url').pathToFileURL(require('node:path').resolve('masal.html')).href);
  await page.locator('#login-name').fill('admin');await page.locator('#login-password').fill('123456789');await page.getByRole('button',{name:'تسجيل الدخول',exact:false}).click();await page.waitForFunction(()=>!app.loginScreen);

@@ -18,7 +18,7 @@ function parseSheets(sheets){
  const supplier=first.length>=5&&/^\d+$/.test(first[1])&&/^E[A-Z0-9-]+$/i.test(first[2]);
  const tabular=mapping.pin!==undefined||mapping.serial!==undefined||mapping.expiry!==undefined;
  const sms=rows.some(r=>/\bHRN\s+SN\b/i.test(r.cells.join(' ')));
- if(!supplier&&!tabular&&!sms)throw Error('صيغة الملف غير معروفة؛ استخدم أعمدة PIN وSerial وExpiry أو ملف المجهز الأصلي');
+ if(!supplier&&!tabular&&!sms){out.push({name:sheet.name,format:'أعمدة غير معرّفة',categoryCode:'',declared:null,rawRows:rows.map(r=>({sourceRow:r.line,cells:r.cells})),rows:rows.map(r=>({sourceRow:r.line,parseError:'حدد أعمدة بيانات البطاقات قبل الفحص'}))});continue;}
  const result={name:sheet.name,format:supplier?'ملف مجهز':sms?'رسائل البطاقات':'أعمدة',declared:supplier?Number(first[1]):null,rows:[]};
  for(const r of rows.slice(supplier||tabular?1:0)){
  let card={sourceRow:r.line};
