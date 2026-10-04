@@ -9,7 +9,7 @@ const referenceOf=value=>reference.find(r=>r.codes.includes(code(value)));
 const normal=v=>clean(v).toLowerCase().replace(/[,،\s._-]/g,'');
 function referenceMatches(product,entry){if(!entry)return false;const name=normal(product.name),label=normal(entry.label);if(entry.face)return Number(product.face)===entry.face&&(!product.currency||product.currency==='IQD')&&!/giga|جيجا|غيغا|gb|max|ماكس|unlimited|محدود|انترنت|إنترنت|باقة|باقه/i.test(product.name);return name===label||name.endsWith('•'+label)||name.endsWith('·'+label)}
 const header=v=>clean(v).toLowerCase().replace(/[\s_\-]/g,'');
-const aliases={serial:['serial','serialnumber','sn','سيريال','سيريل','الرقمالتسلسلي'],pin:['pin','pincode','code','hrn','رمز','رمزالبطاقة','رمزالشحن'],expiry:['expiry','expirydate','expiration','expirationdate','expiredate','تاريخالانتهاء'],cvc:['cvc','cvv'],reference:['reference','ref','مرجع','الرقمالمرجعي'],categoryCode:['category','categorycode','productcode','رمزالفئة']};
+const aliases={serial:['serial','serialnumber','sn','سيريال','سيريل','الرقمالتسلسلي'],pin:['pin','pincode','code','hrn','رمز','رمزالبطاقة','رمزالشحن'],expiry:['expiry','expirydate','expiration','expirationdate','expiredate','تاريخالانتهاء'],cvc:['cvc','cvv'],reference:['reference','ref','مرجع','الرقمالمرجعي'],categoryCode:['category','categorycode','productcode','categoryid','productid','معرفالفئة','معرّفالفئة','معرفالفئةفيملفالطلبية','رمزالفئة']};
 function date(v){const s=clean(v);let m;if((m=s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/)))return `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;if((m=s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/)))return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return s}
 function parseSheets(sheets){
  const out=[];
