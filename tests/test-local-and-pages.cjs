@@ -25,7 +25,7 @@ const {chromium}=require('C:/Users/PRO/.cache/codex-runtimes/codex-primary-runti
    assert.deepEqual(errors,[],url);assert.deepEqual(missing,[],url);
    await context.close();console.log('PASS '+url);
   }
-  const response=await fetch(base+'decrypt.html');assert.equal(response.status,200);assert.ok((await response.text()).includes('crypto.subtle'));
-  console.log('PASS local and /masal/ static-site smoke checks, including decrypt page');
+  const response=await fetch(base+'decrypt.html');assert.equal(response.status,404);
+  console.log('PASS local and /masal/ static-site smoke checks, with decryption page removed');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r))}
 })().catch(e=>{console.error(e);process.exitCode=1});

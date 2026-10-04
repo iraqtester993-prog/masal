@@ -1,7 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 process.chdir(path.resolve(__dirname,'..'));
 let count=0;
-for(const file of ['index.html','masal.html','decrypt.html']){
+for(const file of ['index.html','masal.html']){
  const source=fs.readFileSync(file,'utf8');
  const refs=[...source.matchAll(/<(?:script|link)\b[^>]*\b(?:src|href)="([^"{}]+)"/g)].map(m=>m[1]).filter(p=>!p.startsWith('data:')&&!/^https?:/.test(p));
  for(const ref of refs){assert(fs.existsSync(path.resolve(path.dirname(file),ref.split('?')[0])),file+': missing '+ref);count++}

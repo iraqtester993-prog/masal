@@ -4,7 +4,6 @@ const root=path.resolve(__dirname,'..'),target='docs/FILE-CATALOG.html';
 const descriptions={
  'index.html':'مدخل الموقع على GitHub Pages؛ هيكل واجهة Vue وروابط السكربتات والتنسيقات.',
  'masal.html':'نسخة التشغيل المحلية المجمّعة؛ تتضمن الواجهة والبرمجة والتنسيقات والخطوط والمكتبات داخل ملف واحد. ليست قاعدة بيانات حساباتك.',
- 'decrypt.html':'أداة فك ملفات التصدير والنسخ المشفرة محليًا؛ نموذج الملف وكلمة المرور ومنطق Web Crypto وتنزيل النتيجة.',
  'README.md':'دليل التشغيل الحالي؛ خريطة المجلدات والبناء والاختبارات والنشر وحدود النسخة المحلية.',
  '.gitignore':'قواعد استبعاد الملفات المحلية والمؤقتة والمراجع من إضافتها تلقائيًا إلى Git؛ لا تمسح ملفات متتبعة سابقًا.',
  '.nojekyll':'ملف علامة فارغ لتعطيل معالجة Jekyll عند نشر الموقع كملفات ثابتة.',
@@ -273,7 +272,7 @@ function describe(rel,size){
  else if(group==='assets'){status=/LICENSE|OFL/.test(name)?'ترخيص — يحتفظ به عند التوزيع':/map-.*\.js$/.test(name)?'مورد خريطة مولّد':'أصل تشغيل/بناء — احتفظ به';}
  else if(group==='docs'){status='توثيق — ليس كود تشغيل';}
  else if(group==='tools'){status='أداة تطوير/بناء — لا تعمل ضمن صفحة المستخدم';}
- else if(['index.html','masal.html','decrypt.html'].includes(rel))status='صفحة تشغيل';
+ else if(['index.html','masal.html'].includes(rel))status='صفحة تشغيل';
  if(!role)role='ملف مساعد؛ لم يُحدد له وصف تفصيلي يدوي، راجع مؤشرات المحتوى أدناه.';
  const inspect=rel!==target&&rel!=='masal.html'&&name!=='company-public-runtime.js'&&(['src','tests','tools','docs'].includes(group)||rel==='README.md');
  if(inspect&&['.js','.cjs','.mjs','.css','.md'].includes(ext)){
